@@ -39,18 +39,28 @@
                 <div v-if="undefined_email" class="pt-3 txt-wrong-email"><span class="mdi mdi-alert-octagon"></span>Couldn’t find  your email</div>
                 <div class="pt-5 font-Bai-Jamjuree"><input  @click="goWeb('http://www.gmail.com')"  class="btn-send_email" type="button" value="Check your e-mail"></div>
          </div>
-         <div v-if="stepForgot == 3" style="display: contents;">
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-              <div>4</div>
-              <div>5</div>
-              <div>6</div>
-              <div>{{this.$store.getters.status_}}</div>
-          </div>
-        
-<!-- --- -->
+         <div v-if="stepForgot == 3" style="">
+              <div style="font-weight: 400;font-size: 16px;" class="font-Bai-Jamjuree">New Password <span style="color:red">*</span></div>
+              <div class="pt-3"> <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_email" placeholder="" class="pl-5 inp-username" type="text" name="email" id="email"></div>
+              <div  style="font-weight: 400;font-size: 16px;" class="pt-10 font-Bai-Jamjuree">Confirm Password <span style="color:red"> *</span></div>
+              <div class="pt-3"> <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_password" placeholder="" class="pl-5 inp-password" type="password" name="password" id="password"></div>
+              <div  style="font-weight: 400;font-size: 16px;" class="pt-10 font-Bai-Jamjuree">Captcha <span style="color:red"> *</span></div>
+              <div class="pt-3" style="display: flex;width:100%">
 
+                 <div style="width: 70%;"><input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_captchar" placeholder="" class="pl-5 inp-captcha" type="text" name="captchar" id="captchar"></div>
+                 <div style="width: 25%;">
+                    <vue-captcha 
+                    ref="captcha" 
+                    :captcha.sync="code"
+                    @on-change="handleChange">
+                    </vue-captcha>
+                </div>
+                 <div style="height: 50%;cursor: pointer;display: flex;margin:10px; align-items:center;background-color:#fff;width: 5%;"><span  @click="refresh" class="mdi-rotate-135  mdi mdi-sync"></span></div>
+              </div>
+              <div class="pt-10"><input  @click.prevent="conf()" class="btn-comfirm font-Bai-Jamjureef" type="button" value="Comfirm"></div>
+          </div>
+       
+<!-- --- -->
       </div>
       <div style="padding: 0 30px 0 0;height:5%;"><footers /></div>
     </div>  
@@ -62,9 +72,12 @@
 <script>
 
 import Footers from '@/components/Footer'
+import VueCaptcha from 'vue-captcha-code';
 import Vue from "vue";
 import { tickStep } from 'd3-array'
 import { Verify } from 'crypto';
+
+
 export default {
   name: 'forgot',
   data () {
@@ -74,7 +87,11 @@ export default {
       invalid_email:false,
       undefined_email:false,
       screen_Width:'',
-      screen_Hight:''
+      screen_Hight:'',
+      txt_email:'',
+      txt_password:'',
+      txt_captchar:'',
+      code:'',
     }
   },
   computed: {
@@ -94,18 +111,24 @@ export default {
     },
     forgot_status(){
       return this.$store.getters.forgot_status
-    }
+    },
+   
   },
   watch: {},
   methods: {
+
+     handleChange(code) {
+      console.log('code: ', code);
+    },
+    refresh() {
+      this.$refs.captcha.refreshCaptcha();
+    },
     onResize () {
-      console.log('onResize')
 
       let x = window.innerWidth
       let y = window.innerHeight
       this.screen_Width = (x)-(x*0.5)+'px'
       this.screen_Hight = (y)-(y*0.10)+'px'
-      console.log(x,y)
       if (x <= 375) {
         this.tranformScale = 'scale(0.8)'
       } else if (x > 375 && x <= 550) {
@@ -141,26 +164,37 @@ export default {
       this.$router.push('/')
     }
   },
-  components: {Footers},
+  components: {Footers,VueCaptcha},
   created () {
-    console.log(Vue.localStorage.get("ACTION_FORGOT_STEP"))
+    console.log(Vue.config["url"])
     if (Vue.localStorage.get("login") != null || Vue.localStorage.get("ACTION_FORGOT_STEP") == null) {
         this.$router.push('/home')
     } else {
-
-        if(this.val_email != 'err'){
-          this.$store.dispatch('checkForgot',this.val_email)
-          console.log('==> ',this.forgot_status)
-            if(this.val_email === 'piyathat_j@dhas.com'){
+        this.$store.dispatch('checkForgot',this.val_email)
+        console.log('==><==',this.stepForgot)
+        if(this.val_email != 'err' && this.stepForgot != '3' ){
+          
+          setTimeout(() => {
+              console.log('==> ',this.forgot_status ,this.stepForgot)
+            if(this.forgot_status ){
               Vue.localStorage.set('ACTION_FORGOT_STEP','3')
+              // location.reload();
             }else {
-              this.$router.push('/home')
+              // this.$router.push('/home')
             }
+           }, 150);
+
+
+        }else {
+          console.log('A')
+          // this.$router.push('/home')
         }
 
     }
   },
-  mounted () {}
+  mounted () {
+    
+  }
 }
 </script>
 <style></style>

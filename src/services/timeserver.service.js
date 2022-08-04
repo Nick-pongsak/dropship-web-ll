@@ -2,14 +2,8 @@ import Vue from 'vue'
 
 export default {
    
-    checkForgot(value) {
-        console.log("🚀 ~ file: checkforgot.service.js ~ line 6 ~ checkForgot ~ value", value)
-        var st_forgot = 1
-        if(value === 'piyathat_j@dhas.com' && st_forgot == 1){
-            return Promise.resolve(true);
-        }else {
-            return Promise.resolve(false);
-        }
+    getTimeServer() {
+        
         // var formData = new FormData();
         // formData.append('username', value.username);
         // formData.append('password', value.password);
@@ -18,7 +12,14 @@ export default {
         //         'Authorization': 'Bearer ' + Vue.localStorage.get('token')
         //     },
         // }).then((response) => {
-            // return Promise.resolve(value);
+            const date = new Date()
+            const result = date.toLocaleDateString('th', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                //   weekday: 'long',
+            })
+            return Promise.resolve(result);
         // }).catch((error) => Promise.reject(error));
     }
 }

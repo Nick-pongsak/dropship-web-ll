@@ -3,6 +3,7 @@ const url = `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
 const debug = process.env.VUE_APP_PRODUCTION_STATUS;
 import Vue from 'vue'
 import router from './../../router'
+import timeServer from '../../services/timeserver.service'
 
 
 const store = {
@@ -11,6 +12,7 @@ const store = {
     loadHome: false,
     language: '',
     systemTheme: 'dark',
+    timeServer:''
 
   },
   mutations: {
@@ -28,6 +30,14 @@ const store = {
     }
   },
   actions: {
+    getTimeServer: ({ commit, state }, ) => {
+      timeServer.getTimeServer()
+        .then((response) => {
+          state.timeServer = response
+        })
+        .catch((error) => console.log('getTimeServer'));
+
+    }
 
   },
   getters: {
@@ -43,6 +53,9 @@ const store = {
     systemTheme(state) {
       return state.systemTheme;
     },
+    timeServer(state) {
+      return state.timeServer
+    }
   }
 }
 

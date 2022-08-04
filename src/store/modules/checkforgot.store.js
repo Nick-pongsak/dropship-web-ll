@@ -20,10 +20,10 @@ const store = {
     checkForgot: ({ commit, state }, value) => {
       checkforgotservice.checkForgot(value)
           .then((response) => {
-          //  forgot_status(response) 
+           state.forgot_status = response 
              console.log('checkForgot=> ', response)
           })
-          .catch((error) => console.log('checkForgot'));
+          .catch((error) => console.error(error,'checkForgot'));
 
       }
 

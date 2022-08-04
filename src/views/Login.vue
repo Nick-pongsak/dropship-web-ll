@@ -9,18 +9,20 @@
                 <div  class="txt-detail pt-5">Username / E-mail :</div>
                 <div class="pt-1"> 
                   <input
+                    @keyup.enter="login"
                     :style="{'border': wrong ? '2px solid red' : '' }"
                     class="inp-login-username font-Bai-Jamjuree" type="text" v-model="username" name="username" >  
                 </div>
                 <div class="f-w400 txt-detail pt-5">Password:</div>
                 <div class="pt-1">
                   <input 
+                   @keyup.enter="login"
                    :style="{'border': wrong ? '2px solid red' : '' }"
                    class="inp-login-password font-Bai-Jamjuree" type="password" v-model="password" name="password" >  
                 </div>
                 <div v-if="wrong" class="txt-wrong"><span class="mdi mdi-alert-octagon"></span>Invalid username or password. Please try again</div>
                 <div class="pt-5">
-                   <input   @click.prevent="login('Home')" class="btn-login font-Bai-Jamjureef" type="button" value="Login">
+                   <input   @click.prevent="login()" class="btn-login font-Bai-Jamjureef" type="button" value="Login">
                 </div>
                 <div @click.prevent="forgot('forgotpassword')" class="txt-forgot pt-3">Forgot Password</div>
             </div>
