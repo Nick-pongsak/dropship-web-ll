@@ -1,0 +1,152 @@
+#Forgotpassword{
+    height: 100%;
+
+// FONT
+.font-Bai-Jamjuree{
+    font-family: 'Bai Jamjuree', sans-serif;
+  }
+  .font-Montserrat{
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .f-w400{
+      font-weight:400;
+  }
+  .f-w600{
+    font-weight:400;
+  }
+   .f-w700{
+    font-weight:700;
+  }
+   .f-w800{
+      font-weight:800;
+  }
+  .f-w1000{
+    font-weight:1000;
+}
+
+.box-left{
+     width: 30%;   
+     height: 100%;
+     font-size: 24px;
+     line-height: 29px;
+     color: #fff;
+     padding:17px 0 0 25px;
+     background: #000000;
+}
+.box-right{
+    width: 70%;
+    height: 100%;
+}
+
+.box-inp{
+      height: 95%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction:column;
+}
+.txt-forgot{
+    font-style: normal;
+    font-size: 64px;
+    line-height: 80px;
+}
+.txt-forgot2{
+  font-style: normal;
+  font-size: 24px;
+  line-height: 80px;
+}
+.txt-detail{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
+.txt-detail2{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+  .txt-back{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 515px;
+    cursor: pointer;
+  }
+
+  .txt-wrong-email{
+    min-width: 515px;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+
+
+    color: #DA0707;
+    
+  }
+
+.inp-email{
+min-width: 515px;
+min-height: 44px;
+left: 590px;
+top: 338px;
+
+background: #FFFFFF;
+border: 1px solid #1D4ED8;
+box-shadow: 0px 0px 5px rgba(29, 78, 216, 0.25);
+border-radius: 50px;
+}
+.img-forgot{
+  position: absolute;
+  // height: 700px;
+  // width: 700px;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+}
+
+.btn-send_email{
+width: 294px;
+height: 34px;
+left: 701px;
+top: 433px;
+background: #000000;
+color:#fff;
+border-radius: 50px;
+
+font-weight: 500;
+font-size: 16px;
+line-height: 20px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+ 
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
+
+}

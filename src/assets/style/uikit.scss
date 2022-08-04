@@ -1,0 +1,33 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important; // override vuetify
+}
+
+#app {
+  &.v-application {
+    line-height: normal; // override vuetify
+  }
+  .red--text {
+    color: $dark_red !important;
+    caret-color: $dark_red !important;
+  }
+  font-family: $mainFont;
+}
+
+:root {
+  .v-application ul,
+  .v-application ol {
+    padding-left: 0px !important;
+  }
+  .vs__clear {
+    display: none;
+  }
+  .vs__actions {
+    // svg {
+    // width: 5 !important;
+    // }
+    // width:8px;
+  }
+}
