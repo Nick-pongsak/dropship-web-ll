@@ -39,11 +39,37 @@
                 <div v-if="undefined_email" class="pt-3 txt-wrong-email"><span class="mdi mdi-alert-octagon"></span>Couldn’t find  your email</div>
                 <div class="pt-5 font-Bai-Jamjuree"><input  @click="goWeb('http://www.gmail.com')"  class="btn-send_email" type="button" value="Check your e-mail"></div>
          </div>
+         
          <div v-if="stepForgot == 3" style="">
               <div style="font-weight: 400;font-size: 16px;" class="font-Bai-Jamjuree">New Password <span style="color:red">*</span></div>
-              <div class="pt-3"> <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_email" placeholder="" class="pl-5 inp-username" type="text" name="email" id="email"></div>
-              <div  style="font-weight: 400;font-size: 16px;" class="pt-10 font-Bai-Jamjuree">Confirm Password <span style="color:red"> *</span></div>
-              <div class="pt-3"> <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_password" placeholder="" class="pl-5 inp-password" type="password" name="password" id="password"></div>
+             
+              
+              <div class="pt-3"> 
+                <md-field :style="{'border': err_new_password  ? '2px solid red' : '' }" style="top:0 ; left:0" class="inp-new-username">
+                  <md-input v-model="txt_new_password" @focusout="confirm"   style="height:100%" ></md-input>
+                  <span :style="{'color':err_new_password ? 'red' :'#1D4ED8'}" v-if="txt_check_new_password" class="md-suffix">
+                    <span v-if="err_new_password " style="margin:0 10px 0 0" class="mdi-24px mdi mdi-window-close"></span>
+                    <span v-else style="margin:0 10px 0 0" class="mdi-24px mdi mdi-check"></span>
+                  </span>
+                </md-field> 
+                 </div>
+              <div v-if="err_new_password " class="pt-3 txt-wrong-new-password"> <span class="mdi mdi-alert-octagon"></span> Please enter your password more than 6 characters and </div>
+              <div v-if="err_new_password " class="txt-wrong-new-password"> use both of number and alphabet</div>
+
+              <div  style="font-weight: 400;font-size: 16px;" class="pt-5 font-Bai-Jamjuree">Confirm Password <span style="color:red"> *</span></div>
+              
+              
+              <div class="pt-3"> 
+                <md-field :style="{'border': err_confirm_password  ? '2px solid red' : '' }" style="top:0 ; left:0" class="inp-new-username">
+                  <md-input v-model="txt_confirm_password" @focusout="confirm_password"   style="height:100%" ></md-input>
+                  <span :style="{'color':err_confirm_password ? 'red' :'#1D4ED8'}" v-if="txt_check_confirm_password" class="md-suffix">
+                    <span v-if="err_confirm_password" style="margin:0 10px 0 0" class="mdi-24px mdi mdi-window-close"></span>
+                    <span v-else style="margin:0 10px 0 0" class="mdi-24px mdi mdi-check"></span>
+                  </span>
+                </md-field> 
+                <!-- <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_password" placeholder="" class="pl-5 inp-password" type="password" name="password" id="password"> -->
+                
+                </div>
               <div  style="font-weight: 400;font-size: 16px;" class="pt-10 font-Bai-Jamjuree">Captcha <span style="color:red"> *</span></div>
               <div class="pt-3" style="display: flex;width:100%">
 
@@ -57,10 +83,10 @@
                 </div>
                  <div style="height: 50%;cursor: pointer;display: flex;margin:10px; align-items:center;background-color:#fff;width: 5%;"><span  @click="refresh" class="mdi-rotate-135  mdi mdi-sync"></span></div>
               </div>
-              <div class="pt-10"><input  @click.prevent="conf()" class="btn-comfirm font-Bai-Jamjureef" type="button" value="Comfirm"></div>
+              <div class="pt-10"><input  @click.prevent="confirm()" class="btn-comfirm font-Bai-Jamjureef" type="button" value="Comfirm"></div>
           </div>
-       
 <!-- --- -->
+
       </div>
       <div style="padding: 0 30px 0 0;height:5%;"><footers /></div>
     </div>  
@@ -84,14 +110,20 @@ export default {
     return {
       tranformScale:'',
       txt_email:'',
+      txt_new_password:'',
       invalid_email:false,
       undefined_email:false,
       screen_Width:'',
       screen_Hight:'',
       txt_email:'',
       txt_password:'',
+      txt_confirm_password:'',
       txt_captchar:'',
       code:'',
+      txt_check_new_password:false,
+      txt_check_confirm_password:false,
+      err_new_password:false,
+      err_confirm_password:false,
     }
   },
   computed: {
@@ -112,10 +144,82 @@ export default {
     forgot_status(){
       return this.$store.getters.forgot_status
     },
-   
+    test(){
+      return `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
+    }
   },
   watch: {},
   methods: {
+
+    confirm(ch)
+        {
+          ch = this.txt_new_password
+          this.txt_check_new_password = true
+          var check_number = 'check';
+          var check_char = 'check';
+          var special_characters = 'pass';
+        var len, digit;
+          if(ch == " "){
+            len=0;
+          }else{
+            len = ch.length;
+          }
+          if(len >= 6 ){
+
+              for(var i=0 ; i<len ; i++){
+                digit = ch.charAt(i)
+                if( (digit >= "a" && digit <= "z") || (digit >="0" && digit <="9") || (digit >="A" && digit <="Z") || (digit =="_")){
+
+                }else {
+                  special_characters = 'check'
+                }
+              }
+
+            for(var i=0 ; i<len ; i++){
+               digit = ch.charAt(i)
+            // console.log(digit)
+              if( (digit >= "a" && digit <= "z") ||  (digit >="A" && digit <="Z")  ){
+                  check_char = 'pass'
+              }else {
+              }
+             if(  (digit >="0" && digit <="9")  ){
+                  check_number = 'pass'
+              }else {
+              }
+            }
+            }else {
+               console.log('Char < 6')
+                // return false;
+            }
+          if(check_number=='pass' && check_char=='pass' && special_characters=='pass'){
+            this.err_new_password = false
+          }else {
+            this.txt_confirm_password = ''
+            this.txt_check_confirm_password = false
+            this.err_confirm_password = false
+
+            this.err_new_password = true
+          }
+           console.log('check_number =>' , check_number)
+           console.log('check_char =>' ,check_char)
+           console.log('special_characters => ', special_characters)
+        },
+        confirm_password(){
+           console.log(this.err_new_password ,this.txt_new_password.length)
+            if(this.err_new_password == false && this.txt_new_password.length != 0){
+              if(this.txt_new_password != '' && this.txt_confirm_password != '' ){
+                    this.txt_check_confirm_password = true
+                if(this.txt_new_password == this.txt_confirm_password ){
+                    this.err_confirm_password = false
+                }else {
+                    this.err_confirm_password = true          
+                 }
+                        console.log('check conf')
+              }else {
+                 this.txt_check_confirm_password = false
+              }
+            }
+        },
 
      handleChange(code) {
       console.log('code: ', code);
@@ -127,18 +231,19 @@ export default {
 
       let x = window.innerWidth
       let y = window.innerHeight
+
+      console.log(x , y)
       this.screen_Width = (x)-(x*0.5)+'px'
       this.screen_Hight = (y)-(y*0.10)+'px'
       if (x <= 375) {
-        this.tranformScale = 'scale(0.8)'
+        this.tranformScale = 'scale(0.6)'
       } else if (x > 375 && x <= 550) {
-        this.tranformScale = 'scale(0.9)'
+        this.tranformScale = 'scale(0.6)'
       } else if (x <= 1110 && x >= 960) {
-        this.tranformScale = 'scale(0.8)'
+        this.tranformScale = 'scale(0.6)'
       } else {
         this.tranformScale = 'scale(1)'
       }
-
     },
     send_email(){
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.txt_email)) {
@@ -162,20 +267,23 @@ export default {
     },
     btn_back(){
       this.$router.push('/')
+    },
+    moustout(){
+      console.log('Test Method')
     }
   },
   components: {Footers,VueCaptcha},
   created () {
-    console.log(Vue.config["url"])
+    // console.log(Vue.config["url"])
     if (Vue.localStorage.get("login") != null || Vue.localStorage.get("ACTION_FORGOT_STEP") == null) {
         this.$router.push('/home')
     } else {
         this.$store.dispatch('checkForgot',this.val_email)
-        console.log('==><==',this.stepForgot)
+        // console.log('==><==',this.stepForgot)
         if(this.val_email != 'err' && this.stepForgot != '3' ){
           
           setTimeout(() => {
-              console.log('==> ',this.forgot_status ,this.stepForgot)
+              // console.log('==> ',this.forgot_status ,this.stepForgot)
             if(this.forgot_status ){
               Vue.localStorage.set('ACTION_FORGOT_STEP','3')
               // location.reload();
@@ -186,7 +294,7 @@ export default {
 
 
         }else {
-          console.log('A')
+          // console.log('A')
           // this.$router.push('/home')
         }
 

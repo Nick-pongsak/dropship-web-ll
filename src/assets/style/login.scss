@@ -57,14 +57,23 @@
   .box-right{
     background-color: #000000;
     width: 30%;
-   
-   
   }
+  .box-right-mobile{
+    background-color: #000000;
+    width: 0%;
+  }
+
   .box-left{
    background-color:#EFF6FF;
    width: 70%;
    height: 100%;
   }
+
+  .box-left-mobile{
+    background-color:#EFF6FF;
+    width: 100%;
+    height: 100%;
+   }
 
   .btn-login{
     width: 365px;
@@ -94,6 +103,7 @@
   .box-head{
     height: 5%;
     font-style: normal;
+    font-weight: 1500;
     font-size: 24px;
     line-height: 29px;
     color: #000000;
@@ -107,9 +117,9 @@
     position: absolute;
     width: 647px;
     height: 647px;
-    left: 50%;
-    top: 15%;
-    // transform: scale(0.6);
+    // left: 0;
+    top: 0;
+    // transform: scale(0.8);
   }
 
   .inp-login-username{

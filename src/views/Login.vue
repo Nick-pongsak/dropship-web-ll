@@ -1,13 +1,16 @@
 <template>
   <div id="login" v-resize="onResize">
     <div class="md-layout box">
-      <div class="box-left">
+      <div 
+      :class="screenDevice =='desktop' ? 'box-left':'box-left-mobile'"
+      >
         <div class="f-w800 box-head font-Montserrat">Dropship portal</div>
           <div class="box-login">
             <div :style="{'transform':tranformScale}" class="container-login">
                 <div class="f-w700 txt-login font-Bai-Jamjuree">Login</div>
                 <div  class="txt-detail pt-5">Username / E-mail :</div>
                 <div class="pt-1"> 
+                  {{this.screenWidth}}
                   <input
                     @keyup.enter="login"
                     :style="{'border': wrong ? '2px solid red' : '' }"
@@ -31,8 +34,10 @@
              <footers />
           </div>
       </div>
-    <div class="box-right">
-        <img  class="img-login" src="@/assets/images/person-login.png">
+    <div
+      class="box-right"
+     >
+        <img  :style="{'left':screenWidth*0.3 + 'px'}" v-if="screenDevice === 'desktop'"  class="img-login" src="@/assets/images/person-login.png">
     </div>
   </div>
   </div>
@@ -50,7 +55,10 @@ export default {
       username:'',
       password:'',
       wrong:false,
-      tranformScale:''
+      tranformScale:'',
+      screenWidth:'',
+      screenHeight:'',
+      screenDevice:'',
     }
   },
   methods: {
@@ -131,7 +139,6 @@ export default {
           }else {
             this.wrong = true
           }
-      
       }
     
     },
@@ -140,10 +147,16 @@ export default {
        this.$router.push('/' + 'forgotpassword')
     },
     onResize () {
-      console.log('onResize')
-
       let x = window.innerWidth
       let y = window.innerHeight
+      this.screenWidth = x
+      this.screenHeight = y
+
+      if(x <= 450){
+        this.screenDevice = 'mobile'
+      }else {
+        this.screenDevice = 'desktop'
+      }
       if (x <= 375) {
         this.tranformScale = 'scale(0.65)'
       } else if (x > 375 && x <= 550) {

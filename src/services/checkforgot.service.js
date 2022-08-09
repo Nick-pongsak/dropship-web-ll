@@ -3,7 +3,6 @@ import Vue from 'vue'
 export default {
    
     checkForgot(value) {
-        console.log("🚀 ~ file: checkforgot.service.js ~ line 6 ~ checkForgot ~ value", value)
         var st_forgot = 1
         if(value === 'piyathat_j@dhas.com' && st_forgot == 1){
             return Promise.resolve(true);

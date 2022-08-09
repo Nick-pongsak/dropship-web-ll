@@ -105,6 +105,16 @@
     
   }
 
+  .txt-wrong-new-password{
+    font-style: italic;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    color: #DA0707;
+    
+  }
+
 .inp-email{
   min-width: 515px;
   min-height: 44px;
@@ -127,6 +137,20 @@
   border: 1px solid #1D4ED8;
   box-shadow: 0px 0px 5px rgba(29, 78, 216, 0.25);
   border-radius: 50px;
+  }
+
+  .inp-new-username{
+    min-width: 367px;
+    min-height: 34px;
+    left: 0;
+    top: 0;
+    padding:0 0 0 10px;
+    margin:0 0 0 0;
+    height: 34px;
+    background: #FFFFFF;
+    border: 1px solid #1D4ED8;
+    box-shadow: 0px 0px 5px rgba(29, 78, 216, 0.25);
+    border-radius: 50px;
   }
   .inp-password{
     min-width: 367px;
