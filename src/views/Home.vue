@@ -1,6 +1,6 @@
 <template>
   <div style="color:red" id="maincorp">
-    Home - Page
+    Home - Page  
   </div>
 </template>
 
