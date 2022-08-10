@@ -1,13 +1,13 @@
 <template>
   <div style="color:red" id="maincorp">
-    MAIN
+    <h1>Profile : supplier - Page</h1> 
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 export default {
-  name: 'maincorp',
+  name: 'userprofilepage',
   data () {
     return {}
   },

@@ -122,6 +122,7 @@ export default {
   font-weight: 800;
   font-size: 24px;
   line-height: 29px;
+  padding:0 0 0 10px;
 
 }
 .md-overlay{

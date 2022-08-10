@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login.vue'
-import MainDropship from '@/views/MainDropship.vue'
+import Home from '@/views/Home.vue'
 import DefaultLayout from '@/views/Default.vue'
 import ForgotPassword from '@/views/ForgotPassword.vue'
+import UserProfile from '@/views/UserProfile.vue'
+
+// ADMIN
+import AdminHome from '@/views/AdminHome.vue'
 
 
 Vue.use(Router)
@@ -25,11 +29,22 @@ export default new Router({
       children: [
         {
           path: "/home",
-          component: MainDropship
+          component: Home
         },
         {
           path: "/forgotpassword",
           component: ForgotPassword,
+          
+        },
+        {
+          path: "/userprofile",
+          component: UserProfile,
+          
+        },
+        ,
+        {
+          path: "/admin",
+          component: AdminHome,
           
         },
         

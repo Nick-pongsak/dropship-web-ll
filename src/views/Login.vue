@@ -10,7 +10,7 @@
                 <div class="f-w700 txt-login font-Bai-Jamjuree">Login</div>
                 <div  class="txt-detail pt-5">Username / E-mail :</div>
                 <div class="pt-1"> 
-                  {{this.screenWidth}}
+                  <!-- {{this.screenWidth}} -->
                   <input
                     @keyup.enter="login"
                     :style="{'border': wrong ? '2px solid red' : '' }"
@@ -37,7 +37,7 @@
     <div
       class="box-right"
      >
-        <img  :style="{'left':screenWidth*0.3 + 'px'}" v-if="screenDevice === 'desktop'"  class="img-login" src="@/assets/images/person-login.png">
+        <!-- <img  :style="{'left':screenWidth*0.3 + 'px'}" v-if="screenDevice === 'desktop'"  class="img-login" src="@/assets/images/person-login.png"> -->
     </div>
   </div>
   </div>
@@ -52,8 +52,8 @@ export default {
   components: {Footers},
   data () {
     return {
-      username:'',
-      password:'',
+      username:'test',
+      password:'1234',
       wrong:false,
       tranformScale:'',
       screenWidth:'',
