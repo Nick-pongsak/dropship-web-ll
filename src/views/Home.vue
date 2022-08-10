@@ -1,6 +1,6 @@
 <template>
   <div id="home-page">
-    <order-filter></order-filter>
+    <order-filter @apply="ApplyFilter"></order-filter>
     <div>TABLE</div>
   </div>
 </template>
@@ -19,7 +19,11 @@ export default {
     }
   },
   watch: {},
-  methods: {},
+  methods: {
+    ApplyFilter (val) {
+      console.log('ApplyFilter ==> ', val)
+    }
+  },
   created () {
     if (Vue.localStorage.get('login') == null) {
       this.$router.replace('/')
