@@ -1,11 +1,13 @@
 <template>
-  <div style="color:red" id="maincorp">
-    Home - Page  
+  <div id="home-page">
+    <order-filter></order-filter>
+    <div>TABLE</div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue'
+import OrderFilter from '@/components/filter/OrderFilter'
 export default {
   name: 'homepage',
   data () {
@@ -18,15 +20,13 @@ export default {
   },
   watch: {},
   methods: {},
-  components: {},
   created () {
-     if (Vue.localStorage.get("login") == null) {
-      this.$router.replace("/");
+    if (Vue.localStorage.get('login') == null) {
+      this.$router.replace('/')
     } else {
-
-
     }
   },
+  components: { 'order-filter': OrderFilter },
   mounted () {}
 }
 </script>

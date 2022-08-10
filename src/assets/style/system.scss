@@ -8,11 +8,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-   
   }
   .body-main {
-   
-    height:100% ;
+    height: 100%;
     top: 58px;
     left: 0px;
     position: fixed;
@@ -33,17 +31,34 @@
   .footer-main {
     width: 100%;
   }
-  // &.dark {
-  //   .header-main {
-  //     background: $dark-box;
-  //     color: white;
-  //   }
-  //   .body-main {
-  //     background: $dark-bg;
-  //   }
-  //   .footer-main {
-  //     color: white;
-  //     background: $dark-box;
-  //   }
-  // }
+  .v-menu__content {
+    color: #0000001f;
+    font-family: Bai Jamjuree;
+    font-size: nth($font-sizes, 5);
+    border-radius: 8px;
+    box-shadow: none;
+    border-width: 0.5px;
+    font-weight: 400;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.12);
+    .v-list {
+      padding: unset;
+    } 
+    .v-list-item--dense,
+    .v-list--dense .v-list-item {
+      min-height: 34px;
+      border-width: 0.5px 0px 0px 0px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+    .v-list-item:hover {
+      background: #2372e7;
+      .v-list-item__content {
+        color: #ffffff;
+      }
+    }
+  }
+  .v-select.v-input--dense .v-select__selection--comma {
+    margin: 1px 4px 3px 0;
+  }
 }

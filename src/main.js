@@ -29,6 +29,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faUserSecret)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+Vue.component('date-picker', DatePicker)
+
 // var bcrypt = require('bcryptjs');
 // Vue.use(bcrypt)
 import FontRoboto from './assets/fonts/fontRoboto.css'

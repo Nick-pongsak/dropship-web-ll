@@ -1,0 +1,89 @@
+.v-application {
+  #home-page {
+    padding: 23px 31px 0px 31px;
+
+    .filter {
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #000000;
+      font-family: Bai Jamjuree;
+      padding: 7px 28px 16px 28px;
+      font-size: nth($font-sizes, 6);
+      .btn-filter {
+        height: 28px;
+        width: 90px;
+        border-radius: 49px;
+        border: 1px solid #000000;
+        font-style: normal;
+        font-weight: 500;
+        font-size: nth($font-sizes, 8);
+        line-height: 25px;
+        align-items: center;
+        text-align: center;
+      }
+      .filter-box {
+        margin-top: 6px;
+        padding-right: 3%;
+        font-weight: 500;
+        .subtitle {
+          font-weight: 500;
+          margin-bottom: 6px;
+          line-height: 20px;
+          letter-spacing: 0em;
+          text-align: left;
+        }
+        .v-text-field.v-text-field--solo.v-input--dense > .v-input__control {
+          height: 26px;
+          min-height: 26px;
+        }
+        .v-text-field .v-input__slot {
+          border-radius: 27px;
+          box-shadow: unset;
+          min-height: 26px;
+        }
+        .v-text-field.v-input--dense:not(.v-text-field--outlined) input {
+          padding-top: 0px;
+        }
+        .mx-input {
+          border-radius: 24px;
+          height: 26px;
+          border: none;
+          box-shadow: none;
+        }
+        .mx-icon-calendar {
+          color: #000000;
+          font-size: 10px;
+          right: 12px;
+        }
+        .v-btn {
+          font-family: Bai Jamjuree;
+          background: #000000;
+          height: 34px;
+          width: 87px;
+          border-radius: 8px;
+          color: #ffffff;
+        }
+      }
+    }
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100% - 70px);
+    // height: calc(100% - 100px);
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #efefef;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: #d9d9d9;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgb(145, 145, 145);
+    }
+  }
+}
