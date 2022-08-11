@@ -275,14 +275,14 @@
             'padding-top': windowSize <= 600 ? '20px' : '24px'
           }"
         >
+          <v-btn rounded @click="clearFilter()" class="clear">Clear</v-btn>
           <v-btn
             rounded
-            @click="clearFilter()"
-            style="margin-right:10px"
-            class="clear"
-            >Clear</v-btn
+            @click="apply()"
+            class="ok"
+            :style="{ 'margin-left': windowSize <= 600 ? '10px' : '10px' }"
+            >Apply</v-btn
           >
-          <v-btn rounded @click="apply()" class="apply">Apply</v-btn>
         </div>
       </div>
     </div>
