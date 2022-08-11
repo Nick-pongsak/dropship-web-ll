@@ -28,6 +28,14 @@
             <v-icon slot="append" color="#D7D7D7" size="18">
               mdi-magnify
             </v-icon>
+            <v-icon
+              v-if="showClearInput('search')"
+              slot="append"
+              size="18"
+              @click="clearInput('search')"
+            >
+              mdi-close
+            </v-icon>
           </v-text-field>
         </div>
         <div
@@ -39,7 +47,16 @@
           <div class="subtitle">
             ชื่อลูกค้า
           </div>
-          <v-text-field solo dense v-model="customerInput"> </v-text-field>
+          <v-text-field solo dense v-model="customerInput">
+            <v-icon
+              v-if="showClearInput('customer')"
+              slot="append"
+              size="18"
+              @click="clearInput('customer')"
+            >
+              mdi-close
+            </v-icon>
+          </v-text-field>
         </div>
         <div
           :style="{
@@ -50,7 +67,16 @@
           <div class="subtitle">
             หมายเลขคำสั่งซื้อ
           </div>
-          <v-text-field solo dense v-model="orderInput"> </v-text-field>
+          <v-text-field solo dense v-model="orderInput">
+            <v-icon
+              v-if="showClearInput('orderNo')"
+              slot="append"
+              size="18"
+              @click="clearInput('orderNo')"
+            >
+              mdi-close
+            </v-icon>
+          </v-text-field>
         </div>
       </div>
       <div
@@ -106,6 +132,7 @@
             type="date"
             placeholder=""
             :lang="lang"
+            :disabled-date="disabledOrderDate"
           ></date-picker>
         </div>
         <div
@@ -181,6 +208,7 @@
             type="date"
             placeholder=""
             :lang="lang"
+            :disabled-date="disabledDliveryDate"
           ></date-picker>
         </div>
       </div>
@@ -237,6 +265,7 @@
             type="date"
             placeholder=""
             :lang="lang"
+            :disabled-date="disabledSuccessDelivery"
           ></date-picker>
         </div>
         <div
@@ -246,7 +275,14 @@
             'padding-top': windowSize <= 600 ? '20px' : '24px'
           }"
         >
-          <v-btn rounded @click="apply()">Apply</v-btn>
+          <v-btn
+            rounded
+            @click="clearFilter()"
+            style="margin-right:10px"
+            class="clear"
+            >Clear</v-btn
+          >
+          <v-btn rounded @click="apply()" class="apply">Apply</v-btn>
         </div>
       </div>
     </div>
@@ -262,9 +298,9 @@ export default {
       expandFilter: true,
       windowSize: 1366,
       formatDate: 'DD MMM YYYY',
-      searchInput: '',
-      customerInput: '',
-      orderInput: '',
+      searchInput: null,
+      customerInput: null,
+      orderInput: null,
       startOrderDate: null,
       endOrderDate: null,
       startDliveryDate: null,
@@ -333,10 +369,126 @@ export default {
     }
   },
   computed: {},
+  watch: {
+    startOrderDate: {
+      handler (newValue) {
+        if (newValue == null) {
+          this.endOrderDate = null
+        } else {
+          if (this.endOrderDate == null) {
+            this.endOrderDate = newValue
+          } else {
+            const today = new Date(newValue)
+            const end = new Date(this.endOrderDate)
+            today.setHours(0, 0, 0, 0)
+            end.setHours(0, 0, 0, 0)
+            if (end < today) {
+              this.endOrderDate = newValue
+            }
+          }
+        }
+      }
+    },
+    startDliveryDate: {
+      handler (newValue) {
+        if (newValue == null) {
+          this.endDliveryDate = null
+        } else {
+          if (this.endDliveryDate == null) {
+            this.endDliveryDate = newValue
+          } else {
+            const today = new Date(newValue)
+            const end = new Date(this.endDliveryDate)
+            today.setHours(0, 0, 0, 0)
+            end.setHours(0, 0, 0, 0)
+            if (end < today) {
+              this.endDliveryDate = newValue
+            }
+          }
+        }
+      }
+    },
+    startSuccessDelivery: {
+      handler (newValue) {
+        if (newValue == null) {
+          this.endSuccessDelivery = null
+        } else {
+          if (this.endSuccessDelivery == null) {
+            this.endSuccessDelivery = newValue
+          } else {
+            const today = new Date(newValue)
+            const end = new Date(this.endSuccessDelivery)
+            today.setHours(0, 0, 0, 0)
+            end.setHours(0, 0, 0, 0)
+            if (end < today) {
+              this.endSuccessDelivery = newValue
+            }
+          }
+        }
+      }
+    },
+    endOrderDate: {
+      handler (newValue) {
+        if (newValue == null) {
+          this.endOrderDate = this.startOrderDate
+        }
+      }
+    },
+    endDliveryDate: {
+      handler (newValue) {
+        if (newValue == null) {
+          this.endDliveryDate = this.startDliveryDate
+        }
+      }
+    },
+    endSuccessDelivery: {
+      handler (newValue) {
+        if (newValue == null) {
+          this.endSuccessDelivery = this.startSuccessDelivery
+        }
+      }
+    }
+  },
   methods: {
     showFilter () {
       this.expandFilter = !this.expandFilter
       // this.onResize()
+    },
+    showClearInput (val) {
+      if (val == 'customer') {
+        if (this.customerInput == null) {
+          return false
+        } else if (this.customerInput.trim().length == 0) {
+          return false
+        } else {
+          return true
+        }
+      } else if (val == 'orderNo') {
+        if (this.orderInput == null) {
+          return false
+        } else if (this.orderInput.trim().length == 0) {
+          return false
+        } else {
+          return true
+        }
+      } else if (val == 'search') {
+        if (this.searchInput == null) {
+          return false
+        } else if (this.searchInput.trim().length == 0) {
+          return false
+        } else {
+          return true
+        }
+      }
+    },
+    clearInput (val) {
+      if (val == 'customer') {
+        this.customerInput = null
+      } else if (val == 'orderNo') {
+        this.orderInput = null
+      } else if (val == 'search') {
+        this.searchInput = null
+      }
     },
     onResize () {
       let x = window.innerWidth
@@ -358,6 +510,33 @@ export default {
         status: this.statusInput
       }
       this.$emit('apply', result)
+    },
+    clearFilter () {
+      this.searchInput = null
+      this.customerInput = null
+      this.orderInput = null
+      this.startOrderDate = null
+      this.endOrderDate = null
+      this.startDliveryDate = null
+      this.endDliveryDate = null
+      this.startSuccessDelivery = null
+      this.endSuccessDelivery = null
+      this.statusInput = 'all'
+    },
+    disabledSuccessDelivery (date) {
+      const today = new Date(this.startSuccessDelivery)
+      today.setHours(0, 0, 0, 0)
+      return date < today
+    },
+    disabledDliveryDate (date) {
+      const today = new Date(this.startDliveryDate)
+      today.setHours(0, 0, 0, 0)
+      return date < today
+    },
+    disabledOrderDate (date) {
+      const today = new Date(this.startOrderDate)
+      today.setHours(0, 0, 0, 0)
+      return date < today
     }
   }
 }

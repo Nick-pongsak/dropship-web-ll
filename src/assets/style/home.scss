@@ -57,11 +57,17 @@
         }
         .v-btn {
           font-family: Bai Jamjuree;
-          background: #000000;
           height: 34px;
           width: 87px;
           border-radius: 8px;
-          color: #ffffff;
+          &.apply {
+            color: #ffffff;
+            background: #000000;
+          }
+          &.clear {
+            color: #000000;
+            background: #ffffff;
+          }
         }
       }
     }
