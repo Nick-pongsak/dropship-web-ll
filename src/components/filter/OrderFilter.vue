@@ -80,6 +80,7 @@
             value-type="YYYY-MM-DD"
             type="date"
             placeholder=""
+            :lang="lang"
           ></date-picker>
         </div>
         <div
@@ -104,6 +105,7 @@
             value-type="YYYY-MM-DD"
             type="date"
             placeholder=""
+            :lang="lang"
           ></date-picker>
         </div>
         <div
@@ -153,6 +155,7 @@
             value-type="YYYY-MM-DD"
             type="date"
             placeholder=""
+            :lang="lang"
           ></date-picker>
         </div>
         <div
@@ -177,6 +180,7 @@
             value-type="YYYY-MM-DD"
             type="date"
             placeholder=""
+            :lang="lang"
           ></date-picker>
         </div>
       </div>
@@ -207,6 +211,7 @@
             value-type="YYYY-MM-DD"
             type="date"
             placeholder=""
+            :lang="lang"
           ></date-picker>
         </div>
         <div
@@ -231,6 +236,7 @@
             value-type="YYYY-MM-DD"
             type="date"
             placeholder=""
+            :lang="lang"
           ></date-picker>
         </div>
         <div
@@ -255,7 +261,7 @@ export default {
     return {
       expandFilter: true,
       windowSize: 1366,
-      formatDate: 'DD-MM-YYYY',
+      formatDate: 'DD MMM YYYY',
       searchInput: '',
       customerInput: '',
       orderInput: '',
@@ -273,7 +279,57 @@ export default {
         { code: 'delivery', title: 'Delivery' },
         { code: 'delivering', title: 'Delivering' },
         { code: 'complete', title: 'Complete' }
-      ]
+      ],
+      lang: {
+        formatLocale: {
+          firstDayOfWeek: 1,
+          months: [
+            'มกราคม',
+            'กุมภาพันธ์',
+            'มีนาคม',
+            'เมษายน',
+            'พฤษภาคม',
+            'มิถุนายน',
+            'กรกฎาคม',
+            'สิงหาคม',
+            'กันยายน',
+            'ตุลาคม',
+            'พฤศจิกายน',
+            'ธันวาคม'
+          ],
+          monthsShort: [
+            'ม.ค.',
+            'ก.พ.',
+            'มี.ค.',
+            'เม.ย.',
+            'พ.ค.',
+            'มิ.ย.',
+            'ก.ค.',
+            'ส.ค.',
+            'ก.ย.',
+            'ต.ค.',
+            'พ.ย.',
+            'ธ.ค.'
+          ],
+          weekdaysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส']
+        },
+        months: [
+          'มกราคม',
+          'กุมภาพันธ์',
+          'มีนาคม',
+          'เมษายน',
+          'พฤษภาคม',
+          'มิถุนายน',
+          'กรกฎาคม',
+          'สิงหาคม',
+          'กันยายน',
+          'ตุลาคม',
+          'พฤศจิกายน',
+          'ธันวาคม'
+        ],
+        monthFormat: 'MMMM',
+        monthBeforeYear: false
+      }
     }
   },
   computed: {},
