@@ -1,5 +1,9 @@
 <template>
-  <div class="filter" v-resize="onResize">
+  <div
+    class="filter"
+    v-resize="onResize"
+    :style="{ 'padding-bottom': windowSize > 600 ? '16px' : '8px' }"
+  >
     <div style="width:100%;display:flex">
       <div style="width:90%">
         <div class="btn-filter">Filter</div>

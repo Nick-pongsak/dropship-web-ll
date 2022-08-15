@@ -120,13 +120,13 @@
           color: #00000080;
           height: 34px;
           width: 119px;
+          min-width: 119px;
           background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.12);
           border-radius: 29px;
           font-weight: 500;
           font-size: nth($font-sizes, 6);
-          display: grid;
-          align-items: center;
+          line-height: 33px;
           text-align: center;
         }
         .v-btn {
@@ -136,10 +136,22 @@
           width: 77px;
         }
         .count-subtitle {
-          padding-left: 10px;
+          padding-left: 15px;
           font-size: 14px;
           font-weight: 400;
           text-align: left;
+        }
+      }
+      .table {
+        // width: 100%;
+        // display: flex;
+        .card {
+          height: 219px;
+          width: 427px;
+          min-width: 427px;
+          background: #ffffff;
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
         }
       }
     }

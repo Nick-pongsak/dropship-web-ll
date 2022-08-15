@@ -1,7 +1,7 @@
 <template>
   <div id="home-page">
     <order-filter @apply="ApplyFilter"></order-filter>
-    <detail-table></detail-table>
+    <!-- <detail-table></detail-table> -->
   </div>
 </template>
 
