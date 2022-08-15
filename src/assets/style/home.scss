@@ -143,15 +143,93 @@
         }
       }
       .table {
-        // width: 100%;
-        // display: flex;
         .card {
-          height: 219px;
+          padding-bottom: 15px;
+          margin-right: 30px;
+          margin-bottom: 30px;
+          // height: 219px;
           width: 427px;
-          min-width: 427px;
+          max-width: 427px;
           background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.12);
           border-radius: 8px;
+          display: block;
+          max-width: 100%;
+          .row-card {
+            width: 100%;
+            display: flex;
+            padding-left: 11px;
+            padding-top: 10px;
+            font-size: nth($font-sizes, 6);
+            .v-input--selection-controls {
+              margin-top: 0px;
+            }
+            .btn-filter {
+              margin-left: 10px;
+              height: 24px;
+              width: 86px;
+              min-width: 86px;
+              border-radius: 12px;
+              font-weight: 500;
+              font-size: nth($font-sizes, 5);
+              text-align: center;
+              line-height: 24px;
+              &.new {
+                color: #9747ff;
+                background: #9747ff33;
+              }
+              &.accept {
+                color: #2372e7;
+                background: #ecf1ff;
+              }
+              &.delivery {
+                color: #ff8d4d;
+                background: #feece280;
+              }
+              &.complete {
+                color: #008525;
+                background: #e3ffeb;
+              }
+              &.delivering {
+                color: #f2b925;
+                background: #fff8ee;
+              }
+              &.cancel {
+                color: #da0707;
+                background: #ffd6da80;
+              }
+            }
+            .title-card {
+              padding-left: 8px;
+              font-weight: 500;
+              width: 40%;
+            }
+            .value-card {
+              font-weight: 400;
+              width: 53%;
+            }
+            .view-detail {
+              cursor: pointer;
+              color: #2372e7;
+              text-decoration: underline;
+              text-decoration-color: #2372e7;
+            }
+            .title-card,
+            .value-card {
+              padding-right: 8px;
+            }
+
+            .title-card,
+            .value-card,
+            .view-detail {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+          &.selected{
+            border: 1px solid #1D4ED8;
+          }
         }
       }
     }
