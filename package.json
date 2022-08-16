@@ -29,7 +29,7 @@
     "firebase": "^7.24.0",
     "mock-aws-s3": "^4.0.2",
     "nock": "^13.2.4",
-    "vue": "^2.6.12",
+    "vue": "^3.2.37",
     "vue-captcha-code": "^1.0.2",
     "vue-click-outside": "^1.1.0",
     "vue-i18n": "^8.27.0",
@@ -51,7 +51,7 @@
     "sass": "^1.32.5",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-vuetify": "^0.6.3",
-    "vue-template-compiler": "^2.6.12",
+    "vue-template-compiler": "^2.7.8",
     "vuetify-loader": "^1.6.0"
   },
   "postcss": {
