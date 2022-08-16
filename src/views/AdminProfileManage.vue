@@ -18,7 +18,7 @@
       <b-row >
         <b-col  xl>
           <div  class="md-layout">
-            <div class="head">Supplier ID</div>
+            <div class="head">Admin ID</div>
             <div class="detail" style="">{{this.profile.sup_id}}</div>
           </div>
         </b-col>
@@ -136,20 +136,6 @@
       </b-row>
 
       <b-row>
-        <b-col   xl>
-          <div class="md-layout">
-              <div class="head">บริษัท</div>
-              <div class="detail">
-                <input 
-                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
-                :disabled="isDisabled" v-model="profile.company" class="input-style">
-              </div>
-            </div>
-        </b-col>
-         <b-col xl v-if="windowSize > 1200"></b-col>
-      </b-row>
-
-      <b-row>
         <b-col  
             style="
             display: flex;
@@ -232,7 +218,7 @@
           <div
           :style="{ width: windowSize <= 600 ? '0%' : '35%'}"
            class="right">
-              <img  class="img" src="@/assets/images/user-profile.png">
+              <img  style="width:444px; height: 444px;" class="img" src="@/assets/images/confrim2.png">
           </div>
       </div >
       <div class="box-2">
@@ -256,14 +242,14 @@ export default {
       type_password:'password',
       profile:{
         sup_id:'V52082',
-        email:'yoshihisa_y@uni.com',
+        email:'kirati.m@dhas.com',
         password:'UniAdmin1234',
         use_password:'',
         new_password:'',
         confrim_new_password:'',
-        first_name:'Yuki',
-        last_name:'Yoshihisa',
-        tel:'81620943322',
+        first_name:'Kirati',
+        last_name:'Mahanakorn',
+        tel:'082 175 5444',
         company:'Uni Mitsubushi Pencil Official'
       },
      

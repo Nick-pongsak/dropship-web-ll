@@ -14,7 +14,7 @@
     
       <md-button style="text-transform:none" md-menu-trigger>{{info.frist_name}}{{' '}}{{info.last_name}}<span class="mdi mdi-menu-down"></span></md-button>
       <md-menu-content class="option-detail" >
-        <md-menu-item style="cursor: pointer;">Setting Profile </md-menu-item>
+        <md-menu-item @click="user_profile" style="cursor: pointer;">Setting Profile </md-menu-item>
         <md-menu-item @click="logout" style="cursor: pointer;">Log Out</md-menu-item>
       </md-menu-content>
     </md-menu>
@@ -94,6 +94,9 @@ export default {
         });
          this.$router.push('/')
         // this.active = true
+    },
+    user_profile(){
+       this.$router.push('/userprofile')
     }
   },
   created(){

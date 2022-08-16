@@ -1,11 +1,63 @@
 <template>
-  <div style="color:red" id="maincorp">
-   <h1>Admin Home</h1>
+ 
+    <div style="height:100%" id="page-admin">
+      <div style="height: 100%;background-color:#EFF6FF">
+            <b-row >
+                <b-col  style="padding:50px 0 50px 8%" xl>
+                <div class="head-title">Management</div>
+                </b-col>
+              </b-row>
+
+        <b-container class="admin-card bv-example-row">
+          <b-row >
+
+            <b-col @click="cleck_card('adminManageProfile')" class="card">
+            <b-col style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000" >
+             <img style="" src="@/assets/images/accout.png" alt="">
+            </b-col>
+            <b-col >
+              <span class="txt-title">จัดการบัญชี</span>
+            </b-col>
+            </b-col>
+
+              
+            <b-col  @click="cleck_card('adminManageOrder')" class="card">
+            <b-col style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000" >
+             <img style="" src="@/assets/images/shopping.png" alt="">
+            </b-col>
+            <b-col >
+              <span class="txt-title">จัดการ การสั่งซื้อสินค้า</span>
+            </b-col>
+            </b-col>
+
+              
+            <b-col  @click="cleck_card('adminAccounteAccount')" class="card">
+            <b-col style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000" >
+             <img style="" src="@/assets/images/Users-Settings.png" alt="">
+            </b-col>
+            <b-col >
+              <span class="txt-title">การจัดการผู้ใช้งาน</span>
+            </b-col>
+            </b-col>
+
+<!-- 
+            <b-col class="card">จัดการ การสั่งซื้อสินค้า</b-col>
+            <b-col class="card">การจัดการผู้ใช้งาน</b-col> -->
+          </b-row>
+        </b-container>
+
   </div>
+<div class="footer">
+  <footers text="Copyright © 2019 DHA Siamwalla Ltd. All Rights Reserved." />
+</div>
+
+</div>
+
 </template>
 
 <script>
 import Vue from "vue";
+import Footers from '@/components/Footer'
 export default {
   name: 'admin-home',
   data () {
@@ -15,8 +67,14 @@ export default {
    
   },
   watch: {},
-  methods: {},
-  components: {},
+  methods: {
+    cleck_card(param){
+      console.log(param)
+
+      this.$router.push('/'+param)
+    }
+  },
+  components: {Footers},
   created () {
      if (Vue.localStorage.get("login") == null) {
       this.$router.replace("/");
@@ -28,4 +86,13 @@ export default {
   mounted () {}
 }
 </script>
-<style></style>
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   color: white;
+   text-align: center;
+   padding:0 20px 20px 0;
+}</style>

@@ -1,13 +1,14 @@
 <template>
-  <div class="footer-main">Copyright © 2019 DHA Siamwalla Ltd.</div>
+  <div class="footer-main">{{this.text}}</div>
 </template>
 
 <script>
 export default {
   name: 'footers',
-  props: {},
+  props: ["text"],
   data () {
-    return {}
+    return {
+    }
   },
   computed: {},
   methods: {}

@@ -1,13 +1,14 @@
 <template>
   <div id="home-page">
     <order-filter @apply="ApplyFilter"></order-filter>
-    <div>TABLE</div>
+    <detail-table></detail-table>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import OrderFilter from '@/components/filter/OrderFilter'
+import detailTable from '@/components/table/Detail'
 export default {
   name: 'homepage',
   data () {
@@ -30,7 +31,7 @@ export default {
     } else {
     }
   },
-  components: { 'order-filter': OrderFilter },
+  components: { 'order-filter': OrderFilter, 'detail-table': detailTable },
   mounted () {}
 }
 </script>
