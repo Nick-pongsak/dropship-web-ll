@@ -38,7 +38,12 @@ $dark-bg: #0f1022;
 $dark-box: #182037;
 $dark-font-color: #ffffff;
 $dark_sky2: #1e265466;
-$font-sizes: (8px, 10px, 12px, 13px, 14px, 16px, 18px, 20px, 24px, 26px);
+$font-sizes: (8px, 10px, 12px, 13px, 14px, 16px, 18px, 20px, 24px, 26px ,48px);
+
+$font-family: (
+  'Bai Jamjuree', sans-serif , 
+  'Montserrat', sans-serif
+);
 
 // $lang: vue.$i18n[locale];
 $lang: "th";

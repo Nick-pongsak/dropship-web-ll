@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="box-footer">
-             <footers />
+             <footers text="Copyright © 2019 DHA Siamwalla Ltd." />
           </div>
       </div>
     <div
