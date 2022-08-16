@@ -65,8 +65,16 @@
               {{ row.status_order_title }}
             </div>
           </div>
-          <div style="width:33%" class="view-detail">
-            ดูรายละเอียด
+          <div style="width:33%;display:flex">
+            <div class="view-detail">
+              ดูรายละเอียด
+            </div>
+            <v-icon
+              v-if="row.status_order_code == 'delivering'"
+              v-text="expandFilter ? 'mdi-menu-up' : 'mdi-menu-down'"
+              style="color:#000000;cursor:pointer"
+              size="28"
+            ></v-icon>
           </div>
         </div>
       </div>
