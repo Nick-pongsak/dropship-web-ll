@@ -272,6 +272,25 @@
       font-size: 32px;
       font-weight: 500;
     }
+    .smaill-body {
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar:horizontal {
+        height: 8px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #efefef;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background: #d9d9d9;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: rgb(145, 145, 145);
+      }
+    }
     .d-table {
       width: 100%;
       font-size: nth($font-sizes, 6);
@@ -294,10 +313,7 @@
           padding: 14px 22px;
           border: 0.7px solid rgba(0, 0, 0, 0.2);
         }
-        overflow: scroll;
         overflow-x: hidden;
-        height: calc(2em * 5);
-        // height: 200px;
         &::-webkit-scrollbar {
           width: 6px;
         }
@@ -315,7 +331,6 @@
           background: rgb(145, 145, 145);
         }
       }
-      // height: calc(100% - 100px);
     }
   }
 }
