@@ -227,11 +227,95 @@
               text-overflow: ellipsis;
             }
           }
-          &.selected{
-            border: 1px solid #1D4ED8;
+          &.selected {
+            border: 1px solid #1d4ed8;
           }
         }
       }
+    }
+  }
+}
+.v-dialog {
+  &.v-dialog--active {
+    overflow: hidden !important;
+  }
+}
+.v-dialog__content--active {
+  .btn-filter {
+    color: #000000;
+    height: 41px;
+    width: 155px;
+    min-width: 155px;
+    background: #ecf1ff;
+    border: 1px solid #000000;
+    border-radius: 49px;
+    font-weight: 500;
+    font-size: nth($font-sizes, 8);
+    line-height: 36px;
+    text-align: center;
+  }
+  .d-dialog {
+    // padding: 50px;
+    font-family: Bai Jamjuree;
+    color: #000000;
+    .d-dialog-title {
+      padding-right: 20px;
+      font-size: nth($font-sizes, 6);
+      font-weight: 400;
+      &.desc {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .d-dialog-value {
+      font-size: 32px;
+      font-weight: 500;
+    }
+    .d-table {
+      width: 100%;
+      font-size: nth($font-sizes, 6);
+      .d-head {
+        display: flex;
+        width: 100%;
+        font-weight: 500;
+        padding: 8px 20px;
+        background: #ecf1ff;
+        border-radius: 8px;
+      }
+      .d-body {
+        display: block;
+        width: 100%;
+        margin-top: 6px;
+        .d-body-row {
+          display: flex;
+          width: 100%;
+          font-weight: 400;
+          padding: 14px 22px;
+          border: 0.7px solid rgba(0, 0, 0, 0.2);
+        }
+        overflow: scroll;
+        overflow-x: hidden;
+        height: calc(2em * 5);
+        // height: 200px;
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 8px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #efefef;
+        }
+        &::-webkit-scrollbar-thumb {
+          border-radius: 8px;
+          background: #d9d9d9;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgb(145, 145, 145);
+        }
+      }
+      // height: calc(100% - 100px);
     }
   }
 }

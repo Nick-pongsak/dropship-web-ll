@@ -297,7 +297,9 @@
 // import moment from 'moment'
 export default {
   name: 'order-filter',
-  props: {},
+  props: {
+    status: Array
+  },
   data () {
     return {
       expandFilter: true,
@@ -313,14 +315,7 @@ export default {
       startSuccessDelivery: null,
       endSuccessDelivery: null,
       statusInput: 'all',
-      statusList: [
-        { code: 'all', title: 'All' },
-        { code: 'new', title: 'New' },
-        { code: 'accept', title: 'Accept' },
-        { code: 'delivery', title: 'Delivery' },
-        { code: 'delivering', title: 'Delivering' },
-        { code: 'complete', title: 'Complete' }
-      ],
+      statusList: this.status,
       lang: {
         formatLocale: {
           firstDayOfWeek: 1,
