@@ -1,13 +1,13 @@
 <template>
   <div style="color:red" id="maincorp">
-   <h1>Admin Create Account</h1>
+   <h1>User Manage</h1>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 export default {
-  name: 'admin-create-account',
+  name: 'admin-user-manage',
   data () {
     return {}
   },

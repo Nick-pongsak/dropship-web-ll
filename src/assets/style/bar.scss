@@ -1,0 +1,67 @@
+.v-application {
+    #MenuBar{
+    
+    .header-main {
+        width: 100%;
+        position: absolute;
+        height: 60px;
+        left: 0px;
+        top: 0px;
+        background: #000000;
+        display: flex;
+        align-items: center;
+      }
+      
+      .sys-name{
+        color:#fff;
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 24px;
+        line-height: 29px;
+        padding:0 0 0 10px;
+      
+      }
+      .md-overlay{
+        background-color: unset !important;
+      }
+      .option-detail{
+        
+        border-radius: 6px !important;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
+        padding:10px;
+        font-size: 12px !important;
+        align-items: flex-end;
+        /* width: 139px;
+        height: 74px;  */
+      
+      }
+      
+      .md-list-item-button.md-list-item-content{
+        min-height: 10px;
+      }
+      .md-menu-content-container{
+          display: flex; 
+          justify-content: flex-end;
+      }
+      .md-menu-content.md-menu-content-medium {
+          min-width: 139px !important;
+          min-height: 30px !important;
+      }
+      .box-profile{
+        cursor: pointer;
+        width: 131px;
+        height: 31px;
+        background: #FFFFFF;
+        border: 1px solid #000000;
+        border-radius: 64px;
+        align-items: center;
+      }
+      
+      
+      
+}
+}

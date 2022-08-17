@@ -11,7 +11,7 @@
         <b-container class="admin-card bv-example-row">
           <b-row >
 
-            <b-col @click="cleck_card('adminManageProfile')" class="card">
+            <b-col @click="cleck_card('adminProfile')" class="card">
             <b-col style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000" >
              <img style="" src="@/assets/images/accout.png" alt="">
             </b-col>
@@ -31,7 +31,7 @@
             </b-col>
 
               
-            <b-col  @click="cleck_card('adminAccounteAccount')" class="card">
+            <b-col  @click="cleck_card('AdminUserManage')" class="card">
             <b-col style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000" >
              <img style="" src="@/assets/images/Users-Settings.png" alt="">
             </b-col>
@@ -76,11 +76,16 @@ export default {
   },
   components: {Footers},
   created () {
-     if (Vue.localStorage.get("login") == null) {
+    var user_info = Vue.localStorage.get('user_profile')
+    var TheArray = JSON.parse(user_info)
+    console.log(TheArray)
+     if (Vue.localStorage.get("login") == null && TheArray == null  ) {
       this.$router.replace("/");
-    } else {
+    } else if(TheArray.type == 'admin') {
 
 
+    }else {
+       this.$router.replace("/");
     }
   },
   mounted () {}
