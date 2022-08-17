@@ -8,7 +8,7 @@
             }" class="left">
 
 
-<b-container class="box-profile accentbv-example-row">
+<b-container style="font-family:'Bai Jamjuree', sans-serif " class=" accentbv-example-row">
       <b-row >
         <b-col  style="" xl>
         <div class="btn-filter">Profile</div>

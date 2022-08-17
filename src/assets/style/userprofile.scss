@@ -45,8 +45,11 @@
           height: 80%;
           background-color: #EFF6FF;
           display: flex;
-          overflow: scroll;
+          overflow-y: scroll;
         //   align-items: center;
+
+
+
 
         .md-layout{
             align-items: center;

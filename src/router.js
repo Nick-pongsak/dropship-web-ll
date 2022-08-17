@@ -6,6 +6,8 @@ import DefaultLayout from '@/views/Default.vue'
 import ForgotPassword from '@/views/ForgotPassword.vue'
 import UserProfile from '@/views/UserProfile.vue'
 
+import Logout from '@/views/Logout.vue'
+
 // ADMIN
 import AdminHome from '@/views/AdminHome.vue'
 import AdminProfileManage from '@/views/AdminProfileManage.vue'
@@ -63,6 +65,11 @@ export default new Router({
         {
           path: "/adminAccounteAccount",
           component: AdminAccounteManage,
+          
+        },
+        {
+          path: "/logout",
+          component: Logout,
           
         },
         

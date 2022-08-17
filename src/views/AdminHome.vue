@@ -76,11 +76,16 @@ export default {
   },
   components: {Footers},
   created () {
-     if (Vue.localStorage.get("login") == null) {
+    var user_info = Vue.localStorage.get('user_profile')
+    var TheArray = JSON.parse(user_info)
+    console.log(TheArray)
+     if (Vue.localStorage.get("login") == null && TheArray == null  ) {
       this.$router.replace("/");
-    } else {
+    } else if(TheArray.type == 'admin') {
 
 
+    }else {
+       this.$router.replace("/");
     }
   },
   mounted () {}

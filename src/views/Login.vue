@@ -128,16 +128,30 @@ export default {
 
           if(this.username == 'test' && this.password == '1234'){
           // this.$store.dispatch("loginService");
-          this.wrong = false
-        let user_profile = {
-          frist_name :"Prayut",
-          last_name:'chan-o-cha'
-        }
-          Vue.localStorage.set("login",'true')
-          Vue.localStorage.set("user_profile",JSON.stringify(user_profile))
+           this.wrong = false
+              let user_profile = {
+                frist_name :"User",
+                last_name:'Test',
+                token:'...',
+                type:'user'
+              }
+            Vue.localStorage.set("login",'true')
+            Vue.localStorage.set("user_profile",JSON.stringify(user_profile))
+            // Vue.localStorage.set("TYPE_USER",'user')
             this.$router.push('/' + 'home')
+          }else if(this.username == 'admin' && this.password == 'admin') {
+             let admin_profile = {
+                frist_name :"Admin",
+                last_name:'Test',
+                token:'...',
+                type:'admin'
+              }
+            Vue.localStorage.set("login",'true')
+            Vue.localStorage.set("user_profile",JSON.stringify(admin_profile))
+            // Vue.localStorage.set("TYPE_USER",'admin')
+            this.$router.push('/' + 'admin')
           }else {
-            this.wrong = true
+             this.wrong = true
           }
       }
     
