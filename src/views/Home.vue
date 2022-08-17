@@ -12,6 +12,8 @@
       :data="selectedRow"
       :show="showDialog"
       @close="closeDialog"
+      @submit="submitDialog"
+      @print="printDialog"
     ></detail-dialog>
   </div>
 </template>
@@ -28,7 +30,16 @@ export default {
       data: [],
       status: [],
       selectedRow: {},
-      showDialog: false
+      showDialog: false,
+      statusList: [
+        { code: 'all', title: 'All' },
+        { code: 'new', title: 'New' },
+        { code: 'accept', title: 'Accept' },
+        { code: 'delivery', title: 'Delivery' },
+        { code: 'delivering', title: 'Delivering' },
+        { code: 'complete', title: 'Complete' },
+        { code: 'cancel', title: 'Cancel' }
+      ]
     }
   },
   computed: {
@@ -50,6 +61,20 @@ export default {
       this.showDialog = false
       console.log('closeDialog ==> ', val)
     },
+    printDialog (val) {
+      // this.showDialog = false
+      console.log('printDialog ==> ', val)
+    },
+    submitDialog (val) {
+      // this.showDialog = false
+      if (val == 'print') {
+      } else {
+        this.selectedRow.status_order_code = val
+        let status = this.statusList.filter(a => a.code == val)
+        this.selectedRow.status_order_title =
+          status.length > 0 ? status[0].title : ''
+      }
+    },
     submitAction (val) {
       console.log('submitAction ==> ', val)
     },
@@ -58,15 +83,6 @@ export default {
     },
     fetch () {
       let arr = []
-      let statusList = [
-        { code: 'all', title: 'All' },
-        { code: 'new', title: 'New' },
-        { code: 'accept', title: 'Accept' },
-        { code: 'delivery', title: 'Delivery' },
-        { code: 'delivering', title: 'Delivering' },
-        { code: 'complete', title: 'Complete' },
-        { code: 'cancel', title: 'Cancel' }
-      ]
       for (let i = 0; i < 13; i++) {
         let random = Math.floor(Math.random() * 6)
         random = random == 0 ? 1 : random
@@ -76,8 +92,8 @@ export default {
           order_date: '2022-09-02',
           delivery_date: '2022-05-15',
           delivery_success: '2022-11-02',
-          status_order_code: statusList[random].code,
-          status_order_title: statusList[random].title,
+          status_order_code: this.statusList[random].code,
+          status_order_title: this.statusList[random].title,
           customer_address:
             'เลขที่ 50 ถนนงามวงศ์วาน แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900',
           customer_tel: '0-2649-5000',
@@ -146,7 +162,7 @@ export default {
         })
       }
       this.data = arr
-      this.status = statusList
+      this.status = this.statusList
     }
   },
   created () {

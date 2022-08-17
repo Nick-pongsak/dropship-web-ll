@@ -1,6 +1,6 @@
 <template>
   <div v-resize="onResize">
-    <v-dialog v-model="show" width="1020" id="detail-dialog">
+    <v-dialog v-model="dialog" width="1020" id="detail-dialog">
       <v-card>
         <div
           class="d-dialog"
@@ -287,7 +287,9 @@
                     v-for="(row, index) in data.items"
                     :key="index + row.sku"
                     :style="{
-                      'border-radius': renderBorder(index)
+                      'border-radius': renderBorder(index),
+                      'border-top':
+                        index == 0 ? '0.7px solid rgba(0, 0, 0, 0.2)' : ''
                     }"
                   >
                     <div style="width:5%">{{ index + 1 }}</div>
@@ -300,13 +302,84 @@
               </div>
             </div>
           </div>
+          <div class="d-dialog-action">
+            <div
+              @click="printIcon()"
+              style="padding-right:25px;padding-top:8px"
+              v-if="data.status_order_code == 'delivery'"
+            >
+              <v-icon
+                v-text="'mdi-printer'"
+                style="color:#000000;cursor:pointer"
+                size="20"
+              ></v-icon>
+            </div>
+            <v-btn
+              rounded
+              @click="accept()"
+              class="ok"
+              v-if="renderBtn() !== ''"
+              >{{ renderBtn() }}</v-btn
+            >
+          </div>
         </div>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="close()">
-            I accept
-          </v-btn>
-        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog
+      v-model="confirmDialog"
+      max-width="500"
+      :width="data.status_order_code == 'delivering' ? 600 : 500"
+    >
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:center">
+              <img
+                v-if="confirmPrint"
+                class="img"
+                src="@/assets/images/other.png"
+              />
+              <img v-else class="img" src="@/assets/images/confrim.png" />
+            </div>
+            <div style="padding:0px 20px">{{ confirmText }}</div>
+          </div>
+          <div class="bg-confirm-action">
+            <div
+              class="bg-confirm-action-action"
+              :style="{
+                display: windowSize < 600 ? 'grid' : 'flex'
+              }"
+              v-if="data.status_order_code == 'delivering'"
+            >
+              <div
+                style="display:flex;margin-right:25px"
+                @click="ratio('customer')"
+              >
+                <div
+                  :class="radio == 'customer' ? 'd-ratio selected' : 'd-ratio'"
+                ></div>
+                <div class="d-v-label">พัสดุการนำจ่ายถึงลูกค้า</div>
+              </div>
+              <div style="display:flex" @click="ratio('supply')">
+                <div
+                  :class="radio == 'supply' ? 'd-ratio selected' : 'd-ratio'"
+                ></div>
+                <div class="d-v-label">พัสดุส่งกลับผู้ขาย</div>
+              </div>
+            </div>
+            <div>
+              <v-btn
+                rounded
+                @click="submit()"
+                class="ok"
+                style="margin-right:45px"
+                >{{ confirmBtn }}</v-btn
+              >
+              <v-btn rounded @click="cancel()" class="clear">ไม่</v-btn>
+            </div>
+          </div>
+        </div>
       </v-card>
     </v-dialog>
   </div>
@@ -317,15 +390,19 @@ export default {
   name: 'detail-dialog',
   props: {
     data: Object,
-    show: Boolean
-
-    // status: Array
-    // device: String
+    show: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
       windowSize: 1366,
-      dataPage: this.data,
+      confirmText: '',
+      confirmBtn: '',
+      confirmDialog: false,
+      confirmPrint: false,
+      radio: 'customer',
       monthsShort: [
         'ม.ค.',
         'ก.พ.',
@@ -342,13 +419,38 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    dialog: {
+      get () {
+        return this.show
+      },
+      set (value) {
+        this.close()
+      }
+    }
+  },
   watch: {},
   methods: {
+    ratio (val) {
+      this.radio = val
+    },
+    renderBtn () {
+      if (this.data.status_order_code == 'new') {
+        return 'Accept'
+      } else if (this.data.status_order_code == 'accept') {
+        return 'Delivery'
+      } else if (this.data.status_order_code == 'delivery') {
+        return 'Delivering'
+      } else if (this.data.status_order_code == 'delivering') {
+        return 'Complete'
+      } else {
+        return ''
+      }
+    },
     renderBorder (index) {
       if (index == 0) {
         return '8px 8px 0px 0px'
-      } else if (index == this.data.items.length) {
+      } else if (index == this.data.items.length - 1) {
         return '0px 0px 8px 8px'
       } else {
         return '0px'
@@ -365,11 +467,70 @@ export default {
     close () {
       this.$emit('close', {})
     },
-    view (row) {
-      this.$emit('view', row)
+    accept () {
+      this.confirmPrint = false
+      if (this.data.status_order_code == 'new') {
+        this.confirmText = 'คุณต้องการยืนยันรายการเป็นสถานะ Accept ใช่หรือไม่ ?'
+      } else if (this.data.status_order_code == 'accept') {
+        this.confirmText =
+          'คุณต้องการยืนยันรายการเป็นสถานะ Delivery ใช่หรือไม่ ?'
+      } else if (this.data.status_order_code == 'delivery') {
+        this.confirmText =
+          'คุณต้องการยืนยันรายการเป็นสถานะ Delivering ใช่หรือไม่ ?'
+      } else if (this.data.status_order_code == 'delivering') {
+        this.confirmText = 'การจัดส่งพัสดุสำเร็จ'
+      } else {
+        this.confirmText = ''
+      }
+
+      this.confirmBtn = 'ใช่'
+      this.confirmDialog = true
     },
-    print (row) {
-      this.$emit('print', row)
+    submit () {
+      let process = ''
+      if (this.data.status_order_code == 'new') {
+        process = 'accept'
+      } else if (this.data.status_order_code == 'accept') {
+        process = 'delivery'
+      } else if (
+        this.data.status_order_code == 'delivery' &&
+        !this.confirmPrint
+      ) {
+        process = 'delivering'
+      } else if (
+        this.data.status_order_code == 'delivery' &&
+        this.confirmPrint
+      ) {
+        process = 'print'
+      } else if (
+        this.data.status_order_code == 'delivering' &&
+        this.radio !== null
+      ) {
+        process = 'complete'
+      } else {
+        process = ''
+      }
+      if (process != '') {
+        this.confirmDialog = false
+        this.$emit('submit', process)
+      }
+    },
+    printIcon () {
+      this.confirmPrint = true
+      this.confirmBtn = 'ใช่'
+      this.confirmText = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
+      this.confirmDialog = true
+    },
+    print () {
+      this.confirmPrint = false
+      this.confirmDialog = false
+      this.$emit('print', {})
+    },
+    cancel () {
+      this.confirmText = ''
+      this.confirmBtn = ''
+      this.confirmDialog = false
+      this.confirmPrint = false
     },
     onResize () {
       let x = window.innerWidth
