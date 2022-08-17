@@ -10,9 +10,10 @@ import Logout from '@/views/Logout.vue'
 
 // ADMIN
 import AdminHome from '@/views/AdminHome.vue'
-import AdminProfileManage from '@/views/AdminProfileManage.vue'
 import AdminOrdereManage from '@/views/AdminOrderManage.vue'
-import AdminAccounteManage from '@/views/AdminAccountManage.vue'
+import AdminUserManage from '@/views/AdminUserManage.vue'
+import AdminProfile from '@/views/AdminProfile.vue'
+
 
 
 Vue.use(Router)
@@ -48,13 +49,8 @@ export default new Router({
         },
         ,
         {
-          path: "/admin",
+          path: "/adminHome",
           component: AdminHome,
-          
-        },
-        {
-          path: "/adminManageProfile",
-          component: AdminProfileManage,
           
         },
         {
@@ -63,8 +59,13 @@ export default new Router({
           
         },
         {
-          path: "/adminAccounteAccount",
-          component: AdminAccounteManage,
+          path: "/AdminUserManage",
+          component: AdminUserManage,
+          
+        },
+        {
+          path: "/adminProfile",
+          component: AdminProfile,
           
         },
         {

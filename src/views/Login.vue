@@ -139,7 +139,7 @@ export default {
             Vue.localStorage.set("user_profile",JSON.stringify(user_profile))
             // Vue.localStorage.set("TYPE_USER",'user')
             this.$router.push('/' + 'home')
-          }else if(this.username == 'admin' && this.password == 'admin') {
+          }else if(this.username == 'admin' && this.password == '1234') {
              let admin_profile = {
                 frist_name :"Admin",
                 last_name:'Test',
@@ -149,7 +149,7 @@ export default {
             Vue.localStorage.set("login",'true')
             Vue.localStorage.set("user_profile",JSON.stringify(admin_profile))
             // Vue.localStorage.set("TYPE_USER",'admin')
-            this.$router.push('/' + 'admin')
+            this.$router.push('/' + 'adminHome')
           }else {
              this.wrong = true
           }

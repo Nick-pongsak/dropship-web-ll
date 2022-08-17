@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index:1" class="header-main">
+  <div style="z-index:1" id="MenuBar" class="header-main">
      
     <div style="width:50%;display:flex;">
       <img src="@/assets/icons/logo.png" :style="{ height: logo , width: width }" />
@@ -33,29 +33,36 @@
            
         </md-button>
       <!-- <md-button class="box-profile" style="text-transform:none" md-menu-trigger>{{info.frist_name}}{{' '}}{{info.last_name}}<span class="mdi mdi-menu-down"></span></md-button> -->
-      <md-menu-content class="option-detail" >
-        <md-menu-item @click="user_profile" style="background-color:red;cursor: pointer;border-radius:5px;">Setting Profile </md-menu-item>
-        <md-menu-item @click="logout" style="cursor: pointer;">Log Out</md-menu-item>
+      <md-menu-content  class="option-detail">
+          <md-menu-item @click="action('adminHome')" 
+            :style="{'background-color':active_menu('adminHome') ? '#2372E7': '' ,'color':active_menu('adminHome') ? '#fff': '' }"  
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"> HOME 
+          </md-menu-item>
+
+          <md-menu-item @click="action('AdminUserManage')" 
+            :style="{'background-color':active_menu('AdminUserManage') ? '#2372E7': '' ,'color':active_menu('AdminUserManage') ? '#fff': '' }"  
+             style="font-family: 'Bai Jamjuree', sans-serif;color:#fff;background-color: #2372E7;cursor: pointer;border-radius:5px;"> User management
+          </md-menu-item>
+
+          <md-menu-item @click="action('adminManageOrder')" 
+            :style="{'background-color':active_menu('adminManageOrder') ? '#2372E7': '' ,'color':active_menu('adminManageOrder') ? '#fff': '' }"  
+             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"> Order management
+          </md-menu-item>
+
+          <md-menu-item @click="action('adminProfile')" 
+            :style="{'background-color':active_menu('adminProfile') ? '#2372E7': '' ,'color':active_menu('adminProfile') ? '#fff': '' }"  
+             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"> Account management
+          </md-menu-item>
+
+          <md-menu-item @click="logout" style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;">Log Out</md-menu-item>
       </md-menu-content>
     </md-menu>
-        <!-- <div  @click="logout" class="md-layout box-profile">
-            <div style="text-align: center;width:55%;color:#000">{{info.frist_name}}</div>
-            <div style="width:25%;color:#000"><span class="mdi mdi-account-circle mdi-24px"></span></div>
-            <div style="text-align: center;width:20%;color:#000"><span class="mdi mdi-menu-down mdi-24px"></span></div>
-        </div> -->
     </div>
-    <!-- <md-dialog-confirm
-      :md-active.sync="active"
-      md-title="Do you want to log out?"
-      md-content="Log out of Dropship Portal."
-      md-confirm-text="Yes"
-      md-cancel-text="Cancel"
-      @md-cancel="onCancel"
-      @md-confirm="onConfirm" /> -->
   </div>
 </template>
 
 <script>
+import { equal } from "assert";
 import Vue from "vue";
 export default {
   name: 'headers',
@@ -68,21 +75,6 @@ export default {
       resizeHeader: true,
       active: false,
       value: null,
-      // items: ['HOME', 'User management', 'Order management', 'Account management'],
-      selectedItem: 1,
-      items: [
-        { text: 'Real-Time', icon: 'mdi-clock' },
-        { text: 'Audience', icon: 'mdi-account' },
-        { text: 'Conversions', icon: 'mdi-flag' },
-      ],
-        statusList: [
-        { code: 'all', title: 'All' },
-        { code: 'new', title: 'New' },
-        { code: 'accept', title: 'Accept' },
-        { code: 'delivery', title: 'Delivery' },
-        { code: 'delivering', title: 'Delivering' },
-        { code: 'complete', title: 'Complete' }
-      ],
     }
   },
   watch: {},
@@ -117,9 +109,17 @@ export default {
     changeTheme (val) {
       this.$store.commit('SetTheme', val)
     },
-    goHome () {
-      if (this.$router.app._route.path !== '/home') {
-        this.$router.push('/home')
+    action (param) {
+        this.$router.push('/'+param)
+    },
+    active_menu(param){
+
+       let path = this.$router.app._route.path;
+       const sliceWay = path.slice(1)
+      if(sliceWay === param){
+        return true
+      }else {
+        false
       }
     },
     logout(){
@@ -160,7 +160,9 @@ export default {
   display: flex;
   align-items: center;
 
+  
 }
+
 .sys-name{
   color:#fff;
   height: 100%;
@@ -176,6 +178,7 @@ export default {
   background-color: unset !important;
 }
 .option-detail{
+  
   border-radius: 6px !important;
   background: #FFFFFF;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
@@ -187,13 +190,17 @@ export default {
   height: 74px;  */
 
 }
+
+.md-list-item-button.md-list-item-content{
+  min-height: 10px;
+}
 .md-menu-content-container{
     display: flex; 
     justify-content: flex-end;
 }
 .md-menu-content.md-menu-content-medium {
     min-width: 139px !important;
-    min-height: 74px !important;
+    min-height: 30px !important;
 }
 .box-profile{
   cursor: pointer;
@@ -204,5 +211,7 @@ export default {
   border-radius: 64px;
   align-items: center;
 }
+
+
 
   </style>
