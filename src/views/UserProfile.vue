@@ -6,8 +6,213 @@
             display: windowSize <= 600 ? '' : 'flex' ,
             width: windowSize <= 600 ? '100%' : '65%'
             }" class="left">
+       <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
+        <b-row style="margin-top:10px;" >
+          <b-col  style="" xl>
+          <div class="btn-filter">Profile</div>
+          </b-col>
+        </b-row>
 
-      <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
+          <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">Supplier ID</div>
+                <div class="detail" style="">{{this.profile.sup_id}}</div>
+              </div>
+            </b-col>
+            <b-col xl v-if="windowSize > 1200"></b-col>
+      </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">อีเมล <span style="color:red">*</span></div>
+              <div class="detail">
+                <input 
+                @input="checkFormat"
+                :style="{
+                  'border':this.wrong.invalid_email ? '2px solid red': '',
+                  'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                :disabled="isDisabled || input_cheang_password" v-model="profile.email"  class="input-style">
+              <div v-if="this.wrong.invalid_email" class="txt-wrong"><span class="mdi mdi-alert-octagon"></span>Please enter  a valid  email  address</div>
+            
+            </div>
+            </div>
+        </b-col>
+         <b-col> 
+          <div class="md-layout">
+              <div class="head">ชื่อบริษัท <span style="color:red">*</span></div>
+              <div class="detail">
+                <input 
+                :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                :disabled="isDisabled || input_cheang_password" v-model="profile.company" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+
+             <div v-if="!input_cheang_password" class="md-layout">
+              <div class="head">รหัสผ่าน <span style="color:red">*</span></div>
+              <div class="detail">
+                <md-field :md-toggle-password="false" :style="{'background-color':isDisabled? '#DADADA':'#fff'}" class="input-style"  style="min-height:34px ;margin:0;top:0 ; left:0" >
+                    <md-input  :disabled="true" class="input-style"   :type="type_password" v-model="profile.password"></md-input>
+                <div v-if="isDisabled ">
+                  <span v-if=" type_password == 'password'" style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('password')"  class="md-suffix mdi mdi-eye-off"></span>
+                  <span v-else style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('password')" class="md-suffix mdi mdi-eye"></span>
+                 </div>
+
+                 <div style="display: flex;"  v-else>
+                  <span @click="cheang_password" style="display: flex;padding:0 10px 0 0;font-size:12px;align-items: center;cursor: pointer;" >เปลี่ยน</span>
+                 </div>
+                </md-field>
+                
+               </div>
+            </div>
+           <div v-else class="md-layout">
+              <div class="head">รหัสผ่านปัจจุบัน <span style="color:red">*</span></div>
+              <div class="detail">
+                <md-field :md-toggle-password="false" :style="{'background-color':'#fff'}" class="input-style"  style="min-height:34px ;margin:0;top:0 ; left:0" >
+                    <md-input autocomplete="off"  class="input-style" type="text" v-model="profile.use_password"></md-input>
+                </md-field>
+               </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์<span style="color:red">*</span></div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                :disabled="isDisabled || input_cheang_password" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div v-if="input_cheang_password"  class="md-layout">
+              <div class="head">รหัสผ่านใหม่ <span style="color:red">*</span></div>
+              <div class="detail">
+
+                 <md-field :md-toggle-password="false" :style="{'background-color':'#fff'}" class="input-style"  style="min-height:34px ;margin:0;top:0 ; left:0" >
+                    <md-input  class="input-style"   :type="type_new_password" v-model="profile.new_password"></md-input>
+                <div v-if="profile.new_password != ''">
+                  <span v-if=" type_new_password == 'password'" style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('newPassword')"  class="md-suffix mdi mdi-eye-off"></span>
+                  <span v-else style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('newPassword')" class="md-suffix mdi mdi-eye"></span>
+                 </div>
+                </md-field>
+              </div>
+            </div>
+            <div v-else class="md-layout">
+              <div class="head">ชื่อ <span style="color:red">*</span></div>
+              <div class="detail">
+                 <input 
+                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                 :disabled="isDisabled || input_cheang_password" v-model="profile.first_name" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์สำรอง</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                :disabled="isDisabled || input_cheang_password" v-model="profile.tel2" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+            <div v-if="input_cheang_password" class="md-layout">
+              <div class="head">ยืนยันรหัสผ่าน <span style="color:red">*</span></div>
+              <div class="detail">
+
+                 <md-field :md-toggle-password="false" :style="{'background-color':isDisabled? '#DADADA':'#fff'}" class="input-style"  style="min-height:34px ;margin:0;top:0 ; left:0" >
+                    <md-input  class="input-style"   :type="type_confrim_new_password" v-model="profile.confrim_new_password"></md-input>
+                <div v-if="profile.confrim_new_password != ''">
+                  <span v-if=" type_confrim_new_password == 'password'" style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('confrimNewPassword')"  class="md-suffix mdi mdi-eye-off"></span>
+                  <span v-else style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('confrimNewPassword')" class="md-suffix mdi mdi-eye"></span>
+                 </div>
+                </md-field>
+                 </div>
+            </div>
+            <div v-else class="md-layout">
+              <div class="head">นามสกุล <span style="color:red">*</span></div>
+              <div class="detail">
+                 <input 
+                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                 :disabled="isDisabled || input_cheang_password" v-model="profile.last_name" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div style="display: flex;align-items: flex-start;" class="md-layout">
+              <div  class="head">ที่อยู่ <span style="color:red">*</span></div>
+                <div class="detail" >
+                  <textarea :disabled="true" :style="{'background-color':'#DADADA'}" :value="profile.address" style="border-radius: 8px;min-height:100px;width: 100%;padding:5px;"   name="w3review" rows="4">
+                
+                  </textarea>
+                    <!-- <input
+                    style="height:100px" 
+                    :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                    :disabled="isDisabled" v-model="profile.address" class="input-style"> -->
+                </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+             <div v-if="input_cheang_password" class="md-layout">
+              <div class="head">ชื่อ <span style="color:red">*</span></div>
+              <div class="detail">
+                 <input 
+                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                 :disabled="isDisabled || input_cheang_password" v-model="profile.last_name" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <!-- <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div> -->
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col xl>
+             <div v-if="input_cheang_password" class="md-layout">
+              <div class="head">นามสกุล <span style="color:red">*</span></div>
+              <div class="detail">
+                 <input 
+                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
+                 :disabled="isDisabled || input_cheang_password" v-model="profile.last_name" class="input-style">
+              </div>
+            </div>
+          </b-col>
+          <b-col  
+              style="
+              display: flex;
+              justify-content: flex-end;" xl>
+              <div v-if="!isDisabled" @click="cancel" style="cursor: pointer;padding:0 10px 0 0;display: flex;align-items: center;">ยกเลิก</div>
+                <v-btn v-if="isDisabled" rounded class="ok" @click="edit()"> แก้ไข</v-btn>
+                <v-btn v-else rounded class="ok" @click="save()">บันทึก</v-btn>
+          </b-col>
+        </b-row>
+       </b-container>
+      <!-- <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
       <b-row >
         <b-col  style="" xl>
         <div class="btn-filter">Profile</div>
@@ -165,7 +370,7 @@
               <v-btn v-else rounded class="ok" @click="save()">บันทึก</v-btn>
         </b-col>
       </b-row>
-      </b-container>
+      </b-container> -->
       <!-- DIALOG 1 -->
         <v-dialog
             v-model="dialog"
@@ -283,8 +488,13 @@ export default {
         first_name:'Yuki',
         last_name:'Yoshihisa',
         tel:'81620943322',
-        company:'Uni Mitsubushi Pencil Official'
+        tel2:'',
+        company:'Uni Mitsubushi Pencil Official',
+        address:'29/1 อาคารปิยะเพลส หลังสวน ชั้น 7 ยูนิต 7ซี ซอยหลังสวน ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพมหานคร 10330'
       },
+      wrong:{
+        invalid_email:false
+      }
      
      
     }
@@ -308,7 +518,13 @@ export default {
       this.isDisabled = false
     },
     save(){
-      this.dialog_save = true
+      if(this.FormatEmail()){
+          this.dialog_save = true
+          console.log('=> Save')
+      }else {
+        console.log('อีเมลไม่ถูกต้อง')
+      }
+     
       console.log('save')
     },
     cancel(){
@@ -352,11 +568,37 @@ export default {
             this.profile.new_password = ''
         }else if(param === 'success') {
           this.dialog_save = false
-          this.$router.replace("/logout");
         }else {
-
         }
-    }
+    },
+    checkFormat(){
+       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.profile.email)) {
+            console.log('Yes')
+          } else {
+            console.log('No')
+          }
+    },
+    FormatEmail( ){
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.profile.email)) {
+           this.wrong.invalid_email = false
+           this.setDefault()
+           return true
+          } else {
+            this.wrong.invalid_email = true
+            return false
+          }
+    },
+    setDefault(){
+
+      this.isDisabled=true
+      this.dialog=false
+      this.dialog_save=false
+      this.input_cheang_password=false
+      this.type_password='password'
+      this.type_new_password='password'
+      this.type_confrim_new_password='password'
+
+    },
   },
   components: {},
   created () {
