@@ -1,9 +1,9 @@
 <template>
   <div style="z-index:1" id="MenuBar" class="header-main">
      
-    <div style="width:50%;display:flex;">
+    <div  style="cursor: pointer;width:50%;display:flex;">
       <img src="@/assets/icons/logo.png" :style="{ height: logo , width: width }" />
-      <div class="sys-name" :style="{ 'font-size': sysName }">
+      <div @click="action('home')" class="sys-name" :style="{ 'font-size': sysName }">
         Dropship portal
       </div>
     </div>
