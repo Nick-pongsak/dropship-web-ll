@@ -1,87 +1,150 @@
 <template>
-  <div v-resize="onResize">
-    <v-dialog v-model="dialog" width="1020" id="detail-dialog">
-      <v-card>
+  <div v-resize="onResize" id="detail-dialog">
+    <div
+      class="d-dialog"
+      :style="{
+        padding: windowSize < 600 ? '0px 5px 10px 0px' : '15px 15px 15px 15px'
+      }"
+    >
+      <div style="width:100%;display:flex">
         <div
-          class="d-dialog"
-          :style="{ padding: windowSize < 600 ? '5px' : '50px' }"
+          :style="{
+            padding: windowSize < 600 ? '10px 10px 0px 10px' : '0px',
+            width: '70%'
+          }"
         >
-          <div style="width:100%;display:flex">
-            <div
-              :style="{
-                padding: windowSize < 600 ? '10px 10px 0px 10px' : '0px',
-                width: '70%'
-              }"
-            >
-              <div class="btn-filter">Order Detail</div>
-            </div>
-            <div style="text-align:end;width:30%" @click="close()">
-              <v-icon
-                v-text="'mdi-close'"
-                style="color:#000000;cursor:pointer"
-                size="24"
-              ></v-icon>
-            </div>
-          </div>
+          <div class="btn-filter">Order Detail</div>
+        </div>
+        <div
+          :style="{
+            padding: windowSize < 600 ? '15px 2px 0px 0px' : '5px 5px 0px 0px',
+            'text-align': 'end',
+            width: '30%'
+          }"
+          @click="close()"
+        >
+          <v-icon
+            v-text="'mdi-close'"
+            style="color:#000000;cursor:pointer"
+            size="24"
+          ></v-icon>
+        </div>
+      </div>
+      <div class="smaill-body">
+        <div style="width:100%;padding:13px 0px 10px 20px">
+          <div class="d-dialog-title">หมายเลขคำสั่งซื้อ</div>
+          <div class="d-dialog-value">{{ data.order_no }}</div>
+        </div>
+        <div style="width:100%;padding:0px 20px">
+          <!------------------>
           <div
-            class="smaill-body"
             :style="{
-              'overflow-y': windowSize < 600 ? 'scroll' : 'hidden',
-              height: windowSize < 600 ? 'calc(7em * 5)' : ''
+              width: '100%',
+              display: windowSize < 600 ? '' : 'flex'
             }"
           >
-            <div style="width:100%;padding:25px 20px 20px 20px">
-              <div class="d-dialog-title">หมายเลขคำสั่งซื้อ</div>
-              <div class="d-dialog-value">{{ data.order_no }}</div>
-            </div>
-            <div style="width:100%;padding:0px 20px">
-              <!------------------>
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex',
+                'padding-bottom': windowSize < 600 ? '0px' : '0px'
+              }"
+            >
               <div
+                class="d-dialog-title"
                 :style="{
-                  width: '100%',
-                  display: windowSize < 600 ? '' : 'flex'
+                  width: windowSize < 600 ? '40%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                <div
-                  :style="{
-                    width: windowSize < 600 ? '100%' : '50%',
-                    display: windowSize < 600 ? 'flex' : 'flex',
-                    'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                  }"
-                >
+                ชื่อลูกค้า
+              </div>
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '60%' : '70%',
+                  'padding-bottom': windowSize < 600 ? '0px' : '0px',
+                  'padding-right': windowSize < 600 ? '10px' : '0px'
+                }"
+              >
+                {{ data.customer_name }}
+              </div>
+            </div>
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex'
+              }"
+            >
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '40%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                }"
+              >
+                วันที่สั่งซื้อ
+              </div>
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '60%' : '70%'
+                }"
+              >
+                {{ formatDate(data.order_date) }}
+              </div>
+            </div>
+          </div>
+          <!------------------>
+          <div
+            :style="{
+              width: '100%',
+              'padding-top': '6px',
+              display: windowSize < 600 ? '' : 'flex'
+            }"
+          >
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex',
+                'padding-bottom': windowSize < 600 ? '0px' : '0px'
+              }"
+            >
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '40%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                }"
+              >
+                ที่อยู่
+              </div>
+              <div
+                :class="'d-dialog-title'"
+                :style="{
+                  width: windowSize < 600 ? '60%' : '70%',
+                  'padding-bottom': windowSize < 600 ? '5px' : '0px'
+                }"
+              >
+                {{ data.customer_address }}
+              </div>
+            </div>
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? '' : 'flex'
+              }"
+            >
+              <div style="width:100%">
+                <div style="width:100%;display:flex">
                   <div
-                    class="d-dialog-title"
+                    class="d-dialog-title desc"
                     :style="{
                       width: windowSize < 600 ? '40%' : '30%',
-                      'padding-bottom': windowSize < 600 ? '10px' : '0px'
-                    }"
-                  >
-                    ชื่อลูกค้า
-                  </div>
-                  <div
-                    class="d-dialog-title"
-                    :style="{
-                      width: windowSize < 600 ? '60%' : '70%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
                     }"
                   >
-                    {{ data.customer_name }}
-                  </div>
-                </div>
-                <div
-                  :style="{
-                    width: windowSize < 600 ? '100%' : '50%',
-                    display: windowSize < 600 ? 'flex' : 'flex'
-                  }"
-                >
-                  <div
-                    class="d-dialog-title"
-                    :style="{
-                      width: windowSize < 600 ? '40%' : '30%',
-                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                    }"
-                  >
-                    วันที่สั่งซื้อ
+                    วันที่จัดส่ง
                   </div>
                   <div
                     class="d-dialog-title"
@@ -89,242 +152,259 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ formatDate(data.order_date) }}
+                    {{ formatDate(data.delivery_date) }}
                   </div>
                 </div>
-              </div>
-              <!------------------>
-              <div
-                :style="{
-                  width: '100%',
-                  'padding-top': '10px',
-                  display: windowSize < 600 ? '' : 'flex'
-                }"
-              >
-                <div
-                  :style="{
-                    width: windowSize < 600 ? '100%' : '50%',
-                    display: windowSize < 600 ? 'flex' : 'flex',
-                    'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                  }"
-                >
+                <div style="width:100%;display:flex;padding-top:7px">
                   <div
-                    class="d-dialog-title"
+                    class="d-dialog-title desc"
                     :style="{
                       width: windowSize < 600 ? '40%' : '30%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
                     }"
                   >
-                    ที่อยู่
-                  </div>
-                  <div
-                    :class="
-                      windowSize < 600
-                        ? 'd-dialog-title desc'
-                        : 'd-dialog-title'
-                    "
-                    :style="{
-                      width: windowSize < 600 ? '60%' : '70%',
-                      'padding-bottom': windowSize < 600 ? '5px' : '0px'
-                    }"
-                  >
-                    {{ data.customer_address }}
-                  </div>
-                </div>
-                <div
-                  :style="{
-                    width: windowSize < 600 ? '100%' : '50%',
-                    display: windowSize < 600 ? '' : 'flex'
-                  }"
-                >
-                  <div style="width:100%">
-                    <div style="width:100%;display:flex">
-                      <div
-                        class="d-dialog-title desc"
-                        :style="{
-                          width: windowSize < 600 ? '40%' : '30%',
-                          'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                        }"
-                      >
-                        วันที่จัดส่ง
-                      </div>
-                      <div
-                        class="d-dialog-title"
-                        :style="{
-                          width: windowSize < 600 ? '60%' : '70%'
-                        }"
-                      >
-                        {{ formatDate(data.delivery_date) }}
-                      </div>
-                    </div>
-                    <div style="width:100%;display:flex;padding-top:10px">
-                      <div
-                        class="d-dialog-title desc"
-                        :style="{
-                          width: windowSize < 600 ? '40%' : '30%',
-                          'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                        }"
-                      >
-                        วันที่ส่งสำเร็จ
-                      </div>
-                      <div
-                        class="d-dialog-title"
-                        :style="{
-                          width: windowSize < 600 ? '60%' : '70%'
-                        }"
-                      >
-                        {{ formatDate(data.delivery_success) }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!------------------>
-              <div
-                :style="{
-                  width: '100%',
-                  'padding-top': '10px',
-                  display: windowSize < 600 ? '' : 'flex'
-                }"
-              >
-                <div
-                  :style="{
-                    width: windowSize < 600 ? '100%' : '50%',
-                    display: windowSize < 600 ? 'flex' : 'flex',
-                    'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                  }"
-                >
-                  <div
-                    class="d-dialog-title desc"
-                    :style="{
-                      width: windowSize < 600 ? '40%' : '30%',
-                      'padding-bottom': windowSize < 600 ? '10px' : '0px'
-                    }"
-                  >
-                    เบอร์โทรศัพท์
+                    วันที่ส่งสำเร็จ
                   </div>
                   <div
                     class="d-dialog-title"
                     :style="{
-                      width: windowSize < 600 ? '60%' : '70%',
-                      'padding-bottom': windowSize < 600 ? '5px' : '0px'
+                      width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.customer_tel }}
-                  </div>
-                </div>
-                <div
-                  :style="{
-                    width: windowSize < 600 ? '100%' : '50%',
-                    display: windowSize < 600 ? '' : 'flex'
-                  }"
-                >
-                  <div style="width:100%">
-                    <div style="width:100%;display:flex">
-                      <div
-                        class="d-dialog-title desc"
-                        :style="{
-                          width: windowSize < 600 ? '40%' : '30%',
-                          'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                        }"
-                      >
-                        สถานะ
-                      </div>
-                      <div
-                        class="d-dialog-title"
-                        :style="{
-                          width: windowSize < 600 ? '60%' : '70%'
-                        }"
-                      >
-                        {{ data.status_order_title }}
-                      </div>
-                    </div>
-                    <div style="width:100%;display:flex;padding-top:10px">
-                      <div
-                        class="d-dialog-title desc"
-                        :style="{
-                          width: windowSize < 600 ? '40%' : '30%',
-                          'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                        }"
-                      >
-                        หมายเหตุ
-                      </div>
-                      <div
-                        class="d-dialog-title"
-                        :style="{
-                          width: windowSize < 600 ? '60%' : '70%'
-                        }"
-                      >
-                        {{ data.comment }}
-                      </div>
-                    </div>
+                    {{ formatDate(data.delivery_success) }}
                   </div>
                 </div>
               </div>
-              <!------------------>
+            </div>
+          </div>
+          <!------------------>
+          <div
+            :style="{
+              width: '100%',
+              'padding-top': '6px',
+              display: windowSize < 600 ? '' : 'flex'
+            }"
+          >
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex',
+                'padding-bottom': windowSize < 600 ? '0px' : '0px'
+              }"
+            >
               <div
-                class="d-table"
+                class="d-dialog-title desc"
                 :style="{
-                  'padding-top': windowSize < 600 ? '10px' : '40px'
+                  width: windowSize < 600 ? '40%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                <div class="d-head">
-                  <div style="width:5%">#</div>
-                  <div style="width:15%">SKU</div>
-                  <div style="width:35%">รายการสินค้า</div>
-                  <div style="width:15%">จำนวน</div>
-                  <div style="width:30%">หมายเหตุ</div>
-                </div>
-                <div
-                  class="d-body"
-                  :style="{
-                    'overflow-y': windowSize < 600 ? 'hidden' : 'scroll',
-                    height: windowSize < 600 ? '' : 'calc(4em * 5)'
-                  }"
-                >
+                เบอร์โทรศัพท์
+              </div>
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '60%' : '70%',
+                  'padding-bottom': windowSize < 600 ? '5px' : '0px'
+                }"
+              >
+                {{ data.customer_tel }}
+              </div>
+            </div>
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? '' : 'flex'
+              }"
+            >
+              <div style="width:100%">
+                <div style="width:100%;display:flex">
                   <div
-                    class="d-body-row"
-                    v-for="(row, index) in data.items"
-                    :key="index + row.sku"
+                    class="d-dialog-title desc"
                     :style="{
-                      'border-radius': renderBorder(index),
-                      'border-top':
-                        index == 0 ? '0.7px solid rgba(0, 0, 0, 0.2)' : ''
+                      width: windowSize < 600 ? '40%' : '30%',
+                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
                     }"
                   >
-                    <div style="width:5%">{{ index + 1 }}</div>
-                    <div style="width:15%">{{ row.sku }}</div>
-                    <div style="width:35%">{{ row.item_name }}</div>
-                    <div style="width:15%">{{ row.qty }}</div>
-                    <div style="width:30%">{{ row.comment }}</div>
+                    สถานะ
+                  </div>
+                  <div
+                    class="d-dialog-title"
+                    :style="{
+                      width: windowSize < 600 ? '60%' : '70%'
+                    }"
+                  >
+                    {{ data.status_order_title }}
+                  </div>
+                </div>
+                <div style="width:100%;display:flex;padding-top:7px">
+                  <div
+                    class="d-dialog-title desc"
+                    :style="{
+                      width: windowSize < 600 ? '40%' : '30%',
+                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                    }"
+                  >
+                    หมายเหตุ
+                  </div>
+                  <div
+                    class="d-dialog-title"
+                    :style="{
+                      width: windowSize < 600 ? '60%' : '70%'
+                    }"
+                  >
+                    {{ data.comment }}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="d-dialog-action">
-            <div
-              @click="printIcon()"
-              style="padding-right:25px;padding-top:8px"
-              v-if="data.status_order_code == 'delivery'"
-            >
-              <v-icon
-                v-text="'mdi-printer'"
-                style="color:#000000;cursor:pointer"
-                size="20"
-              ></v-icon>
+          <!------------------>
+          <div
+            class="d-table"
+            :style="{
+              'padding-top': windowSize < 600 ? '10px' : '15px'
+            }"
+          >
+            <div class="d-head" v-if="windowSize >= 600">
+              <div style="width:3%;text-align:center">{{ headColum[0] }}</div>
+              <div style="width:10%;padding-left:20px">{{ headColum[1] }}</div>
+              <div style="width:47%;padding-left:10px;">
+                {{ headColum[2] }}
+              </div>
+              <div style="width:10%;text-align:center;padding-left:5px;">
+                {{ headColum[3] }}
+              </div>
+              <div style="width:30%;padding-left:17px">{{ headColum[4] }}</div>
             </div>
-            <v-btn
-              rounded
-              @click="accept()"
-              class="ok"
-              v-if="renderBtn() !== ''"
-              >{{ renderBtn() }}</v-btn
-            >
+            <div class="d-body">
+              <div
+                class="d-body-row"
+                v-for="(row, index) in data.items"
+                :key="index + row.sku"
+                :style="{
+                  'border-radius': renderBorder(index),
+                  'border-top':
+                    index == 0 ? '0.7px solid rgba(0, 0, 0, 0.2)' : '',
+                  display: windowSize < 600 ? 'block' : 'flex',
+                  padding: windowSize < 600 ? '0px 10px 0px 0px' : '8px 20px'
+                }"
+              >
+                <div
+                  :style="{
+                    width: windowSize < 600 ? '100%' : '3%',
+                    'text-align': windowSize < 600 ? 'left' : 'center'
+                  }"
+                >
+                  <div style="width:100%;display:flex">
+                    <div class="small-row-title" v-if="windowSize < 600">
+                      {{ headColum[0] }}
+                    </div>
+                    <div
+                      class="small-row-value"
+                      :style="{ width: windowSize < 600 ? '60%' : '100%' }"
+                    >
+                      {{ index + 1 }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  :style="{
+                    width: windowSize < 600 ? '100%' : '10%',
+                    'padding-left': windowSize < 600 ? '0px' : '10px'
+                  }"
+                >
+                  <div style="width:100%;display:flex">
+                    <div class="small-row-title" v-if="windowSize < 600">
+                      {{ headColum[1] }}
+                    </div>
+                    <div
+                      class="small-row-value"
+                      :style="{ width: windowSize < 600 ? '60%' : '100%' }"
+                    >
+                      {{ row.sku }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  :style="{
+                    width: windowSize < 600 ? '100%' : '47%',
+                    'padding-right': windowSize < 600 ? '0px' : '10px'
+                  }"
+                >
+                  <div style="width:100%;display:flex">
+                    <div class="small-row-title" v-if="windowSize < 600">
+                      {{ headColum[2] }}
+                    </div>
+                    <div
+                      class="small-row-value"
+                      :style="{ width: windowSize < 600 ? '60%' : '100%' }"
+                    >
+                      {{ row.item_name }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  :style="{
+                    width: windowSize < 600 ? '100%' : '10%'
+                  }"
+                >
+                  <div style="width:100%;display:flex">
+                    <div class="small-row-title" v-if="windowSize < 600">
+                      {{ headColum[3] }}
+                    </div>
+                    <div
+                      class="small-row-value"
+                      :style="{
+                        'text-align': windowSize < 600 ? 'left' : 'center',
+                        width: windowSize < 600 ? '60%' : '100%'
+                      }"
+                    >
+                      {{ currency(row.qty) }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  :style="{
+                    width: windowSize < 600 ? '100%' : '30%',
+                    'padding-right': windowSize < 600 ? '0px' : '10px',
+                    'padding-left': windowSize < 600 ? '' : '10px'
+                  }"
+                >
+                  <div style="width:100%;display:flex;">
+                    <div class="small-row-title" v-if="windowSize < 600">
+                      {{ headColum[4] }}
+                    </div>
+                    <div
+                      class="small-row-value"
+                      :style="{ width: windowSize < 600 ? '60%' : '100%' }"
+                    >
+                      {{ row.comment }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </v-card>
-    </v-dialog>
+      </div>
+      <div class="d-dialog-action">
+        <div
+          @click="printIcon()"
+          style="padding-right:25px;padding-top:8px"
+          v-if="data.status_order_code == 'delivery'"
+        >
+          <v-icon
+            v-text="'mdi-printer'"
+            style="color:#000000;cursor:pointer"
+            size="20"
+          ></v-icon>
+        </div>
+        <v-btn rounded @click="accept()" class="ok" v-if="renderBtn() !== ''">{{
+          renderBtn()
+        }}</v-btn>
+      </div>
+    </div>
 
     <v-dialog
       v-model="confirmDialog"
@@ -416,7 +496,8 @@ export default {
         'ต.ค.',
         'พ.ย.',
         'ธ.ค.'
-      ]
+      ],
+      headColum: ['#', 'SKU', 'รายการสินค้า', 'จำนวน', 'หมายเหตุ']
     }
   },
   computed: {
@@ -431,6 +512,9 @@ export default {
   },
   watch: {},
   methods: {
+    currency (qty) {
+      return window.currency(qty)
+    },
     ratio (val) {
       this.radio = val
     },

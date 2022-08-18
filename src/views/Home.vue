@@ -1,16 +1,22 @@
 <template>
-  <div id="home-page">
-    <order-filter :status="status" @apply="ApplyFilter"></order-filter>
-    <detail-table
-      :data="data"
-      :status="status"
-      @view="viewDeatil"
-      @submit="submitAction"
-      @print="printDetail"
-    ></detail-table>
+  <div
+    id="home-page"
+    :style="{ background: showDialog ? 'rgba(0, 0, 0, 0.2)' : '' }"
+  >
+    <div v-show="!showDialog">
+      <order-filter :status="status" @apply="ApplyFilter"></order-filter>
+      <detail-table
+        :data="data"
+        :status="status"
+        @view="viewDeatil"
+        @submit="submitAction"
+        @print="printDetail"
+      ></detail-table>
+    </div>
+    <!-- :show="showDialog" -->
     <detail-dialog
       :data="selectedRow"
-      :show="showDialog"
+      v-show="showDialog"
       @close="closeDialog"
       @submit="submitDialog"
       @print="printDialog"
@@ -88,7 +94,7 @@ export default {
         random = random == 0 ? 1 : random
         arr.push({
           order_no: 'P0000001' + i,
-          customer_name: 'ปิยดา กิตติกรณ์กุล ' + i,
+          customer_name: 'ปิยดา กิตติกรณ์กุล xxxxxxxxxxxx xxxxxxxxxxxxx ' + i,
           order_date: '2022-09-02',
           delivery_date: '2022-05-15',
           delivery_success: '2022-11-02',

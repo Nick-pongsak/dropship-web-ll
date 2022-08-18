@@ -74,7 +74,7 @@
     }
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100% - 70px);
+    height: calc(100% - 58px);
     // height: calc(100% - 100px);
     &::-webkit-scrollbar {
       width: 6px;
@@ -148,8 +148,10 @@
           margin-right: 30px;
           margin-bottom: 30px;
           // height: 219px;
-          width: 427px;
-          max-width: 427px;
+          width: 400px;
+          max-width: 400px;
+          // width: 427px;
+          // max-width: 427px;
           background: #ffffff;
           border: 1px solid rgba(0, 0, 0, 0.12);
           border-radius: 8px;
@@ -234,88 +236,45 @@
       }
     }
   }
-}
-.v-dialog {
-  &.v-dialog--active {
-    overflow: hidden !important;
-  }
-}
-.v-dialog__content--active {
-  .btn-filter {
-    color: #000000;
-    height: 41px;
-    width: 155px;
-    min-width: 155px;
-    background: #ecf1ff;
-    border: 1px solid #000000;
-    border-radius: 49px;
-    font-weight: 500;
-    font-size: nth($font-sizes, 8);
-    line-height: 36px;
-    text-align: center;
-  }
-  .d-dialog {
-    // padding: 50px;
-    font-family: Bai Jamjuree;
-    color: #000000;
-    .d-dialog-title {
-      padding-right: 20px;
-      font-size: nth($font-sizes, 6);
-      font-weight: 400;
-      &.desc {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-    .d-dialog-value {
-      font-size: 32px;
+  #detail-dialog {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 40px;
+
+    .btn-filter {
+      color: #000000;
+      height: 41px;
+      width: 155px;
+      min-width: 155px;
+      background: #ecf1ff;
+      border: 1px solid #000000;
+      border-radius: 49px;
       font-weight: 500;
+      font-size: nth($font-sizes, 8);
+      line-height: 36px;
+      text-align: center;
     }
-    .smaill-body {
-      overflow-x: hidden;
-      &::-webkit-scrollbar {
-        width: 6px;
-      }
-      &::-webkit-scrollbar:horizontal {
-        height: 8px;
-      }
-      &::-webkit-scrollbar-track {
-        background: #efefef;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background: #d9d9d9;
-      }
-      &::-webkit-scrollbar-thumb:hover {
-        background: rgb(145, 145, 145);
-      }
-    }
-    .d-table {
-      width: 100%;
-      font-size: nth($font-sizes, 6);
-      .d-head {
-        display: flex;
-        width: 100%;
-        font-weight: 500;
-        padding: 8px 20px;
-        background: #ecf1ff;
-        border-radius: 8px;
-      }
-      .d-body {
-        display: block;
-        width: 100%;
-        margin-top: 6px;
-        .d-body-row {
-          display: flex;
-          width: 100%;
-          font-weight: 400;
-          padding: 14px 22px;
-          border-bottom: 0.7px solid rgba(0, 0, 0, 0.2);
-          border-left: 0.7px solid rgba(0, 0, 0, 0.2);
-          border-right: 0.7px solid rgba(0, 0, 0, 0.2);
+    .d-dialog {
+      font-family: Bai Jamjuree;
+      color: #000000;
+      .d-dialog-title {
+        padding-right: 20px;
+        font-size: nth($font-sizes, 6);
+        font-weight: 400;
+        &.desc {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
+      }
+      .d-dialog-value {
+        font-size: 32px;
+        font-weight: 500;
+      }
+      .smaill-body {
         overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100vh - 205px);
         &::-webkit-scrollbar {
           width: 6px;
         }
@@ -333,14 +292,79 @@
           background: rgb(145, 145, 145);
         }
       }
+      .d-table {
+        width: 100%;
+        font-size: nth($font-sizes, 6);
+        .d-head {
+          display: flex;
+          width: 100%;
+          font-weight: 500;
+          padding: 8px 20px;
+          background: #ecf1ff;
+          border-radius: 8px;
+        }
+        .d-body {
+          display: block;
+          width: 100%;
+          margin-top: 6px;
+          .d-body-row {
+            display: flex;
+            width: 100%;
+            font-weight: 400;
+            border-bottom: 0.7px solid rgba(0, 0, 0, 0.2);
+            border-left: 0.7px solid rgba(0, 0, 0, 0.2);
+            border-right: 0.7px solid rgba(0, 0, 0, 0.2);
+          }
+          overflow-x: hidden;
+          .small-row-title {
+            width: 40%;
+            padding-top: 3px;
+            padding-bottom: 2px;
+            padding-left: 10px;
+            font-weight: 500;
+            background: #ecf1ff;
+          }
+          .small-row-value {
+            // width: 60%;
+            padding-left: 10px;
+            padding-top: 3px;
+            padding-bottom: 2px;
+          }
+        }
+      }
+      .d-dialog-action {
+        justify-content: end;
+        display: flex;
+        padding-top: 10px;
+        text-align: right;
+        padding-right: 25px;
+        .v-btn {
+          font-family: Bai Jamjuree;
+          height: 30px;
+          // width: 72px;
+          padding: 0px 50px;
+          border-radius: 8px;
+          font-size: nth($font-sizes, 6);
+          text-transform: none;
+          &.ok {
+            color: #ffffff;
+            background: #000000;
+          }
+          &.clear {
+            color: #000000;
+            background: #ffffff;
+          }
+        }
+      }
     }
-    .d-dialog-action {
-      justify-content: end;
-      display: flex;
-      padding-top: 25px;
-      text-align: right;
-      padding-right: 25px;
-    }
+  }
+
+  // .v-dialog {
+  //   &.v-dialog--active {
+  //     overflow: hidden !important;
+  //   }
+  // }
+  .v-dialog__content--active {
     .bg-confirm {
       text-align: center;
       padding-top: 10px;

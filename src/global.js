@@ -8,3 +8,11 @@ window.deviceType = () => {
   }
   return "desktop";
 }
+window.currency = (val) => {
+  let value = parseFloat(val)
+  if (Number.isInteger(value)) {
+    return parseFloat(value).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  } else {
+    return val
+  }
+}
