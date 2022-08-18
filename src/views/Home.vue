@@ -71,14 +71,18 @@ export default {
       // this.showDialog = false
       console.log('printDialog ==> ', val)
     },
-    submitDialog (val) {
+    submitDialog (result) {
       // this.showDialog = false
+      let val = result.event
       if (val == 'print') {
       } else {
         this.selectedRow.status_order_code = val
         let status = this.statusList.filter(a => a.code == val)
         this.selectedRow.status_order_title =
           status.length > 0 ? status[0].title : ''
+        if (val == 'complete') {
+          this.selectedRow.comment = result.detail
+        }
       }
     },
     submitAction (val) {
@@ -98,6 +102,7 @@ export default {
           order_date: '2022-09-02',
           delivery_date: '2022-05-15',
           delivery_success: '2022-11-02',
+          comment: '',
           status_order_code: this.statusList[random].code,
           status_order_title: this.statusList[random].title,
           customer_address:

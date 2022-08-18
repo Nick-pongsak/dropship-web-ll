@@ -9,7 +9,8 @@
       <div style="width:100%;display:flex">
         <div
           :style="{
-            padding: windowSize < 600 ? '10px 10px 0px 10px' : '0px 0px 0px 5px',
+            padding:
+              windowSize < 600 ? '10px 10px 0px 10px' : '0px 0px 0px 5px',
             width: '70%'
           }"
         >
@@ -253,7 +254,14 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.comment }}
+                    <span v-if="data.comment == ''"> </span>
+                    <span v-else>
+                      {{
+                        data.comment == 'customer'
+                          ? 'พัสดุการนำจ่ายถึงลูกค้า'
+                          : 'พัสดุส่งกลับผู้ขาย'
+                      }}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -595,8 +603,12 @@ export default {
         process = ''
       }
       if (process != '') {
+        let obj = {
+          event: process,
+          detail: this.radio
+        }
         this.confirmDialog = false
-        this.$emit('submit', process)
+        this.$emit('submit', obj)
       }
     },
     printIcon () {

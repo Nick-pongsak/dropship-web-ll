@@ -4,7 +4,10 @@
     :style="{ background: showDialog ? 'rgba(0, 0, 0, 0.2)' : '' }"
   >
     <div v-show="!showDialog">
-      <admin-order-manage-filter :status="status" @apply="ApplyFilter"></admin-order-manage-filter>
+      <admin-order-manage-filter
+        :status="status"
+        @apply="ApplyFilter"
+      ></admin-order-manage-filter>
       <admin-order-manage-detail
         :data="data"
         :status="status"
@@ -71,14 +74,18 @@ export default {
       // this.showDialog = false
       console.log('printDialog ==> ', val)
     },
-    submitDialog (val) {
+    submitDialog (result) {
       // this.showDialog = false
+      let val = result.event
       if (val == 'print') {
       } else {
         this.selectedRow.status_order_code = val
         let status = this.statusList.filter(a => a.code == val)
         this.selectedRow.status_order_title =
           status.length > 0 ? status[0].title : ''
+        if (val == 'complete') {
+          this.selectedRow.comment = result.detail
+        }
       }
     },
     submitAction (val) {
@@ -100,6 +107,7 @@ export default {
           delivery_success: '2022-11-02',
           status_order_code: this.statusList[random].code,
           status_order_title: this.statusList[random].title,
+          comment: '',
           manufacturer_name: 'Jainoi Pirompairak',
           company_name1: 'ABC Company',
           company_name2: 'Uni Mitsubishi Pencil Official',
