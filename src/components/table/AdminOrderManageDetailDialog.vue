@@ -3,13 +3,14 @@
     <div
       class="d-dialog"
       :style="{
-        padding: windowSize < 600 ? '10px 5px 10px 0px' : '25px 25px 15px 25px'
+        padding: windowSize < 600 ? '0px 5px 10px 0px' : '25px 25px 15px 25px'
       }"
     >
       <div style="width:100%;display:flex">
         <div
           :style="{
-            padding: windowSize < 600 ? '10px 10px 0px 10px' : '0px 0px 0px 5px',
+            padding:
+              windowSize < 600 ? '20px 10px 0px 10px' : '0px 0px 0px 5px',
             width: '70%'
           }"
         >
@@ -17,7 +18,7 @@
         </div>
         <div
           :style="{
-            padding: windowSize < 600 ? '15px 2px 0px 0px' : '5px 5px 0px 0px',
+            padding: windowSize < 600 ? '25px 2px 0px 0px' : '5px 5px 0px 0px',
             'text-align': 'end',
             width: '30%'
           }"
@@ -31,11 +32,87 @@
         </div>
       </div>
       <div class="smaill-body">
-        <div style="width:100%;padding:13px 0px 10px 20px">
-          <div class="d-dialog-title">หมายเลขคำสั่งซื้อ</div>
-          <div class="d-dialog-value">{{ data.order_no }}</div>
-        </div>
         <div style="width:100%;padding:0px 20px">
+          <!------------------>
+          <div
+            :style="{
+              width: '100%',
+              'padding-top': '6px',
+              display: windowSize < 600 ? '' : 'flex'
+            }"
+          >
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex',
+                'padding-bottom': windowSize < 600 ? '0px' : '0px',
+                'padding-top': windowSize < 600 ? '8px' : '10px'
+              }"
+            >
+              <div
+                class="d-dialog-title desc"
+                :style="{
+                  width: windowSize < 600 ? '100%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '10px' : '13px'
+                }"
+              >
+                <div class="d-dialog-title">หมายเลขคำสั่งซื้อ</div>
+                <div class="d-dialog-value">{{ data.order_no }}</div>
+              </div>
+            </div>
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? '' : 'flex'
+              }"
+            >
+              <div
+                :style="{
+                  width: '100%',
+                  'padding-top': windowSize < 600 ? '0px' : '25px'
+                }"
+              >
+                <div style="width:100%;display:flex">
+                  <div
+                    class="d-dialog-title desc"
+                    :style="{
+                      width: windowSize < 600 ? '40%' : '30%',
+                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                    }"
+                  >
+                    ชื่อบริษัท
+                  </div>
+                  <div
+                    class="d-dialog-title"
+                    :style="{
+                      width: windowSize < 600 ? '60%' : '70%'
+                    }"
+                  >
+                    {{ data.company_name2 }}
+                  </div>
+                </div>
+                <div style="width:100%;display:flex;padding-top:7px">
+                  <div
+                    class="d-dialog-title desc"
+                    :style="{
+                      width: windowSize < 600 ? '40%' : '30%',
+                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                    }"
+                  >
+                    ชื่อผู้ผลิต
+                  </div>
+                  <div
+                    class="d-dialog-title"
+                    :style="{
+                      width: windowSize < 600 ? '60%' : '70%'
+                    }"
+                  >
+                    {{ data.manufacturer_name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!------------------>
           <div
             :style="{
@@ -48,6 +125,66 @@
                 width: windowSize < 600 ? '100%' : '50%',
                 display: windowSize < 600 ? 'flex' : 'flex',
                 'padding-bottom': windowSize < 600 ? '0px' : '0px'
+              }"
+            >
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '40%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '10px' : '0px'
+                }"
+              >
+                ชื่อบริษัท
+              </div>
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '60%' : '70%',
+                  'padding-bottom': windowSize < 600 ? '0px' : '0px',
+                  'padding-right': windowSize < 600 ? '10px' : '0px'
+                }"
+              >
+                {{ data.company_name1 }}
+              </div>
+            </div>
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex'
+              }"
+            >
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '40%' : '30%',
+                  'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                }"
+              >
+                วันที่สั่งซื้อ
+              </div>
+              <div
+                class="d-dialog-title"
+                :style="{
+                  width: windowSize < 600 ? '60%' : '70%'
+                }"
+              >
+                {{ formatDate(data.order_date) }}
+              </div>
+            </div>
+          </div>
+          <!------------------>
+          <div
+            :style="{
+              width: '100%',
+              display: windowSize < 600 ? '' : 'flex'
+            }"
+          >
+            <div
+              :style="{
+                width: windowSize < 600 ? '100%' : '50%',
+                display: windowSize < 600 ? 'flex' : 'flex',
+                'padding-bottom': windowSize < 600 ? '0px' : '0px',
+                'padding-top': '6px'
               }"
             >
               <div
@@ -80,10 +217,11 @@
                 class="d-dialog-title"
                 :style="{
                   width: windowSize < 600 ? '40%' : '30%',
-                  'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                  'padding-bottom': windowSize < 600 ? '0px' : '0px',
+                  'padding-top': '6px'
                 }"
               >
-                วันที่สั่งซื้อ
+                วันที่จัดส่ง
               </div>
               <div
                 class="d-dialog-title"
@@ -91,7 +229,7 @@
                   width: windowSize < 600 ? '60%' : '70%'
                 }"
               >
-                {{ formatDate(data.order_date) }}
+                {{ formatDate(data.delivery_date) }}
               </div>
             </div>
           </div>
@@ -137,25 +275,6 @@
             >
               <div style="width:100%">
                 <div style="width:100%;display:flex">
-                  <div
-                    class="d-dialog-title desc"
-                    :style="{
-                      width: windowSize < 600 ? '40%' : '30%',
-                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
-                    }"
-                  >
-                    วันที่จัดส่ง
-                  </div>
-                  <div
-                    class="d-dialog-title"
-                    :style="{
-                      width: windowSize < 600 ? '60%' : '70%'
-                    }"
-                  >
-                    {{ formatDate(data.delivery_date) }}
-                  </div>
-                </div>
-                <div style="width:100%;display:flex;padding-top:7px">
                   <div
                     class="d-dialog-title desc"
                     :style="{
@@ -389,7 +508,7 @@
         </div>
       </div>
       <div class="d-dialog-action">
-        <div
+        <!-- <div
           @click="printIcon()"
           style="padding-right:25px;padding-top:8px"
           v-if="data.status_order_code == 'delivery'"
@@ -399,7 +518,7 @@
             style="color:#000000;cursor:pointer"
             size="20"
           ></v-icon>
-        </div>
+        </div> -->
         <v-btn rounded @click="accept()" class="ok" v-if="renderBtn() !== ''">{{
           renderBtn()
         }}</v-btn>
@@ -467,7 +586,7 @@
 
 <script>
 export default {
-  name: 'detail-dialog',
+  name: 'admin-order-manage-detail-dialog',
   props: {
     data: Object,
     show: {
