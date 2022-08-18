@@ -8,7 +8,178 @@
             }" class="left">
 
 
-      <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
+
+
+
+       <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
+        <b-row >
+          <b-col  style="" xl>
+          <div class="btn-filter">Profile</div>
+          </b-col>
+        </b-row>
+
+          <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">Supplier ID</div>
+                <div class="detail" style="">{{this.profile.sup_id}}</div>
+              </div>
+            </b-col>
+            <b-col xl v-if="windowSize > 1200">2</b-col>
+      </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">อีเมล <span style="color:red">*</span></div>
+              <div class="detail">
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.email"  class="input-style">
+            </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col  xl>
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+        </b-col>
+         <b-col> 
+           <div class="md-layout">
+              <div class="head">เบอร์โทรศัพท์</div>
+              <div class="detail" >
+                <input 
+                :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
+                :disabled="isDisabled" v-model="profile.tel" class="input-style">
+              </div>
+            </div>
+         </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col xl></b-col>
+          <b-col  
+              style="
+              display: flex;
+              justify-content: flex-end;" xl>
+              <div v-if="!isDisabled" @click="cancel" style="cursor: pointer;padding:0 10px 0 0;display: flex;align-items: center;">ยกเลิก</div>
+                <v-btn v-if="isDisabled" rounded class="ok" @click="edit()"> แก้ไข</v-btn>
+                <v-btn v-else rounded class="ok" @click="save()">บันทึก</v-btn>
+          </b-col>
+        </b-row>
+       </b-container>
+
+      <!-- <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
       <b-row >
         <b-col  style="" xl>
         <div class="btn-filter">Profile</div>
@@ -93,12 +264,6 @@
                   <span v-else style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('newPassword')" class="md-suffix mdi mdi-eye-off"></span>
                  </div>
                 </md-field>
-
-
-                 <!-- <input 
-                 type="password"
-                 :style="{'background-color':isDisabled? '#DADADA':'#fff'}"
-                 :disabled="isDisabled" v-model="profile.new_password" class="input-style"> -->
               </div>
             </div>
 
@@ -172,7 +337,7 @@
               <v-btn v-else rounded class="ok" @click="save()">บันทึก</v-btn>
         </b-col>
       </b-row>
-  </b-container>
+      </b-container> -->
       <!-- DIALOG 1 -->
         <v-dialog
             v-model="dialog"

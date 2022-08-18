@@ -13,6 +13,7 @@ import AdminHome from '@/views/AdminHome.vue'
 import AdminOrdereManage from '@/views/AdminOrderManage.vue'
 import AdminUserManage from '@/views/AdminUserManage.vue'
 import AdminProfile from '@/views/AdminProfile.vue'
+import AdminCreateAccount from '@/views/AdminCreateAccount.vue'
 
 
 
@@ -66,6 +67,11 @@ export default new Router({
         {
           path: "/adminProfile",
           component: AdminProfile,
+          
+        },
+        {
+          path: "/AdminCreateAccount",
+          component: AdminCreateAccount,
           
         },
         {
