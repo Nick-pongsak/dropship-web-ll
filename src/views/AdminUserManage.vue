@@ -67,6 +67,7 @@ export default {
       for (let i = 0; i < 13; i++) {
         let random = Math.floor(Math.random() * 2)
         arr.push({
+          user_code:'V52086',
           user_name: 'Jainoi Pirompairak ' + i,
           update_time: '2022-09-02',
           login_time: '2022-05-15',

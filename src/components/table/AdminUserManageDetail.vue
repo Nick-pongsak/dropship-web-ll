@@ -17,13 +17,12 @@
         :key="'card-' + index + '-' + row.order_no"
       >
         <div class="row-card" style="padding-left: 10px;">
-          <div style="display:flex;width:100%">
-            <div class="title-card" style="padding-top: 5px;">
-              รหัสผู้ใช้งาน
-            </div>
-            <div class="value-card" style="padding-top: 5px;">
-              {{ row.order_no }}
-            </div>
+          <div style="width:7%"></div>
+          <div class="title-card" style="padding-top: 5px;">
+            รหัสผู้ใช้งาน
+          </div>
+          <div class="value-card" style="padding-top: 5px;">
+            {{ row.user_code }}
           </div>
         </div>
         <div class="row-card">
