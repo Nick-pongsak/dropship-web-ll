@@ -316,7 +316,8 @@ export default {
       endSuccessDelivery: null,
       statusInput: 'all',
       statusList: this.status,
-      lang: {
+      lang: {  
+       
         formatLocale: {
           firstDayOfWeek: 1,
           months: [
@@ -347,7 +348,8 @@ export default {
             'พ.ย.',
             'ธ.ค.'
           ],
-          weekdaysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส']
+          weekdaysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
+           
         },
         months: [
           'มกราคม',
