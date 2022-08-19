@@ -13,7 +13,6 @@
         @print="printDetail"
       ></detail-table>
     </div>
-    <!-- :show="showDialog" -->
     <detail-dialog
       :data="selectedRow"
       v-show="showDialog"
@@ -25,7 +24,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import OrderFilter from '@/components/filter/OrderFilter'
 import detailTable from '@/components/table/Detail'
 import DetailDialog from '@/components/table/DetailDialog'
@@ -177,10 +175,20 @@ export default {
     }
   },
   created () {
-    if (Vue.localStorage.get('login') == null) {
-      this.$router.replace('/')
-    } else {
-      this.fetch()
+    if (
+      this.$store.getters.user_profile === null &&
+      sessionStorage.getItem('user_profile') === null
+    ) {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    } else if (sessionStorage.getItem('user_profile') !== null) {
+      let data = JSON.parse(sessionStorage.getItem('user_profile'))
+      if (data.user_role == 'admin') {
+        this.$router.push('/' + 'adminHome')
+      } else {
+        this.fetch()
+      }
     }
   },
   components: {
