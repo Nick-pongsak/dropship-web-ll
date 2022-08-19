@@ -101,7 +101,8 @@ export default {
             } else if (data.user_role == 'admin') {
               this.$router.push('/' + 'adminHome')
             } else {
-              this.wrong = true
+              this.$router.push('/' + 'home')
+              // this.wrong = true
             }
           })
           .catch(error => {
