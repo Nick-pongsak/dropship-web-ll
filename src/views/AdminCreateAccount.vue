@@ -1,7 +1,235 @@
 <template>
-    <div id="user-profile-page" v-resize="onResize"  >
+    <div id="page-admin" v-resize="onResize"  >
       <div class="box-1">
-          <div style="background-color:red;width:75%" class="left">
+          <div
+
+            :style="{ 
+            display: windowSize <= 600 ? '' : 'flex' ,
+            width: windowSize <= 600 ? '100%' : '75%'
+            }"
+            class="left">
+
+            <b-container style="font-family:'Bai Jamjuree', sans-serif" class=" accentbv-example-row">
+        <b-row style="margin-top:10px;" >
+          <b-col  style="" xl>
+          <div class="btn-filter">Create Account</div>
+          </b-col>
+        </b-row>
+
+          <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">รหัสผู้ใช้งาน</div>
+                <div class="detail" style="">V52086</div>
+              </div>
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head">ชื่อบริษัท <span style="color:red;">*</span></div>
+                <div class="detail" style="">
+                <input 
+                   v-model="account.company"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.company != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+        <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">อีเมล <span style="color:red">*</span></div>
+                <div class="detail" style="">
+                  <input 
+                   v-model="account.email"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.email != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head">รหัสผ่าน <span style="color:red;">*</span></div>
+                <div class="detail" style="">
+                   <input 
+                   :disabled="true"
+                   v-model="account.password"
+                  :style="{
+                    'background-color':'#DADADA',
+                    }"
+                  class="input-style">
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+       <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">ชื่อ <span style="color:red">*</span></div>
+                <div class="detail" style="">
+                  <input 
+                   v-model="account.frist_name"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.frist_name != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head">นามสกุล <span style="color:red;">*</span></div>
+                <div class="detail" style="">
+                <input 
+                   v-model="account.last_name"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.last_name != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+      <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">เบอร์โทรศัพท์ <span style="color:red">*</span></div>
+                <div class="detail" style="">
+                  <input 
+                   v-model="account.tel"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.tel != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head">เบอร์โทรศัพท์อื่น</div>
+                <div class="detail" style="">
+                <input 
+                   v-model="account.tel2"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.tel2 != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+       <b-row style="background-color:" >
+            <b-col style="background-color:">
+              <div  class="md-layout">
+                <div style="width: 10%;" class="head">ที่อยู่ <span style="color:red">*</span></div>
+                <div style="width:80%" class="detail">
+                  <input 
+                   v-model="account.address"
+                style="width:   100%"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.address != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+          
+      </b-row>
+
+       <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">จังหวัด <span style="color:red">*</span></div>
+                <div class="detail" style="">
+                  <input 
+                   v-model="account.province"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.province != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head">รหัสไปรณีย์ <span style="color:red;">*</span></div>
+                <div class="detail" style="">
+                <input 
+                   v-model="account.zip_code"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.zip_code != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+       <b-row >
+            <b-col  xl>
+              <div  class="md-layout">
+                <div class="head">แขวง/ตำบล <span style="color:red">*</span></div>
+                <div class="detail" style="">
+                  <input 
+                   v-model="account.province"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.province != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head">เขต/อำเภอ <span style="color:red;">*</span></div>
+                <div class="detail" style="">
+                <input 
+                   v-model="account.zip_code"
+                  :style="{
+                    'background-color':'#fff',
+                    'border': account.zip_code != ''? '2px solid #2372E7' : '' 
+                    }"
+                   class="input-style">
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+      <b-row >
+            <b-col  xl>
+              
+            </b-col>
+            <b-col>
+               <div  class="md-layout">
+                <div class="head"></div>
+                <div class="detail" style="dwidth:100%;display: flex;justify-content: flex-end;">
+                  <div  @click="cancel" style="cursor: pointer;padding:0 30px 0 0;display: flex;align-items: center;">ยกเลิก</div>
+                  <v-btn  rounded class="ok" @click="save()">บันทึก</v-btn>
+                </div>
+              </div>
+            </b-col>
+      </b-row>
+
+       </b-container>
+
     
        <!-- DIALOG 1 -->
         <!-- <v-dialog
@@ -84,7 +312,7 @@
             </v-card>
         </v-dialog> -->
    </div>
-          <div class="right">
+          <div :style="{ width: windowSize <= 600 ? '0%' : '25%'}" style="display: flex;align-items: flex-end;"  class="right">
               <img  class="img" src="@/assets/images/profile-admin.png">
           </div>
       </div >
@@ -100,18 +328,51 @@ import Vue from "vue";
 export default {
   name: 'admin-create-acount',
   data () {
-    return {}
+    return {
+      windowSize:'',
+      account:{
+        company:'',
+        email:'',
+        password:'',
+        frist_name:'',
+        last_name:'',
+        tel:'',
+        tel2:'',
+        address:'',
+        province:'',
+        zip_code:''
+      }
+    }
   },
   computed: {
    
   },
   watch: {},
-  methods: {},
+  methods: {
+    onResize () {
+       let x = window.innerWidth
+      let y = window.innerHeight
+      this.windowSize = x
+
+    },
+    cancel(){},
+    save(){},
+    random(){
+      var length = 8,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+      for (var i = 0, n = charset.length; i < length; ++i) {
+          retVal += charset.charAt(Math.floor(Math.random() * n));
+      }
+        this.account.password = retVal
+    }
+  },
   components: {},
   created () {
      if (Vue.localStorage.get("login") == null) {
       this.$router.replace("/");
     } else {
+      this.random()
 
 
     }

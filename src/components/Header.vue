@@ -3,7 +3,10 @@
      
     <div  style="cursor: pointer;width:50%;display:flex;">
       <img src="@/assets/icons/logo.png" :style="{ height: logo , width: width }" />
-      <div @click="action('home')" class="sys-name" :style="{ 'font-size': sysName }">
+      <div  v-if="info.type == 'user'" @click="action('home')" class="sys-name" :style="{ 'font-size': sysName }">
+        Dropship portal
+      </div>
+       <div  v-else  @click="action('adminHome')" class="sys-name" :style="{ 'font-size': sysName }">
         Dropship portal
       </div>
     </div>
