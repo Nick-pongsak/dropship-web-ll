@@ -12,7 +12,7 @@
     <div class="action-bar" v-else style="padding:5px 0 5px 0">
       <div class="count-subtitle" style="">พบ {{ dataPage.length }} รายการ</div>
     </div>
-    <div class="table d-flex flex-wrap justify-start">
+    <div class="table d-flex flex-wrap justify-center">
       <div
         :class="checkbox ? 'card selected' : 'card'"
         v-for="(row, index) in dataPage"

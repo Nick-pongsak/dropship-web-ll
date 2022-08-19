@@ -10,7 +10,7 @@
         </v-btn>
       </div>
     </div>
-    <div class="table d-flex flex-wrap justify-start">
+    <div class="table d-flex flex-wrap justify-center">
       <div
         :class="checkbox ? 'card selected' : 'card'"
         v-for="(row, index) in dataPage"
