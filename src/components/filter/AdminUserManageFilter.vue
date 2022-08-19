@@ -22,7 +22,7 @@
     >
       <div
         class="filter-box"
-        :style="{ width: windowSize <= 600 ? '100%' : '40%' }"
+        :style="{ width: windowSize <= 600 ? '100%' : '70%' }"
       >
         <div style="width:100%">
           <div class="subtitle">
@@ -51,16 +51,16 @@
           <div
             :style="{ display: windowSize <= 600 ? '' : 'flex', width: '100%' }"
           >
-            <div :style="{ width: windowSize <= 600 ? '100%' : '50%' }">
+            <div :style="{ width: windowSize <= 600 ? '100%' : '35%' }">
               <div class="subtitle">
-                ชื่อลูกค้า
+                อีเมล
               </div>
-              <v-text-field solo dense v-model="customerInput">
+              <v-text-field solo dense v-model="emailInput">
                 <v-icon
-                  v-if="showClearInput('customer')"
+                  v-if="showClearInput('email')"
                   slot="append"
                   size="18"
-                  @click="clearInput('customer')"
+                  @click="clearInput('email')"
                 >
                   mdi-close
                 </v-icon>
@@ -68,36 +68,30 @@
             </div>
             <div
               :style="{
-                width: windowSize <= 600 ? '100%' : '50%',
+                width: windowSize <= 600 ? '100%' : '35%',
                 'margin-left': windowSize <= 600 ? '' : '8px'
               }"
             >
               <div class="subtitle">
-                ชื่อผู้ผลิต
+                รหัสผู้ใช้งาน
               </div>
-              <v-text-field solo dense v-model="manufacturerInput">
+              <v-text-field solo dense v-model="userCodeInput">
                 <v-icon
-                  v-if="showClearInput('manufacturer')"
+                  v-if="showClearInput('userCode')"
                   slot="append"
                   size="18"
-                  @click="clearInput('manufacturer')"
+                  @click="clearInput('userCode')"
                 >
                   mdi-close
                 </v-icon>
               </v-text-field>
             </div>
-          </div>
-        </div>
-        <div
-          :style="{
-            width: '100%',
-            'margin-top': windowSize <= 600 ? '7px' : '6px'
-          }"
-        >
-          <div
-            :style="{ display: windowSize <= 600 ? '' : 'flex', width: '100%' }"
-          >
-            <div :style="{ width: windowSize <= 600 ? '100%' : '50%' }">
+            <div
+              :style="{
+                width: windowSize <= 600 ? '100%' : '30%',
+                'margin-left': windowSize <= 600 ? '' : '8px'
+              }"
+            >
               <div class="subtitle">
                 ชื่อบริษัท
               </div>
@@ -112,26 +106,6 @@
                 </v-icon>
               </v-text-field>
             </div>
-            <div
-              :style="{
-                width: windowSize <= 600 ? '100%' : '50%',
-                'margin-left': windowSize <= 600 ? '' : '8px'
-              }"
-            >
-              <div class="subtitle">
-                หมายเลขคำสั่งซื้อ
-              </div>
-              <v-text-field solo dense v-model="orderInput">
-                <v-icon
-                  v-if="showClearInput('orderNo')"
-                  slot="append"
-                  size="18"
-                  @click="clearInput('orderNo')"
-                >
-                  mdi-close
-                </v-icon>
-              </v-text-field>
-            </div>
           </div>
         </div>
       </div>
@@ -139,70 +113,16 @@
         class="filter-box"
         :style="{
           width: windowSize <= 600 ? '100%' : '20%',
-          'margin-top': windowSize <= 600 ? '13px' : ''
+          'margin-top': windowSize <= 600 ? '11px' : ''
         }"
       >
         <div class="subtitle">
-          วันที่สั่งซื้อ
+          สถานะ
         </div>
         <div style="display:flex">
-          <span
-            :style="{
-              color: '#00000099',
-              'margin-right': '13px',
-              'padding-left': windowSize <= 600 ? '13px' : '0px',
-              'font-weight': 400
-            }"
-            >เริ่ม</span
-          >
-          <date-picker
-            :style="{ width: '100%' }"
-            v-model="startOrderDate"
-            :format="formatDate"
-            value-type="YYYY-MM-DD"
-            type="date"
-            placeholder=""
-            :lang="lang"
-          ></date-picker>
-        </div>
-        <div
-          :style="{
-            display: 'flex',
-            'margin-top': windowSize <= 600 ? '17px' : '30px'
-          }"
-        >
-          <span
-            :style="{
-              color: '#00000099',
-              'margin-right': '17px',
-              'padding-left': windowSize <= 600 ? '13px' : '0px',
-              'font-weight': 400
-            }"
-            >ถึง</span
-          >
-          <date-picker
-            :style="{ width: '100%' }"
-            v-model="endOrderDate"
-            :format="formatDate"
-            value-type="YYYY-MM-DD"
-            type="date"
-            placeholder=""
-            :lang="lang"
-            :disabled-date="disabledOrderDate"
-          ></date-picker>
-        </div>
-        <div
-          :style="{
-            width: '100%',
-            'margin-top': '5px'
-          }"
-        >
-          <div class="subtitle">
-            สถานะ
-          </div>
           <v-select
             v-model="statusInput"
-            :items="statusList"
+            :items="systemList"
             label=""
             item-text="title"
             item-value="code"
@@ -210,135 +130,44 @@
             dense
           ></v-select>
         </div>
-      </div>
-      <div
-        class="filter-box"
-        :style="{
-          width: windowSize <= 600 ? '100%' : '20%',
-          'margin-top': windowSize <= 600 ? '11px' : ''
-        }"
-      >
-        <div class="subtitle">
-          วันที่จัดส่ง
-        </div>
-        <div style="display:flex">
-          <span
-            :style="{
-              color: '#00000099',
-              'margin-right': '13px',
-              'padding-left': windowSize <= 600 ? '13px' : '0px',
-              'font-weight': 400
-            }"
-            >เริ่ม</span
-          >
-          <date-picker
-            :style="{ width: '100%' }"
-            v-model="startDliveryDate"
-            :format="formatDate"
-            value-type="YYYY-MM-DD"
-            type="date"
-            placeholder=""
-            :lang="lang"
-          ></date-picker>
-        </div>
         <div
           :style="{
-            display: 'flex',
-            'margin-top': windowSize <= 600 ? '17px' : '30px'
+            display: windowSize <= 600 ? '' : '',
+            'margin-top': windowSize <= 600 ? '3px' : '3px'
           }"
         >
-          <span
-            :style="{
-              color: '#00000099',
-              'margin-right': '17px',
-              'padding-left': windowSize <= 600 ? '13px' : '0px',
-              'font-weight': 400
-            }"
-            >ถึง</span
-          >
-          <date-picker
-            :style="{ width: '100%' }"
-            v-model="endDliveryDate"
-            :format="formatDate"
-            value-type="YYYY-MM-DD"
-            type="date"
-            placeholder=""
-            :lang="lang"
-            :disabled-date="disabledDliveryDate"
-          ></date-picker>
+          <div class="subtitle">
+            ชื่อ นามสกุล
+          </div>
+          <v-text-field solo dense v-model="fullnameInput">
+            <v-icon
+              v-if="showClearInput('fullname')"
+              slot="append"
+              size="18"
+              @click="clearInput('fullname')"
+            >
+              mdi-close
+            </v-icon>
+          </v-text-field>
         </div>
       </div>
       <div
         class="filter-box"
         :style="{
-          width: windowSize <= 600 ? '100%' : '20%',
+          width: windowSize <= 600 ? '100%' : '10%',
           'margin-top': windowSize <= 600 ? '11px' : ''
         }"
       >
-        <div class="subtitle">
-          วันที่ส่งสำเร็จ
-        </div>
-        <div style="display:flex">
-          <span
-            :style="{
-              color: '#00000099',
-              'margin-right': '13px',
-              'padding-left': windowSize <= 600 ? '13px' : '0px',
-              'font-weight': 400
-            }"
-            >เริ่ม</span
-          >
-          <date-picker
-            :style="{ width: '100%' }"
-            v-model="startSuccessDelivery"
-            :format="formatDate"
-            value-type="YYYY-MM-DD"
-            type="date"
-            placeholder=""
-            :lang="lang"
-          ></date-picker>
-        </div>
-        <div
-          :style="{
-            display: 'flex',
-            'margin-top': windowSize <= 600 ? '17px' : '30px'
-          }"
-        >
-          <span
-            :style="{
-              color: '#00000099',
-              'margin-right': '17px',
-              'padding-left': windowSize <= 600 ? '13px' : '0px',
-              'font-weight': 400
-            }"
-            >ถึง</span
-          >
-          <date-picker
-            :style="{ width: '100%' }"
-            v-model="endSuccessDelivery"
-            :format="formatDate"
-            value-type="YYYY-MM-DD"
-            type="date"
-            placeholder=""
-            :lang="lang"
-            :disabled-date="disabledSuccessDelivery"
-          ></date-picker>
-        </div>
-        <div
-          :style="{
-            width: '100%',
-            'text-align': 'right',
-            'padding-top': windowSize <= 600 ? '20px' : '24px'
-          }"
-        >
+        <div style="display:flex;padding-top:13px">
           <v-btn rounded @click="clearFilter()" class="clear">Clear</v-btn>
-          <v-btn
-            rounded
-            @click="apply()"
-            class="ok"
-            :style="{ 'margin-left': windowSize <= 600 ? '10px' : '10px' }"
-            >Apply</v-btn
-          >
+        </div>
+        <div
+          :style="{
+            display: 'flex',
+            'margin-top': windowSize <= 600 ? '17px' : '22px'
+          }"
+        >
+          <v-btn rounded @click="apply()" class="ok">Apply</v-btn>
         </div>
       </div>
     </div>
@@ -356,171 +185,35 @@ export default {
     return {
       expandFilter: true,
       windowSize: 1366,
-      formatDate: 'DD MMM YYYY',
       searchInput: null,
-      customerInput: null,
-      manufacturerInput: null,
-      orderInput: null,
+      emailInput: null,
+      userCodeInput: null,
+      fullnameInput: null,
       companyInput: null,
-      startOrderDate: null,
-      endOrderDate: null,
-      startDliveryDate: null,
-      endDliveryDate: null,
-      startSuccessDelivery: null,
-      endSuccessDelivery: null,
       statusInput: 'all',
-      statusList: this.status,
-      lang: {
-        formatLocale: {
-          firstDayOfWeek: 1,
-          months: [
-            'มกราคม',
-            'กุมภาพันธ์',
-            'มีนาคม',
-            'เมษายน',
-            'พฤษภาคม',
-            'มิถุนายน',
-            'กรกฎาคม',
-            'สิงหาคม',
-            'กันยายน',
-            'ตุลาคม',
-            'พฤศจิกายน',
-            'ธันวาคม'
-          ],
-          monthsShort: [
-            'ม.ค.',
-            'ก.พ.',
-            'มี.ค.',
-            'เม.ย.',
-            'พ.ค.',
-            'มิ.ย.',
-            'ก.ค.',
-            'ส.ค.',
-            'ก.ย.',
-            'ต.ค.',
-            'พ.ย.',
-            'ธ.ค.'
-          ],
-          weekdaysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส']
-        },
-        months: [
-          'มกราคม',
-          'กุมภาพันธ์',
-          'มีนาคม',
-          'เมษายน',
-          'พฤษภาคม',
-          'มิถุนายน',
-          'กรกฎาคม',
-          'สิงหาคม',
-          'กันยายน',
-          'ตุลาคม',
-          'พฤศจิกายน',
-          'ธันวาคม'
-        ],
-        monthFormat: 'MMMM',
-        monthBeforeYear: false
-      }
+      systemList: this.status
     }
   },
   computed: {},
-  watch: {
-    startOrderDate: {
-      handler (newValue) {
-        if (newValue == null) {
-          this.endOrderDate = null
-        } else {
-          if (this.endOrderDate == null) {
-            this.endOrderDate = newValue
-          } else {
-            const today = new Date(newValue)
-            const end = new Date(this.endOrderDate)
-            today.setHours(0, 0, 0, 0)
-            end.setHours(0, 0, 0, 0)
-            if (end < today) {
-              this.endOrderDate = newValue
-            }
-          }
-        }
-      }
-    },
-    startDliveryDate: {
-      handler (newValue) {
-        if (newValue == null) {
-          this.endDliveryDate = null
-        } else {
-          if (this.endDliveryDate == null) {
-            this.endDliveryDate = newValue
-          } else {
-            const today = new Date(newValue)
-            const end = new Date(this.endDliveryDate)
-            today.setHours(0, 0, 0, 0)
-            end.setHours(0, 0, 0, 0)
-            if (end < today) {
-              this.endDliveryDate = newValue
-            }
-          }
-        }
-      }
-    },
-    startSuccessDelivery: {
-      handler (newValue) {
-        if (newValue == null) {
-          this.endSuccessDelivery = null
-        } else {
-          if (this.endSuccessDelivery == null) {
-            this.endSuccessDelivery = newValue
-          } else {
-            const today = new Date(newValue)
-            const end = new Date(this.endSuccessDelivery)
-            today.setHours(0, 0, 0, 0)
-            end.setHours(0, 0, 0, 0)
-            if (end < today) {
-              this.endSuccessDelivery = newValue
-            }
-          }
-        }
-      }
-    },
-    endOrderDate: {
-      handler (newValue) {
-        if (newValue == null) {
-          this.endOrderDate = this.startOrderDate
-        }
-      }
-    },
-    endDliveryDate: {
-      handler (newValue) {
-        if (newValue == null) {
-          this.endDliveryDate = this.startDliveryDate
-        }
-      }
-    },
-    endSuccessDelivery: {
-      handler (newValue) {
-        if (newValue == null) {
-          this.endSuccessDelivery = this.startSuccessDelivery
-        }
-      }
-    }
-  },
+  watch: {},
   methods: {
     showFilter () {
       this.expandFilter = !this.expandFilter
       // this.onResize()
     },
     showClearInput (val) {
-      if (val == 'customer') {
-        if (this.customerInput == null) {
+      if (val == 'email') {
+        if (this.emailInput == null) {
           return false
-        } else if (this.customerInput.trim().length == 0) {
+        } else if (this.emailInput.trim().length == 0) {
           return false
         } else {
           return true
         }
-      } else if (val == 'orderNo') {
-        if (this.orderInput == null) {
+      } else if (val == 'fullname') {
+        if (this.fullnameInput == null) {
           return false
-        } else if (this.orderInput.trim().length == 0) {
+        } else if (this.fullnameInput.trim().length == 0) {
           return false
         } else {
           return true
@@ -533,10 +226,10 @@ export default {
         } else {
           return true
         }
-      } else if (val == 'manufacturer') {
-        if (this.manufacturerInput == null) {
+      } else if (val == 'userCode') {
+        if (this.userCodeInput == null) {
           return false
-        } else if (this.manufacturerInput.trim().length == 0) {
+        } else if (this.userCodeInput.trim().length == 0) {
           return false
         } else {
           return true
@@ -552,14 +245,14 @@ export default {
       }
     },
     clearInput (val) {
-      if (val == 'customer') {
-        this.customerInput = null
-      } else if (val == 'orderNo') {
-        this.orderInput = null
+      if (val == 'email') {
+        this.emailInput = null
+      } else if (val == 'fullname') {
+        this.fullnameInput = null
       } else if (val == 'search') {
         this.searchInput = null
-      } else if (val == 'manufacturer') {
-        this.manufacturerInput = null
+      } else if (val == 'userCode') {
+        this.userCodeInput = null
       } else if (val == 'company') {
         this.companyInput = null
       }
@@ -573,48 +266,21 @@ export default {
     apply () {
       let result = {
         search: this.searchInput,
-        customer: this.customerInput,
-        manufacturer: this.manufacturerInput,
-        order: this.orderInput,
+        email: this.emailInput,
+        userCode: this.userCodeInput,
+        fullname: this.fullnameInput,
         company: this.companyInput,
-        startOrderDate: this.startOrderDate,
-        endOrderDate: this.endOrderDate,
-        startDliveryDate: this.startDliveryDate,
-        endDliveryDate: this.endDliveryDate,
-        startSuccessDelivery: this.startSuccessDelivery,
-        endSuccessDelivery: this.endSuccessDelivery,
         status: this.statusInput
       }
       this.$emit('apply', result)
     },
     clearFilter () {
       this.searchInput = null
-      this.customerInput = null
-      this.orderInput = null
-      this.manufacturerInput = null
+      this.emailInput = null
+      this.fullnameInput = null
+      this.userCodeInput = null
       this.companyInput = null
-      this.startOrderDate = null
-      this.endOrderDate = null
-      this.startDliveryDate = null
-      this.endDliveryDate = null
-      this.startSuccessDelivery = null
-      this.endSuccessDelivery = null
       this.statusInput = 'all'
-    },
-    disabledSuccessDelivery (date) {
-      const today = new Date(this.startSuccessDelivery)
-      today.setHours(0, 0, 0, 0)
-      return date < today
-    },
-    disabledDliveryDate (date) {
-      const today = new Date(this.startDliveryDate)
-      today.setHours(0, 0, 0, 0)
-      return date < today
-    },
-    disabledOrderDate (date) {
-      const today = new Date(this.startOrderDate)
-      today.setHours(0, 0, 0, 0)
-      return date < today
     }
   }
 }

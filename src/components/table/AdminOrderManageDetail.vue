@@ -78,14 +78,6 @@
             >
               ดูรายละเอียด
             </div>
-            <!-- <div @click="print(row)" style="padding-right:5px">
-              <v-icon
-                v-if="row.status_order_code == 'delivering'"
-                v-text="'mdi-printer'"
-                style="color:#000000;cursor:pointer"
-                size="20"
-              ></v-icon>
-            </div> -->
           </div>
         </div>
       </div>
@@ -98,8 +90,6 @@ export default {
   name: 'detail-table',
   props: {
     data: Array,
-    status: Array
-    // device: String
   },
   data () {
     return {

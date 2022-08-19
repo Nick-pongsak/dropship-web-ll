@@ -200,6 +200,14 @@
                 color: #da0707;
                 background: #ffd6da80;
               }
+              &.active {
+                color: #008525;
+                background: #e3ffeb;
+              }
+              &.inactive {
+                color: #da0707;
+                background: rgba(255, 214, 218, 0.5);
+              }
             }
             .title-card {
               padding-left: 8px;

@@ -10,7 +10,6 @@
       ></admin-order-manage-filter>
       <admin-order-manage-detail
         :data="data"
-        :status="status"
         @view="viewDeatil"
         @submit="submitAction"
         @print="printDetail"
@@ -183,10 +182,20 @@ export default {
     }
   },
   created () {
-    if (Vue.localStorage.get('login') == null) {
-      this.$router.replace('/')
-    } else {
-      this.fetch()
+    if (
+      this.$store.getters.user_profile === null &&
+      sessionStorage.getItem('user_profile') === null
+    ) {
+      this.$store.dispatch('LogOut').then(() => {
+        this.$router.push('/')
+      })
+    } else if (sessionStorage.getItem('user_profile') !== null) {
+      let data = JSON.parse(sessionStorage.getItem('user_profile'))
+      if (data.user_role == 'user') {
+        this.$router.push('/' + 'home')
+      } else {
+        this.fetch()
+      }
     }
   },
   components: {

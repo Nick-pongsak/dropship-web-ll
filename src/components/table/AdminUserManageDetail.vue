@@ -1,16 +1,14 @@
 <template>
   <div class="detail-table" v-resize="onResize">
-    <div class="action-bar" v-if="windowSize > 600">
-      <v-checkbox v-model="checkbox" value="red" hide-details></v-checkbox>
-      <div class="subtitle">Action</div>
-      <div class="btn-filter">Delete</div>
-      <v-btn rounded @click="submit()" class="ok">Submit</v-btn>
-      <div class="count-subtitle">
-        พบ {{ dataPage.length }} รายการ (เลือกแล้ว {{ count }} รายการ)
+    <div class="action-bar" style="padding:8px 23px 8px 0">
+      <div class="count-subtitle" style="width:40%">
+        พบ {{ dataPage.length }} รายการ
       </div>
-    </div>
-    <div class="action-bar" v-else style="padding:5px 0 5px 0">
-      <div class="count-subtitle" style="">พบ {{ dataPage.length }} รายการ</div>
+      <div style="width:60%;text-align:end;">
+        <v-btn rounded @click="submit()" class="ok" style="width:unset"
+          >+ Add Suppiler
+        </v-btn>
+      </div>
     </div>
     <div class="table d-flex flex-wrap justify-start">
       <div
@@ -20,15 +18,8 @@
       >
         <div class="row-card" style="padding-left: 10px;">
           <div style="display:flex;width:100%">
-            <div style="padding-top: 0px;width:7%">
-              <v-checkbox
-                v-model="checkbox"
-                value="red"
-                hide-details
-              ></v-checkbox>
-            </div>
             <div class="title-card" style="padding-top: 5px;">
-              หมายเลขคำสั่งซื้อ
+              รหัสผู้ใช้งาน
             </div>
             <div class="value-card" style="padding-top: 5px;">
               {{ row.order_no }}
@@ -37,29 +28,29 @@
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
-          <div class="title-card">ชื่อลูกค้า</div>
-          <div class="value-card">{{ row.customer_name }}</div>
+          <div class="title-card">ชื่อ</div>
+          <div class="value-card">{{ row.user_name }}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
-          <div class="title-card">ชื่อผู้ผลิต</div>
-          <div class="value-card">{{ row.manufacturer_name }}</div>
+          <div class="title-card">อีเมล</div>
+          <div class="value-card">{{ row.email }}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
-          <div class="title-card">วันที่สั่งซื้อ</div>
-          <div class="value-card">{{ formatDate(row.order_date) }}</div>
+          <div class="title-card">วันที่สร้าง</div>
+          <div class="value-card">{{ formatDate(row.create_time) }}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
-          <div class="title-card">วันที่จัดส่ง</div>
-          <div class="value-card">{{ formatDate(row.delivery_date) }}</div>
+          <div class="title-card">เข้าใช้งานล่าสุด</div>
+          <div class="value-card">{{ formatDate(row.login_time) }}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
-          <div class="title-card">วันที่ส่งสำเร็จ</div>
+          <div class="title-card">อัปเดตล่าสุด</div>
           <div class="value-card">
-            {{ formatDate(row.delivery_success) }}
+            {{ formatDate(row.update_time) }}
           </div>
         </div>
         <div class="row-card" style="margin-top: 11px;">
@@ -78,14 +69,6 @@
             >
               ดูรายละเอียด
             </div>
-            <!-- <div @click="print(row)" style="padding-right:5px">
-              <v-icon
-                v-if="row.status_order_code == 'delivering'"
-                v-text="'mdi-printer'"
-                style="color:#000000;cursor:pointer"
-                size="20"
-              ></v-icon>
-            </div> -->
           </div>
         </div>
       </div>
@@ -97,9 +80,7 @@
 export default {
   name: 'detail-table',
   props: {
-    data: Array,
-    status: Array
-    // device: String
+    data: Array
   },
   data () {
     return {
