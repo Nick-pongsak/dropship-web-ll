@@ -3,7 +3,7 @@
     <div class="action-bar" v-if="windowSize > 600">
       <v-checkbox v-model="checkbox" value="red" hide-details></v-checkbox>
       <div class="subtitle">Action</div>
-      <div class="btn-filter">Print label</div>
+      <div class="btn-filter">Delete</div>
       <v-btn rounded @click="submit()" class="ok">Submit</v-btn>
       <div class="count-subtitle">
         พบ {{ dataPage.length }} รายการ (เลือกแล้ว {{ count }} รายการ)
