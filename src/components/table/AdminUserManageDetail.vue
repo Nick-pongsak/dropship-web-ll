@@ -118,7 +118,7 @@ export default {
     renderStatus (row, mode) {
       if (mode == 'class') {
         return row.user_status == 1 ? 'active' : 'inactive'
-      } else {
+      } else { 
         return row.user_status == 1 ? 'Active' : 'Inactive'
       }
     },
