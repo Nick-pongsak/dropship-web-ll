@@ -264,13 +264,19 @@ export default {
       // console.log(x)
     },
     apply () {
+      let status = ''
+      if (this.statusInput == 'active') {
+        status = 1
+      } else if (this.statusInput == 'inactive') {
+        status = 0
+      }
       let result = {
-        search: this.searchInput,
-        email: this.emailInput,
-        userCode: this.userCodeInput,
-        fullname: this.fullnameInput,
-        company: this.companyInput,
-        status: this.statusInput
+        keyword: this.searchInput == null ? '' : this.searchInput,
+        user_email: this.emailInput == null ? '' : this.emailInput,
+        user_id: this.userCodeInput == null ? '' : this.userCodeInput,
+        name: this.fullnameInput == null ? '' : this.fullnameInput,
+        user_company: this.companyInput == null ? '' : this.companyInput,
+        user_status: status
       }
       this.$emit('apply', result)
     },

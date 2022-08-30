@@ -11,7 +11,7 @@
       </div>
     </div>
     <div v-if="data.length != 0" class="table d-flex flex-wrap justify-center">
-      <div 
+      <div
         :class="checkbox ? 'card selected' : 'card'"
         v-for="(row, index) in data"
         :key="'card-' + index + '-' + row.order_no"
@@ -56,8 +56,8 @@
           <div style="width:7%"></div>
           <div style="width:60%;display:flex;padding-left:9px">
             สถานะ
-            <div :class="'btn-filter ' + row.status_order_code">
-              {{ row.status_order_title }}
+            <div :class="'btn-filter ' + renderStatus(row, 'class')">
+              {{ renderStatus(row, 'text') }}
             </div>
           </div>
           <div style="width:33%;display:flex">
@@ -71,9 +71,14 @@
           </div>
         </div>
       </div>
-  
     </div>
-    <div style="padding-top:8%;font-size: 40px;color: rgba(0, 0, 0, 0.6);"  class="table d-flex flex-wrap justify-center" v-else>ไม่พบข้อมูลที่ค้นหา กรุณากรอกข้อมูลใหม่ </div>
+    <div
+      style="padding-top:8%;font-size: 40px;color: rgba(0, 0, 0, 0.6);"
+      class="table d-flex flex-wrap justify-center"
+      v-else
+    >
+      ไม่พบข้อมูลที่ค้นหา กรุณากรอกข้อมูลใหม่
+    </div>
   </div>
 </template>
 
@@ -110,18 +115,28 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    // formatDate(val) {
-    //   console.log(val)
-    //   let today = new Date(val)
-    //   const year = today.getFullYear()
-    //   const fullYear = year + 543
-    //   const days = today.getDate()
-    //   const monthName = this.monthsShort[today.getMonth()]
-    //   return days + ' ' + monthName + ' ' + fullYear
-    // },
-    formatDate(val) {
-     return val
+    renderStatus (row, mode) {
+      if (mode == 'class') {
+        return row.user_status == 1 ? 'active' : 'inactive'
+      } else {
+        return row.user_status == 1 ? 'Active' : 'Inactive'
+      }
     },
+    formatDate (val) {
+      if (val !== null) {
+        let today = new Date(val)
+        const year = today.getFullYear()
+        const fullYear = year + 543
+        const days = today.getDate()
+        const monthName = this.monthsShort[today.getMonth()]
+        return days + ' ' + monthName + ' ' + fullYear
+      } else {
+        return val
+      }
+    },
+    // formatDate(val) {
+    //  return val
+    // },
     submit () {
       this.$emit('submit', this.dataPage)
     },

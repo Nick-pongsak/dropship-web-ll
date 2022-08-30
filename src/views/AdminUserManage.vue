@@ -37,7 +37,15 @@ export default {
       systemList: [
         { code: 'active', title: 'Active' },
         { code: 'inactive', title: 'Inactive' }
-      ]
+      ],
+      filterData: {
+        keyword: '',
+        user_status: '',
+        user_email: '',
+        user_id: '',
+        user_company: '',
+        name: ''
+      }
     }
   },
   computed: {
@@ -48,7 +56,8 @@ export default {
   watch: {},
   methods: {
     ApplyFilter (val) {
-      console.log('ApplyFilter ==> ', val)
+      this.filterData = val
+      this.fetch()
     },
     viewDeatil (val) {
       this.selectedRow = val
@@ -63,40 +72,34 @@ export default {
       this.$router.push('/AdminCreateAccount')
     },
     fetch () {
-        let arr = []
-        this.$store
-                  .dispatch('getUserList')
-                  .then(res => {
-                    console.log(res.data)
-                    for (let index = 0; index < res.data.length; index++) {
-                      const element =  res.data[index];
-                      arr.push(element)
-                      console.log(element)
-                    }
-                    this.data = arr
-                    this.status = this.statusList
+      let arr = []
+      this.$store.dispatch('getUserList', this.filterData).then(res => {
+        // console.log(res.data)
+        // for (let index = 0; index < res.data.length; index++) {
+        //   const element = res.data[index]
+        //   arr.push(element)
+          // console.log(element)
+        // }
+        this.data = res.data
+        this.status = this.statusList
 
-   
-      // for (let i = 0; i < 13; i++) {
-      //   let random = Math.floor(Math.random() * 2)
-      //   arr.push({
-      //     user_code:'V52086',
-      //     user_name: 'Jainoi Pirompairak ' + i,
-      //     update_time: '2022-09-02',
-      //     login_time: '2022-05-15',
-      //     create_time: '2022-11-02',
-      //     status_order_code: this.systemList[random].code,
-      //     status_order_title: this.systemList[random].title,
-      //     comment: '',
-      //     email: 'jainoi_p@kidmak.com'
-      //   })
-      // }
-      // this.data = arr
-      // this.status = this.statusList
+        // for (let i = 0; i < 13; i++) {
+        //   let random = Math.floor(Math.random() * 2)
+        //   arr.push({
+        //     user_code:'V52086',
+        //     user_name: 'Jainoi Pirompairak ' + i,
+        //     update_time: '2022-09-02',
+        //     login_time: '2022-05-15',
+        //     create_time: '2022-11-02',
+        //     status_order_code: this.systemList[random].code,
+        //     status_order_title: this.systemList[random].title,
+        //     comment: '',
+        //     email: 'jainoi_p@kidmak.com'
+        //   })
+        // }
+        // this.data = arr
+        // this.status = this.statusList
       })
-
-
-     
     }
   },
   created () {
@@ -112,13 +115,13 @@ export default {
       if (data.user_role == 'user') {
         this.$router.push('/' + 'home')
       } else {
-              // this.$store
-              //     .dispatch('getUserList')
-              //     .then(res => {
-              //       console.log(res.data)
-              //       this.data = res.data
-              //       console.log(this.data)
-              //   })
+        // this.$store
+        //     .dispatch('getUserList')
+        //     .then(res => {
+        //       console.log(res.data)
+        //       this.data = res.data
+        //       console.log(this.data)
+        //   })
         this.fetch()
       }
     }
