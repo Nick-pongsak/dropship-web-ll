@@ -7,12 +7,14 @@ import app from './modules/app.store'
 import login from './modules/login.store'
 import checkemail from './modules/checkemail.store'
 import checkforgot from './modules/checkforgot.store'
+import admin from './modules/admin.store'
 
 export default new Vuex.Store({
   modules: {
     app,
     login,
     checkemail,
-    checkforgot
+    checkforgot,
+    admin
   }
 })

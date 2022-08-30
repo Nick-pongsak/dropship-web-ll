@@ -14,21 +14,21 @@
     </div>
     <div class="box-right">
       <div :style="{'transform' : this.tranformScale}" class="box-inp">
-        <div v-if="stepForgot != 3" class="f-w1000 txt-forgot font-Bai-Jamjuree">Forgot Password</div>
-        <div v-else class="f-w1000 txt-forgot2 font-Bai-Jamjuree">Forgot Password</div>
+        <div v-if="stepForgot != 3" class="f-w1000 txt-forgot font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
+        <div v-else class="f-w1000 txt-forgot2 font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
 
 <!-- Enter your E-mail  -->
 <!-- {{this.loc_email_forgot}} -->
           <div v-if="stepForgot == 1" style="display: contents;">
-               <div class="pt-5 txt-detail font-Bai-Jamjuree">Enter your E-mail and we’ll send you a</div>
-                <div class="txt-detail font-Bai-Jamjuree">Link to reset you password</div>
+               <div class="pt-5 txt-detail font-Bai-Jamjuree">กรุณากรอกอีเมลที่ทำการลงทะเบียนไว้เพื่อทำการรีเซ็ตรหัสผ่านใหม่ของคุณ</div>
+                <!-- <div class="txt-detail font-Bai-Jamjuree">Link to reset you password</div> -->
                 <div class="pt-5 font-Bai-Jamjuree">
                   <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_email" placeholder="Please input your E-mail address " class="pl-5 inp-email" type="text" name="email" id="email">
                 </div>
                 <div v-if="invalid_email" class="pt-3 txt-wrong-email"><span class="mdi mdi-alert-octagon"></span>Please enter  a valid  email  address</div>
                 <div v-if="undefined_email" class="pt-3 txt-wrong-email"><span class="mdi mdi-alert-octagon"></span>Couldn’t find  your email</div>
-                <div class="pt-5 font-Bai-Jamjuree"><input  @click="send_email"  class="btn-send_email" type="button" value="Send link to E-mail"></div>
-                <div @click="btn_back" class="txt-back pt-5 font-Bai-Jamjuree">back</div>
+                <div class="pt-5 font-Bai-Jamjuree"><input  @click="send_email"  class="font-Bai-Jamjuree btn-send_email" type="button" value="ยืนยัน"></div>
+                <div @click="btn_back" class="txt-back pt-5 font-Bai-Jamjuree">กลับหน้าเข้าสู่ระบบ</div>
          </div>
          <div v-if="stepForgot == 2" style="display: contents;">
                <div class="pt-5 txt-detail font-Bai-Jamjuree">E-mail send</div>

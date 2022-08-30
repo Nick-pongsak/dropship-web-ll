@@ -37,6 +37,7 @@
 
 
       .box-1{
+        
         height: 80%;
         background-color: #EFF6FF;
         display: flex;
@@ -50,7 +51,7 @@
       }
 
       .right{ 
-        padding:0 0 3% 0;
+        padding:0 3% 0 0;
         width: 25%;
       }
 
@@ -85,13 +86,21 @@
 
         .input-style{
           // border:1px solid #000;
-          padding:0 0 0 5px;
+          padding:0 0 0 10px;
           border-radius: 8px;
           height: 34px;
           width: 100%;
         }
-      }
+       .v-dialog {
+        .title-dialog{
+          background-color: red;
+          color:red;
+        }
+       }
 
+     
+      }
+    
 
       .box-2{
        height: 20%;
@@ -148,7 +157,7 @@
       }
       }
       
-
+  
 
      
     }

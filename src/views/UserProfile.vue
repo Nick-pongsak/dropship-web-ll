@@ -33,7 +33,7 @@
                 :style="{
                   'border':this.wrong.invalid_email ? '2px solid red': '',
                   'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
-                :disabled="isDisabled || input_cheang_password" v-model="profile.email"  class="input-style">
+                :disabled="isDisabled || input_cheang_password" v-model="user_info.user_email"  class="input-style">
               <div v-if="this.wrong.invalid_email" class="txt-wrong"><span class="mdi mdi-alert-octagon"></span>Please enter  a valid  email  address</div>
             
             </div>
@@ -45,7 +45,7 @@
               <div class="detail">
                 <input 
                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
-                :disabled="isDisabled || input_cheang_password" v-model="profile.company" class="input-style">
+                :disabled="isDisabled || input_cheang_password" v-model="user_info.user_company" class="input-style">
               </div>
             </div>
          </b-col>
@@ -58,10 +58,10 @@
               <div class="head">รหัสผ่าน <span style="color:red">*</span></div>
               <div class="detail">
                 <md-field :md-toggle-password="false" :style="{'background-color':isDisabled? '#DADADA':'#fff'}" class="input-style"  style="min-height:34px ;margin:0;top:0 ; left:0" >
-                    <md-input  :disabled="true" class="input-style"   :type="type_password" v-model="profile.password"></md-input>
+                    <md-input  :disabled="true" class="input-style"   type="password" v-model="pass"> </md-input>
                 <div v-if="isDisabled ">
-                  <span v-if=" type_password == 'password'" style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('password')"  class="md-suffix mdi mdi-eye-off"></span>
-                  <span v-else style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('password')" class="md-suffix mdi mdi-eye"></span>
+                  <span  style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('password')"  class="md-suffix mdi mdi-eye-off"></span>
+                  <!-- <span  style="cursor: pointer;padding:0 10px 0 0;" @click="cheang('password')" class="md-suffix mdi mdi-eye"></span> -->
                  </div>
 
                  <div style="display: flex;"  v-else>
@@ -86,7 +86,7 @@
               <div class="detail" >
                 <input 
                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
-                :disabled="isDisabled || input_cheang_password" v-model="profile.tel" class="input-style">
+                :disabled="isDisabled || input_cheang_password" v-model="user_info.user_phone" class="input-style">
               </div>
             </div>
          </b-col>
@@ -112,7 +112,7 @@
               <div class="detail">
                  <input 
                  :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
-                 :disabled="isDisabled || input_cheang_password" v-model="profile.first_name" class="input-style">
+                 :disabled="isDisabled || input_cheang_password" v-model="user_info.user_name" class="input-style">
               </div>
             </div>
         </b-col>
@@ -122,7 +122,7 @@
               <div class="detail" >
                 <input 
                 :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
-                :disabled="isDisabled || input_cheang_password" v-model="profile.tel2" class="input-style">
+                :disabled="isDisabled || input_cheang_password" v-model="user_info.user_phone_secendary" class="input-style">
               </div>
             </div>
          </b-col>
@@ -148,7 +148,7 @@
               <div class="detail">
                  <input 
                  :style="{'background-color':isDisabled || input_cheang_password? '#DADADA':'#fff'}"
-                 :disabled="isDisabled || input_cheang_password" v-model="profile.last_name" class="input-style">
+                 :disabled="isDisabled || input_cheang_password" v-model="user_info.user_name" class="input-style">
               </div>
             </div>
         </b-col>
@@ -156,7 +156,7 @@
            <div style="display: flex;align-items: flex-start;" class="md-layout">
               <div  class="head">ที่อยู่ <span style="color:red">*</span></div>
                 <div class="detail" >
-                  <textarea :disabled="true" :style="{'background-color':'#DADADA'}" :value="profile.address" style="border-radius: 8px;min-height:100px;width: 100%;padding:5px;"   name="w3review" rows="4">
+                  <textarea :disabled="true" :style="{'background-color':'#DADADA'}" :value="user_info.user_address" style="border-radius: 8px;min-height:100px;width: 100%;padding:5px;"   name="w3review" rows="4">
                 
                   </textarea>
                     <!-- <input
@@ -475,6 +475,7 @@ export default {
       dialog:false,
       dialog_save:false,
       input_cheang_password:false,
+      pass:'999999999',
       type_password:'password',
       type_new_password:'password',
       type_confrim_new_password:'password',
@@ -503,6 +504,10 @@ export default {
     loading () {
       return this.$store.getters.isLoading
     },
+    user_info(){
+
+      return JSON.parse(Vue.localStorage.get('user_profile'))
+    }
     
   },
   watch: {},

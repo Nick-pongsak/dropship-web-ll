@@ -56,7 +56,7 @@ import VueI18n from 'vue-i18n'
 import locales from './locales'
 Vue.use(VueI18n)
 var i18n = new VueI18n({
-  locale: 'th',
+  locale: 'wrong',
   messages: locales
 })
 

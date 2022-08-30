@@ -26,6 +26,7 @@ const store = {
           let res = response.data.success.data
           sessionStorage.setItem('user_profile', JSON.stringify(res))
           sessionStorage.setItem('token_seesion', res.access_token)
+          console.log(response.data)
           commit("SetUserProfile", res)
           commit("SetAccessToken", res.access_token)
 

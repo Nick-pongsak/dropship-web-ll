@@ -6,7 +6,7 @@
         :style="{ height: logo, width: width }"
       />
       <div
-        v-if="info.type == 'user'"
+        v-if="info.user_role == 'Supplier'"
         @click="action('home')"
         class="sys-name"
         :style="{ 'font-size': sysName }"
@@ -24,7 +24,7 @@
     </div>
 
     <div
-      v-if="info.type == 'user'"
+      v-if="info.user_role == 'Supplier'"
       style="color:#fff;display: flex;width:50%"
       class="right-header justify-end"
     >
@@ -35,15 +35,15 @@
       </div>
       <md-menu md-size="medium" md-align-trigger>
         <md-button style="text-transform:none" md-menu-trigger
-          >{{ info.frist_name }}{{ ' ' }}{{ info.last_name
+          >{{ info.user_name }}{{ ' ' }}{{ info.user_surname
           }}<span class="mdi mdi-menu-down"></span
         ></md-button>
         <md-menu-content class="option-detail">
           <md-menu-item @click="user_profile" style="cursor: pointer;"
-            >Setting Profile
+            >ข้อมูลส่วนตัว
           </md-menu-item>
           <md-menu-item @click="logout" style="cursor: pointer;"
-            >Log Out</md-menu-item
+            >ออกจากระบบ</md-menu-item
           >
         </md-menu-content>
       </md-menu>
@@ -69,7 +69,7 @@
             <div
               style="width:55%;color:#000; display: flex;align-items: center;"
             >
-              {{ info.frist_name }}
+              {{ info.user_name }}
             </div>
             <div style="width:25%;color:#000">
               <span class="mdi mdi-account-circle mdi-24px"></span>
@@ -89,20 +89,20 @@
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
           >
-            HOME
+            หน้าหลัก
           </md-menu-item>
 
           <md-menu-item
-            @click="action('AdminUserManage')"
+            @click="action('adminProfile')"
             :style="{
-              'background-color': active_menu('AdminUserManage')
+              'background-color': active_menu('adminProfile')
                 ? '#2372E7'
                 : '',
-              color: active_menu('AdminUserManage') ? '#fff' : ''
+              color: active_menu('adminProfile') ? '#fff' : ''
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;color:#fff;background-color: #2372E7;cursor: pointer;border-radius:5px;"
           >
-            User management
+          จัดการบัญชี
           </md-menu-item>
 
           <md-menu-item
@@ -115,24 +115,24 @@
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
           >
-            Order management
+          จัดการ การสั่งซื้อสินค้า
           </md-menu-item>
 
           <md-menu-item
-            @click="action('adminProfile')"
+            @click="action('AdminUserManage')"
             :style="{
-              'background-color': active_menu('adminProfile') ? '#2372E7' : '',
-              color: active_menu('adminProfile') ? '#fff' : ''
+              'background-color': active_menu('AdminUserManage') ? '#2372E7' : '',
+              color: active_menu('AdminUserManage') ? '#fff' : ''
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
           >
-            Account management
+          จัดการผู้ใช้งาน
           </md-menu-item>
 
           <md-menu-item
             @click="logout"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
-            >Log Out</md-menu-item
+            >ออกจากระบบ</md-menu-item
           >
         </md-menu-content>
       </md-menu>
