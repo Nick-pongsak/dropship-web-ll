@@ -52,7 +52,7 @@ const store = {
     getDataUserCreate({ state, commit, dispatch }, data) {
       return new Promise((resolve, reject) => {
         let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
-        axios.post(`${url}/apiweb/api/auth/get-data-user`, { user_role: data.value }, {
+        axios.post(`${url}/apiweb/api/get-data-user`, { user_role: data.value }, {
           headers: {
             'Content-Type': 'application/json',
             "Authorization": `Bearer ${Profile.access_token}`,
@@ -82,6 +82,28 @@ const store = {
       })
 
     },
+   
+    changePwdStatus({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/change-pwd-status`, {
+          user_id: data.user_id,
+          new_password: data.new_password,
+          user_status: data.user_status,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
 
     GetProvince({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
@@ -105,7 +127,50 @@ const store = {
       })
 
     },
+    updateProfile({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/update-profile`, {
+          user_id:data.user_id,
+          user_email:data.user_email,
+          user_name:data.user_name,
+          user_surname:data.user_surname,
+          user_phone:data.user_phone,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
 
+    },
+    changePassword({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/change-password`, {
+          user_id:data.user_id,
+          old_password:data.old_password,
+          new_password:data.new_password,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
   },
   getters: {
     user_create_profile(state) {

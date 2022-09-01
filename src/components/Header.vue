@@ -15,16 +15,15 @@
       </div>
       <div
         v-else
-        @click="action('adminHome')"
+        @click="action(info.user_role == 'supplier' ? 'home' : 'adminHome')"
         class="sys-name"
         :style="{ 'font-size': sysName }"
       >
         Dropship portal
       </div>
     </div>
-
     <div
-      v-if="info.user_role == 'Supplier'"
+      v-if="info.user_role == 'supplier'"
       style="color:#fff;display: flex;width:50%"
       class="right-header justify-end"
     >

@@ -28,7 +28,7 @@
         <div class="row-card">
           <div style="width:7%"></div>
           <div class="title-card">ชื่อ</div>
-          <div class="value-card">{{ row.user_name }}</div>
+          <div class="value-card">{{ row.user_name + ' '+ row.user_surname }}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
@@ -124,12 +124,30 @@ export default {
     },
     formatDate (val) {
       if (val !== null) {
+        let hours= ''
+        let min= ''
         let today = new Date(val)
         const year = today.getFullYear()
         const fullYear = year + 543
         const days = today.getDate()
+        const h = today.getHours()
+        const m = today.getMinutes()
         const monthName = this.monthsShort[today.getMonth()]
-        return days + ' ' + monthName + ' ' + fullYear
+
+        if(h < 10){
+          hours = '0' + h
+          console.log('a')
+        }else {
+          hours = h
+        }
+
+        if(m < 10){
+          min = '0' + m
+          console.log('a')
+        }else {
+          min = m
+        }
+        return days + ' ' + monthName + ' ' + fullYear + '  '+hours + ':' + min + ' น.'
       } else {
         return val
       }

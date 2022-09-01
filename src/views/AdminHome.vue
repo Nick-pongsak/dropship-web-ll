@@ -83,8 +83,10 @@ export default {
       })
     } else if (sessionStorage.getItem('user_profile') !== null) {
       let data = JSON.parse(sessionStorage.getItem('user_profile'))
-      if (data.user_role == 'user') {
+      if (data.user_role == 'supplier') {
         this.$router.push('/' + 'home')
+      }else {
+        console.log('ADmin')
       }
     }
   },
