@@ -5,7 +5,7 @@
   >
     <div v-show="!showDialog">
       <admin-order-manage-filter
-        :status="status"
+        :status="statusList"
         @apply="ApplyFilter"
       ></admin-order-manage-filter>
       <admin-order-manage-detail
@@ -23,6 +23,10 @@
       @submit="submitDialog"
       @print="printDialog"
     ></admin-order-manage-detail-dialog>
+
+    <token-dialog
+    v-if="tokenExpired"
+    ></token-dialog>
   </div>
 </template>
 
@@ -31,14 +35,31 @@ import Vue from 'vue'
 import OrderFilter from '@/components/filter/AdminOrderManageFilter'
 import detailTable from '@/components/table/AdminOrderManageDetail'
 import DetailDialog from '@/components/table/AdminOrderManageDetailDialog'
+import TokenDetailDialog from '@/components/dialog/TokenDialog'
+
 export default {
   name: 'admin-order-manage',
   data () {
     return {
       data: [],
+      tokenExpired:false,
       status: [],
       selectedRow: {},
       showDialog: false,
+      filterData: {
+        company: '',
+        customer: '',
+        endDliveryDate: '',
+        endOrderDate: '',
+        endSuccessDelivery: '',
+        manufacturer: '',
+        order: '',
+        search: '',
+        startDliveryDate: '',
+        startOrderDate: '',
+        startSuccessDelivery: '',
+        status: "all"
+      },
       statusList: [
         { code: 'all', title: 'All' },
         { code: 'new', title: 'New' },
@@ -58,7 +79,9 @@ export default {
   watch: {},
   methods: {
     ApplyFilter (val) {
+      this.filterData = val
       console.log('ApplyFilter ==> ', val)
+      this.fetch()
     },
     viewDeatil (val) {
       this.selectedRow = val
@@ -78,7 +101,7 @@ export default {
       let val = result.event
       if (val == 'print') {
       } else {
-        this.selectedRow.status_order_code = val
+        this.selectedRow.order_status = val
         let status = this.statusList.filter(a => a.code == val)
         this.selectedRow.status_order_title =
           status.length > 0 ? status[0].title : ''
@@ -89,11 +112,31 @@ export default {
     },
     submitAction (val) {
       console.log('submitAction ==> ', val)
+
+      this.$store.dispatch('disableOrderAdmin', val)
+      .then(res => {
+        this.fetch ()
+      })
+      .catch(error => {})
     },
     printDetail (val) {
       console.log('printDetail ==> ', val)
     },
     fetch () {
+      this.$store.dispatch('getOrderAdmin', this.filterData).then(res => {
+        console.log(res.success.data)
+
+        this.data = res.success.data
+        this.status = this.statusList
+        // this.data = res.data
+        // this.status = this.statusList
+      })
+      .catch(error => { 
+        if(error.response.status == 401){
+          this.tokenExpired = true
+          console.log('Error 401')
+        }
+       })
       let arr = []
       for (let i = 0; i < 13; i++) {
         let random = Math.floor(Math.random() * 6)
@@ -177,8 +220,8 @@ export default {
           ]
         })
       }
-      this.data = arr
-      this.status = this.statusList
+      // this.data = arr
+      // this.status = this.statusList
     }
   },
   created () {
@@ -201,7 +244,8 @@ export default {
   components: {
     'admin-order-manage-filter': OrderFilter,
     'admin-order-manage-detail': detailTable,
-    'admin-order-manage-detail-dialog': DetailDialog
+    'admin-order-manage-detail-dialog': DetailDialog,
+    'token-dialog': TokenDetailDialog,
   },
   mounted () {}
 }

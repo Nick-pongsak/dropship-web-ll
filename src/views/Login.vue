@@ -63,6 +63,71 @@
         <img  :style="{'left':screenWidth*0.5 + 'px'}" v-if="screenDevice === 'desktop'"  class="img-login" src="@/assets/images/person-login.png">
       </div>
     </div>
+
+    <v-dialog
+      v-model="dialogPdpa"
+      persistent
+      max-width="100%"
+      style="height:100%"
+      id="dialogCinfrim"
+    >
+    <v-card style="padding: 0;">
+        <v-card-text  style="padding: 0;" >
+          <v-container style="max-width: 100%;" >
+            <div style="margin:10px 20px 0 0;display: flex;justify-content: flex-end;">
+              <v-icon
+              @click="close_PDPA"
+                v-text="'mdi-close'"
+                style="color:#000000;cursor:pointer"
+                size="24">
+              </v-icon>
+            </div>
+        <img  class="img-login" src="@/assets/pdf/PDPA-1.png">
+          <img  class="img-login" src="@/assets/pdf/PDPA-2.png">
+          <img  class="img-login" src="@/assets/pdf/PDPA-3.png">
+          <img  class="img-login" src="@/assets/pdf/PDPA-4.png">
+          <img  class="img-login" src="@/assets/pdf/PDPA-5.png">
+          <img  class="img-login" src="@/assets/pdf/PDPA-6.png">
+          <img  class="img-login" src="@/assets/pdf/PDPA-7.png">
+          </v-container>
+        </v-card-text>
+       
+      </v-card>
+    </v-dialog>
+
+    <v-snackbar
+    style="padding:0;margin:4.5% 0 0 0;"
+      v-model="snackbar"
+      :multi-line="multiLine"
+      :color="color"
+      :timeout="timeout"
+    >
+    <div style="
+        align-items:center;
+        justify-content: center;
+        background-color:#EFF6FF;
+        font-family: 'Bai Jamjuree', sans-serif;
+        border-radius: 4px;
+        height: 100%;" 
+      class="md-layout">
+        <div 
+         style="display: flex;justify-content: center;align-items: center;font-size:1em;color:#000;height:100%;width:95%;">
+        เว็บไซต์มีการเก็บข้อมูลความเป็นส่วนบุคคล เพื่อใช้อ้างอิงการดำเนินกิจกรรมของเว็ปไซต์ ทั้งนี้สามารถอ่านข้อมูลเพิ่มเติมได้ที่ <span @click="dialogPdpa = true" style="text-decoration: underline;color:#0085D1;cursor: pointer;margin:0 0 0 10px;" href="">นโยบายความเป็นส่วนตัว</span>
+        </div>
+
+        <div style="width:5%;">
+          <v-icon
+           @click="snackbar = false"
+            v-text="'mdi-close'"
+            style="color:#000000;cursor:pointer"
+            size="24"
+          ></v-icon>
+        
+        </div>
+    </div>
+    
+     
+    </v-snackbar>
   </div>
 </template>
 
@@ -76,6 +141,15 @@ export default {
   components: { Footers },
   data () {
     return {
+      multiLine: true,
+      snackbar: true,
+      textSnack: '',
+      color: '#fff',
+      timeout: 9999999,
+
+
+
+      dialogPdpa:false,
       validateUsername:null,
       validatePassword:null,
       validate:null,
@@ -156,6 +230,9 @@ export default {
         
       }
     },
+    close_PDPA(){
+      this.dialogPdpa = false
+    },
     forgot () {
       Vue.localStorage.set('ACTION_FORGOT_STEP', '1')
       this.$router.push('/' + 'forgotpassword')
@@ -190,6 +267,7 @@ export default {
     }
   },
   created () {
+
     if (sessionStorage.getItem('token_seesion') !== null) {
       this.$store.dispatch('LogOut')
     }
@@ -204,4 +282,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

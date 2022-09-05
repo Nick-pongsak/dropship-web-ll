@@ -646,13 +646,13 @@ export default {
       this.radio = val
     },
     renderBtn () {
-      if (this.data.status_order_code == 'new') {
+      if (this.data.order_status == 'New') {
         return 'Accept'
-      } else if (this.data.status_order_code == 'accept') {
+      } else if (this.data.order_status == 'Accept') {
         return 'Delivery'
-      } else if (this.data.status_order_code == 'delivery') {
+      } else if (this.data.order_status == 'Delivery') {
         return 'Delivering'
-      } else if (this.data.status_order_code == 'delivering') {
+      } else if (this.data.order_status == 'Delivering') {
         return 'Complete'
       } else {
         return ''

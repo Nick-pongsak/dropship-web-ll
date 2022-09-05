@@ -82,6 +82,25 @@ const store = {
       })
 
     },
+    disableOrderAdmin({ state, commit, dispatch }, data) {
+      return new Promise((resolve, reject) => {
+        console.log("getUserList ==>", JSON.stringify(data))
+        let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+        axios.post(`${url}/apiweb/api/disable-order-admin`, {
+          purchase_id: JSON.stringify(data)
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          resolve(response);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
    
     changePwdStatus({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
@@ -113,6 +132,41 @@ const store = {
           zip_code: data.zip_code,
           subdistrict_id: data.subdistrict_id,
           district_id: data.district_id
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
+    getOrderAdmin({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/get-order-admin`, {
+          keyword:data.search,
+          cus_name:data.customer,
+          sup_name:data.manufacturer,
+          company:data.company,
+          purchase_id:data.order,
+
+
+          start_order_date:data.startOrderDate,
+          end_order_date:data.endOrderDate,
+
+          start_delivery_date:data.startDliveryDate,
+          end_delivery_date:data.endDliveryDate,
+
+          start_success_date:data.startSuccessDelivery,
+          end_success_date:data.endSuccessDelivery,
+
+          order_status:data.status == 'all'? '' : data.status
         }, {
           headers: {
             'Content-Type': 'application/json',

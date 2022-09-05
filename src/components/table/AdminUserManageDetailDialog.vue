@@ -56,7 +56,7 @@
                 <div class="detail" style="">
                   <md-field style="width: 100%;margin:0;min-height:0px;padding:0">
                     <md-input 
-                      v-model="data.user_name +' '+ data.user_surname" 
+                       v-model="data.user_name +' '+ data.user_surname" 
                       :disabled="true" 
                       class="input-style">
                   </md-input>

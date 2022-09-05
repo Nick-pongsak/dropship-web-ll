@@ -1,29 +1,40 @@
 <template>
   <div class="detail-table" v-resize="onResize">
     <div class="action-bar" v-if="windowSize > 600">
-      <v-checkbox v-model="checkbox" value="red" hide-details></v-checkbox>
+      <v-checkbox  v-model="checkbox_all" value="red" hide-details></v-checkbox>
       <div class="subtitle">Action</div>
-      <div class="btn-filter">Delete</div>
-      <v-btn rounded @click="submit()" class="ok">Submit</v-btn>
+      <div class="btn-filter">Disable</div>
+      <v-btn :disabled="this.select_order.length == 0 ? true : false" rounded @click="confirmDisable = true " class="ok">Submit</v-btn>
       <div class="count-subtitle">
-        พบ {{ dataPage.length }} รายการ (เลือกแล้ว {{ count }} รายการ)
+        พบ {{ data.length }} รายการ (เลือกแล้ว {{ this.select_order.length }} รายการ)
       </div>
     </div>
     <div class="action-bar" v-else style="padding:5px 0 5px 0">
-      <div class="count-subtitle" style="">พบ {{ dataPage.length }} รายการ</div>
+      <div class="count-subtitle" style="">พบ {{ data.length }} รายการ</div>
     </div>
-    <div class="table d-flex flex-wrap justify-center">
+    <div 
+     class="table d-flex flex-wrap"
+    :class="data.length < 3 ? '' : 'justify-center'"
+    >
       <div
-        :class="checkbox ? 'card selected' : 'card'"
-        v-for="(row, index) in dataPage"
-        :key="'card-' + index + '-' + row.order_no"
+        :class="[ row.disable != 1  && find(row.purchase_id) &&  row.order_status == 'Complete'? 'card selected' : 'card' , row.disable == 1 ? 'card disable' : '' ]"
+        v-for="(row, index) in data"
+        :key="'card-' + index + '-' + row.purchase_id"
       >
-        <div class="row-card" style="padding-left: 10px;">
+        <div class="row-card" style=";padding-left: 10px;">
           <div style="display:flex;width:100%">
             <div style="padding-top: 0px;width:7%">
               <v-checkbox
-                v-model="checkbox"
-                value="red"
+              v-if="row.disable == 0 && row.order_status != 'Complete'"
+              :disabled="true"
+                v-model="checkbox_true"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                v-else-if="row.disable == 0"
+                @change="push(row.purchase_id)"
+                :v-model="row.purchase_id"
+                :value="row"
                 hide-details
               ></v-checkbox>
             </div>
@@ -31,19 +42,19 @@
               หมายเลขคำสั่งซื้อ
             </div>
             <div class="value-card" style="padding-top: 5px;">
-              {{ row.order_no }}
+              {{ row.purchase_id }}
             </div>
           </div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
           <div class="title-card">ชื่อลูกค้า</div>
-          <div class="value-card">{{ row.customer_name }}</div>
+          <div class="value-card">{{ row.cus_name }} {{row.cus_surname}}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
           <div class="title-card">ชื่อผู้ผลิต</div>
-          <div class="value-card">{{ row.manufacturer_name }}</div>
+          <div class="value-card">{{ row.sup_name }} {{row.sup_surname}}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
@@ -53,21 +64,21 @@
         <div class="row-card">
           <div style="width:7%"></div>
           <div class="title-card">วันที่จัดส่ง</div>
-          <div class="value-card">{{ formatDate(row.delivery_date) }}</div>
+          <div class="value-card">{{ formatDate(row.order_delivery_date) }}</div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
           <div class="title-card">วันที่ส่งสำเร็จ</div>
           <div class="value-card">
-            {{ formatDate(row.delivery_success) }}
+            {{ formatDate(row.order_success_date) }}
           </div>
         </div>
         <div class="row-card" style="margin-top: 11px;">
           <div style="width:7%"></div>
           <div style="width:60%;display:flex;padding-left:9px">
             สถานะ
-            <div :class="'btn-filter ' + row.status_order_code">
-              {{ row.status_order_title }}
+            <div :class="'btn-filter ' + row.order_status.toLowerCase()">
+              {{ row.order_status }}
             </div>
           </div>
           <div style="width:33%;display:flex">
@@ -82,6 +93,39 @@
         </div>
       </div>
     </div>
+
+    <v-dialog
+      v-model="confirmDisable"
+      max-width="454"
+      width="454"
+    >
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:center">
+              <img
+                class="img"
+                src="@/assets/images/no.png"
+              />
+            </div>
+            <div style="padding:0px 10px">คุณต้องการ <span style="font-weight: bold;">ลบหมายเลขคำสั่งซื้อใ</span>ช่หรือไม่</div>
+          </div>
+          <div class="bg-confirm-action">
+            <div>
+              <v-btn
+                rounded
+                @click="submit()"
+                class="ok"
+                style="margin-right:45px"
+                >ใช่</v-btn
+              >
+              <v-btn rounded @click="confirmDisable = false" class="clear">ไม่</v-btn>
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -93,8 +137,12 @@ export default {
   },
   data () {
     return {
+      confirmDisable:false,
+      select_order:[],
       windowSize: 1366,
       checkbox: false,
+      checkbox_all:false,
+      checkbox_true:true,
       count: 0,
       dataPage: this.data,
       deviceType: null,
@@ -118,16 +166,62 @@ export default {
   computed: {},
   watch: {},
   methods: {
+  push( param ){
+    if(this.select_order.length == 0){
+      // console.log('push')
+      this.select_order.push(param)
+    }else {
+      const found = this.select_order.find(element => element == param);
+      console.log(found)
+      if(!found){
+        this.select_order.push(param)
+      }else {
+        this.select_order = this.select_order.filter(x => x !== param);
+        // console.log('pop')
+      }
+    }
+    // console.log(this.select_order)
+  },
     formatDate (val) {
-      let today = new Date(val)
-      const year = today.getFullYear()
-      const fullYear = year + 543
-      const days = today.getDate()
-      const monthName = this.monthsShort[today.getMonth()]
-      return days + ' ' + monthName + ' ' + fullYear
+      if (val !== null) {
+        let hours = ''
+        let min = ''
+        let today = new Date(val)
+        const year = today.getFullYear()
+        const fullYear = year + 543
+        const days = today.getDate()
+        const h = today.getHours()
+        const m = today.getMinutes()
+        const monthName = this.monthsShort[today.getMonth()]
+
+        if(h < 10){
+          hours = '0' + h
+        }else {
+          hours = h
+        }
+
+        if(m < 10){
+          min = '0' + m
+        }else {
+          min = m
+        }
+
+        return days + ' ' + monthName + ' ' + fullYear + '  '+hours + ':' + min + ' น.'
+      } else {
+        return val
+      }
     },
     submit () {
-      this.$emit('submit', this.dataPage)
+      this.confirmDisable = false
+      this.$emit('submit', this.select_order)
+    },
+    find( param ){
+      const found = this.select_order.find(element => element == param);
+      if(!found){
+        return false
+      }else {
+        return true
+      }
     },
     view (row) {
       this.$emit('view', row)

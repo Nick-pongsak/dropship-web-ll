@@ -1003,7 +1003,7 @@ export default {
         }else {
           this.Error.errorClassEmail = '',
           this.Error.errorClassEmail_txt = ''
-          return TextTrackCue
+          return true
         }
       }
     

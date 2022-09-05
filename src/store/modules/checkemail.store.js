@@ -1,10 +1,6 @@
 import axios from 'axios';
 const url = `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
 const debug = process.env.VUE_APP_PRODUCTION_STATUS;
-import Vue from 'vue'
-import router from '../../router'
-import checkemailservice from '../../services/checkemail.service'
-
 
 const store = {
   state: {
@@ -17,15 +13,26 @@ const store = {
   },
   actions: {
 
-    checkEmail: ({ commit, state }, ) => {
-        checkemailservice.checkEmail()
-          .then((response) => {
-             console.log(response)
-          })
-          .catch((error) => console.log('checkEmail'));
+    checkEmail({ state, commit, dispatch }, data) {
+      console.log("🚀 ~ file: checkemail.store.js ~ line 21 ~ checkEmail ~ data", data)
+ 
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/auth/checkemail`, {
+          user_email: data
+          
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }).then(response => {
+          console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
 
-      }
-
+    },
   },
   getters: {
     status_(state) {
