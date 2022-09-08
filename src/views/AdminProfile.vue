@@ -16,7 +16,7 @@
       <b-row >
         <b-col  xl>
           <div  class="md-layout">
-            <div class="head">Admin ID</div>
+            <div class="head">รหัสผู้ใช้งาน</div>
             <div class="detail" style="">{{this.profile.user_id}}</div>
           </div>
         </b-col>
@@ -571,6 +571,23 @@ export default {
       }
     },
     cancel(){
+      this.profile = JSON.parse(Vue.localStorage.get('user_profile'))
+
+      this.Error.errorClassPwd = ''
+      this.Error.errorClassPwd_txt = ''
+      this.Error.errorClassNewPwd = ''
+      this.Error.errorClassNewPwd_txt = ''
+      this.Error.errorClassConfNewPwd = ''
+      this.Error.errorClassConfNewPwd_txt = ''
+      this.Error.errorClassFirstName = ''
+      this.Error.errorClassFirstName_txt = ''
+      this.Error.errorClassLastName = ''
+      this.Error.errorClassLasttName_txt = ''
+      this.Error.errorClassTel = ''
+      this.Error.errorClassTel_txt = ''
+      this.Error. errorClassEmail = ''
+      this.Error.errorClassEmail_txt = ''
+
       this.edit_val.val_pass = '999999'
       this.isDisabled = true
       this.input_cheang_password = false

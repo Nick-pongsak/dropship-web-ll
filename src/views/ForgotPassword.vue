@@ -245,7 +245,14 @@ export default {
                   }else {
                     Vue.localStorage.set('EMAIL-FORGOT',this.txt_email)
                     Vue.localStorage.set('ACTION_FORGOT_STEP',2)
-                    location.reload();
+                    console.log('Send')
+
+                    this.$store.dispatch('sendMail', 'piyathat_j@dhas.com')
+                      .then(res => {
+                          console.log(res)
+                      })
+                      .catch(error => {})
+                    // location.reload();
                     this.Error.errorClassEmail = '',
                     this.Error.errorClassEmail_txt = ''
                   }

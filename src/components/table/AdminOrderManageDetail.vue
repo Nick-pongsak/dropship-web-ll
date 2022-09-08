@@ -1,7 +1,8 @@
 <template>
   <div class="detail-table" v-resize="onResize">
+    {{this.select_order}}
     <div class="action-bar" v-if="windowSize > 600">
-      <v-checkbox  v-model="checkbox_all" value="red" hide-details></v-checkbox>
+      <v-checkbox   @change="push_all()"  v-model="checkbox_all" value="red" hide-details></v-checkbox>
       <div class="subtitle">Action</div>
       <div class="btn-filter">Disable</div>
       <v-btn :disabled="this.select_order.length == 0 ? true : false" rounded @click="confirmDisable = true " class="ok">Submit</v-btn>
@@ -17,6 +18,7 @@
     :class="data.length < 3 ? '' : 'justify-center'"
     >
       <div
+      id="test"
         :class="[ row.disable != 1  && find(row.purchase_id) &&  row.order_status == 'Complete'? 'card selected' : 'card' , row.disable == 1 ? 'card disable' : '' ]"
         v-for="(row, index) in data"
         :key="'card-' + index + '-' + row.purchase_id"
@@ -26,15 +28,15 @@
             <div style="padding-top: 0px;width:7%">
               <v-checkbox
               v-if="row.disable == 0 && row.order_status != 'Complete'"
-              :disabled="true"
+                :disabled="true"
                 v-model="checkbox_true"
                 hide-details
               ></v-checkbox>
               <v-checkbox
                 v-else-if="row.disable == 0"
                 @change="push(row.purchase_id)"
-                :v-model="row.purchase_id"
-                :value="row"
+                :v-model="select_(row.purchase_id)"
+                value="1"
                 hide-details
               ></v-checkbox>
             </div>
@@ -92,6 +94,13 @@
           </div>
         </div>
       </div>
+      <div
+      style="padding-top:8%;font-size: 40px;color: rgba(0, 0, 0, 0.6);"
+      class="table d-flex flex-wrap justify-center"
+      v-if="data.length == 0"
+      >
+      ไม่พบข้อมูลที่ค้นหา กรุณากรอกข้อมูลใหม่
+    </div>
     </div>
 
     <v-dialog
@@ -133,14 +142,14 @@
 export default {
   name: 'detail-table',
   props: {
-    data: Array,
+    data: Array
   },
   data () {
     return {
       confirmDisable:false,
       select_order:[],
       windowSize: 1366,
-      checkbox: false,
+      checked: true,
       checkbox_all:false,
       checkbox_true:true,
       count: 0,
@@ -177,10 +186,8 @@ export default {
         this.select_order.push(param)
       }else {
         this.select_order = this.select_order.filter(x => x !== param);
-        // console.log('pop')
       }
     }
-    // console.log(this.select_order)
   },
     formatDate (val) {
       if (val !== null) {
@@ -211,11 +218,29 @@ export default {
         return val
       }
     },
+    push_all(){
+      for (let index = 0; index < this.data.length; index++) {
+        const element = this.data[index];
+        if(element.order_status == 'Complete' && element.disable == 0){
+          this.push(element.purchase_id)
+        }
+        
+      }
+    },
     submit () {
       this.confirmDisable = false
       this.$emit('submit', this.select_order)
+      this.select_order = []
     },
     find( param ){
+      const found = this.select_order.find(element => element == param);
+      if(!found){
+        return false
+      }else {
+        return true
+      }
+    },
+    select_( param ){
       const found = this.select_order.find(element => element == param);
       if(!found){
         return false
@@ -234,7 +259,6 @@ export default {
       let y = window.innerHeight
       this.windowSize = x
       this.deviceType = window.deviceType()
-      // console.log(x)
     }
   }
 }

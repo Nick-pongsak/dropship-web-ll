@@ -57,7 +57,7 @@
                 }"
               >
                 <div class="d-dialog-title">หมายเลขคำสั่งซื้อ</div>
-                <div class="d-dialog-value">{{ data.order_no }}</div>
+                <div class="d-dialog-value">{{ data.purchase_id }}</div>
               </div>
             </div>
             <div
@@ -72,7 +72,7 @@
                   'padding-top': windowSize < 600 ? '0px' : '25px'
                 }"
               >
-                <div style="width:100%;display:flex">
+                <!-- <div style="width:100%;display:flex">
                   <div
                     class="d-dialog-title desc"
                     :style="{
@@ -88,9 +88,9 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.company_name2 }}
+                    {{ data.sup_name }}
                   </div>
-                </div>
+                </div> -->
                 <div style="width:100%;display:flex;padding-top:7px">
                   <div
                     class="d-dialog-title desc"
@@ -107,7 +107,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.manufacturer_name }}
+                    {{ data.sup_name }} {{data.sup_surname}}
                   </div>
                 </div>
               </div>
@@ -144,7 +144,7 @@
                   'padding-right': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                {{ data.company_name1 }}
+                {{ data.sup_company }}
               </div>
             </div>
             <div
@@ -204,7 +204,7 @@
                   'padding-right': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                {{ data.customer_name }}
+                {{ data.cus_name }} {{data.cus_surname }}
               </div>
             </div>
             <div
@@ -229,7 +229,7 @@
                   width: windowSize < 600 ? '60%' : '70%'
                 }"
               >
-                {{ formatDate(data.delivery_date) }}
+                {{ formatDate(data.order_delivery_date) }}
               </div>
             </div>
           </div>
@@ -264,7 +264,7 @@
                   'padding-bottom': windowSize < 600 ? '5px' : '0px'
                 }"
               >
-                {{ data.customer_address }}
+                {{ data.cus_address }}
               </div>
             </div>
             <div
@@ -290,7 +290,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ formatDate(data.delivery_success) }}
+                    {{ formatDate(data.order_success_date) }}
                   </div>
                 </div>
               </div>
@@ -327,7 +327,7 @@
                   'padding-bottom': windowSize < 600 ? '5px' : '0px'
                 }"
               >
-                {{ data.customer_tel }}
+                {{ data.cus_phone }}
               </div>
             </div>
             <div
@@ -353,7 +353,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.status_order_title }}
+                    {{ data.order_status }}
                   </div>
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
@@ -372,7 +372,8 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    <span v-if="data.comment == ''">
+                  {{data.order_detail_remark}}
+                    <!-- <span v-if="data.comment == ''">
                     </span>
                     <span v-else>
                       {{
@@ -380,7 +381,7 @@
                           ? 'พัสดุการนำจ่ายถึงลูกค้า'
                           : 'พัสดุส่งกลับผู้ขาย'
                       }}</span
-                    >
+                    > -->
                   </div>
                 </div>
               </div>
@@ -408,7 +409,7 @@
               <div
                 class="d-body-row"
                 v-for="(row, index) in data.items"
-                :key="index + row.sku"
+                :key="index + row.index"
                 :style="{
                   'border-radius': renderBorder(index),
                   'border-top':
@@ -449,7 +450,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ row.sku }}
+                      {{ row.product_sku }}
                     </div>
                   </div>
                 </div>
@@ -467,7 +468,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ row.item_name }}
+                      {{ row.product_name }}
                     </div>
                   </div>
                 </div>
@@ -487,7 +488,7 @@
                         width: windowSize < 600 ? '60%' : '100%'
                       }"
                     >
-                      {{ currency(row.qty) }}
+                      {{ currency(row.order_qty) }}
                     </div>
                   </div>
                 </div>
@@ -506,7 +507,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ row.comment }}
+                      {{ data.order_detail_remark }}
                     </div>
                   </div>
                 </div>
@@ -557,7 +558,7 @@
               :style="{
                 display: windowSize < 600 ? 'grid' : 'flex'
               }"
-              v-if="data.status_order_code == 'delivering'"
+              v-if="data.order_status == 'Delivering'"
             >
               <div
                 style="display:flex;margin-right:25px"
@@ -680,15 +681,15 @@ export default {
     },
     accept () {
       this.confirmPrint = false
-      if (this.data.status_order_code == 'new') {
+      if (this.data.order_status == 'New') {
         this.confirmText = 'คุณต้องการยืนยันรายการเป็นสถานะ Accept ใช่หรือไม่ ?'
-      } else if (this.data.status_order_code == 'accept') {
+      } else if (this.data.order_status == 'Accept') {
         this.confirmText =
           'คุณต้องการยืนยันรายการเป็นสถานะ Delivery ใช่หรือไม่ ?'
-      } else if (this.data.status_order_code == 'delivery') {
+      } else if (this.data.order_status == 'Delivery') {
         this.confirmText =
           'คุณต้องการยืนยันรายการเป็นสถานะ Delivering ใช่หรือไม่ ?'
-      } else if (this.data.status_order_code == 'delivering') {
+      } else if (this.data.order_status == 'Delivering') {
         this.confirmText = 'การจัดส่งพัสดุสำเร็จ'
       } else {
         this.confirmText = ''
@@ -699,25 +700,25 @@ export default {
     },
     submit () {
       let process = ''
-      if (this.data.status_order_code == 'new') {
-        process = 'accept'
-      } else if (this.data.status_order_code == 'accept') {
-        process = 'delivery'
+      if (this.data.order_status.toLowerCase() == 'new') {
+        process = 'Accept'
+      } else if (this.data.order_status.toLowerCase() == 'accept') {
+        process = 'Delivery'
       } else if (
-        this.data.status_order_code == 'delivery' &&
+        this.data.order_status.toLowerCase() == 'delivery' &&
         !this.confirmPrint
       ) {
-        process = 'delivering'
+        process = 'Delivering'
       } else if (
-        this.data.status_order_code == 'delivery' &&
+        this.data.order_status.toLowerCase() == 'delivery' &&
         this.confirmPrint
       ) {
         process = 'print'
       } else if (
-        this.data.status_order_code == 'delivering' &&
+        this.data.order_status.toLowerCase() == 'delivering' &&
         this.radio !== null
       ) {
-        process = 'complete'
+        process = 'Complete'
       } else {
         process = ''
       }

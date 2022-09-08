@@ -20,6 +20,11 @@
       @submit="submitDialog"
       @print="printDialog"
     ></detail-dialog>
+
+    <token-dialog
+    v-if="tokenExpired"
+    ></token-dialog>
+
   </div>
 </template>
 
@@ -27,6 +32,9 @@
 import OrderFilter from '@/components/filter/OrderFilter'
 import detailTable from '@/components/table/Detail'
 import DetailDialog from '@/components/table/DetailDialog'
+import TokenDetailDialog from '@/components/dialog/TokenDialog'
+
+import Vue from 'vue'
 export default {
   name: 'homepage',
   data () {
@@ -34,6 +42,19 @@ export default {
       data: [],
       status: [],
       selectedRow: {},
+      tokenExpired:false,
+      filterData: {
+        customer: '',
+        endDliveryDate: '',
+        endOrderDate: '',
+        endSuccessDelivery: '',
+        order: '',
+        search: '',
+        startDliveryDate: '',
+        startOrderDate: '',
+        startSuccessDelivery: '',
+        status: "all"
+      },
       showDialog: false,
       statusList: [
         { code: 'all', title: 'All' },
@@ -54,6 +75,8 @@ export default {
   watch: {},
   methods: {
     ApplyFilter (val) {
+      this.filterData = val
+       this.fetch()
       console.log('ApplyFilter ==> ', val)
     },
     viewDeatil (val) {
@@ -67,6 +90,7 @@ export default {
     },
     printDialog (val) {
       // this.showDialog = false
+      // Vue.localStorage.set('PRINT_LABEL', JSON.stringify(val))
       console.log('printDialog ==> ', val)
     },
     submitDialog (result) {
@@ -90,87 +114,17 @@ export default {
       console.log('printDetail ==> ', val)
     },
     fetch () {
-      let arr = []
-      for (let i = 0; i < 13; i++) {
-        let random = Math.floor(Math.random() * 6)
-        random = random == 0 ? 1 : random
-        arr.push({
-          order_no: 'P0000001' + i,
-          customer_name: 'ปิยดา กิตติกรณ์กุล xxxxxxxxxxxx xxxxxxxxxxxxx ' + i,
-          order_date: '2022-09-02',
-          delivery_date: '2022-05-15',
-          delivery_success: '2022-11-02',
-          comment: '',
-          status_order_code: this.statusList[random].code,
-          status_order_title: this.statusList[random].title,
-          customer_address:
-            'เลขที่ 50 ถนนงามวงศ์วาน แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900',
-          customer_tel: '0-2649-5000',
-          items: [
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            }
-          ]
-        })
-      }
-      this.data = arr
+        console.log(this.filterData)
+      this.$store.dispatch('getOrderSupplier', this.filterData).then(res => {
+        // console.log(res.success.data)
+        this.data = res.success.data
+      })
+      .catch(error => { 
+        if(error.response.status == 401){
+          this.tokenExpired = true
+          console.log('Error 401')
+        }
+       })
       this.status = this.statusList
     }
   },
@@ -194,7 +148,8 @@ export default {
   components: {
     'order-filter': OrderFilter,
     'detail-table': detailTable,
-    'detail-dialog': DetailDialog
+    'detail-dialog': DetailDialog,
+    'token-dialog': TokenDetailDialog,
   },
   mounted () {}
 }

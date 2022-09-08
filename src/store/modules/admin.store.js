@@ -127,7 +127,7 @@ const store = {
     GetProvince({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/auth/get-province`, {
+        axios.post(`${url}/apiweb/api/get-province`, {
           province_id: data.province_id,
           zip_code: data.zip_code,
           subdistrict_id: data.subdistrict_id,

@@ -16,7 +16,7 @@
           <b-row >
             <b-col  xl>
               <div  class="md-layout">
-                <div class="head">Supplier ID</div>
+                <div class="head">รหัสผู้ใช้งาน</div>
                 <div class="detail" style="">{{this.profile.user_id}}</div>
               </div>
             </b-col>
@@ -29,7 +29,6 @@
               <div class="head">อีเมล <span style="color:red">*</span></div>
               <div class="detail">
                 <input 
-                @input="checkFormat"
                 :style="{
                   'border':this.wrong.invalid_email ? '2px solid red': '',
                   'background-color':'#DADADA'}"
@@ -211,7 +210,7 @@
               justify-content: flex-end;" xl>
               <div v-if="!isDisabled" @click="cancel" style="cursor: pointer;padding:0 10px 0 0;display: flex;align-items: center;">ยกเลิก</div>
                 <v-btn v-if="isDisabled" rounded class="ok" @click="edit()"> แก้ไข</v-btn>
-                <v-btn v-else rounded class="ok" @click="save()">บันทึก</v-btn>
+                <v-btn v-else :disabled="input_cheang_password ? false : true"  rounded class="ok" @click="save()">บันทึก</v-btn>
           </b-col>
         </b-row>
        </b-container>
@@ -371,14 +370,6 @@ export default {
         errorClassNewPwd_txt:'',
         errorClassConfNewPwd:'',
         errorClassConfNewPwd_txt:'',
-        errorClassFirstName:'',
-        errorClassFirstName_txt:'',
-        errorClassLastName:'',
-        errorClassLasttName_txt:'',
-        errorClassTel:'',
-        errorClassTel_txt:'',
-        errorClassEmail:'',
-        errorClassEmail_txt:''
       },
       edit_val:{
         val_pass:'',
@@ -547,6 +538,18 @@ export default {
 
     },
     cancel(){
+
+        this.Error.errorClassPwd = ''
+        this.Error.errorClassPwd_txt = ''
+        this.Error.errorClassNewPwd = ''
+        this.Error.errorClassNewPwd_txt = ''
+        this.Error.errorClassConfNewPwd = ''
+        this.Error.errorClassConfNewPwd_txt = ''
+ 
+      this.edit_val.val_pass=''
+      this.edit_val.new_password=''
+      this.edit_val.confrim_new_password =''
+
       this.isDisabled = true
       this.input_cheang_password = false
       this.type_password = 'password'
@@ -616,23 +619,6 @@ export default {
     },
       success_(){
       this.dialog_success = false
-    },
-    checkFormat(){
-       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.profile.email)) {
-            console.log('Yes')
-          } else {
-            console.log('No')
-          }
-    },
-    FormatEmail( ){
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.profile.email)) {
-           this.wrong.invalid_email = false
-           this.setDefault()
-           return true
-          } else {
-            this.wrong.invalid_email = true
-            return false
-          }
     },
     syntaxPassword(password){
       var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{7,}$/

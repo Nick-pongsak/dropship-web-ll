@@ -16,12 +16,16 @@ import AdminProfile from '@/views/AdminProfile.vue'
 import AdminCreateAccount from '@/views/AdminCreateAccount.vue'
 
 
+// TEST
+import Print from '@/views/PrintLabel.vue'
+
 
 Vue.use(Router)
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+// export default new Router({
+const routes = new Router({
+  // mode: 'history',
+  // base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -34,6 +38,10 @@ export default new Router({
       path: "/home",
       component: DefaultLayout,
       children: [
+        {
+          path: "/PrintLabel",
+          component: Print
+        },
         {
           path: "/home",
           component: Home
@@ -86,3 +94,4 @@ export default new Router({
    
   ]
 })
+export default routes

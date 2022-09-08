@@ -137,89 +137,89 @@ export default {
           console.log('Error 401')
         }
        })
-      let arr = []
-      for (let i = 0; i < 13; i++) {
-        let random = Math.floor(Math.random() * 6)
-        random = random == 0 ? 1 : random
-        arr.push({
-          order_no: 'P0000001' + i,
-          customer_name: 'ปิยดา กิตติกรณ์กุล xxxxxxxxxxxx xxxxxxxxxxxxx ' + i,
-          order_date: '2022-09-02',
-          delivery_date: '2022-05-15',
-          delivery_success: '2022-11-02',
-          status_order_code: this.statusList[random].code,
-          status_order_title: this.statusList[random].title,
-          comment: '',
-          manufacturer_name: 'Jainoi Pirompairak',
-          company_name1: 'ABC Company',
-          company_name2: 'Uni Mitsubishi Pencil Official',
-          customer_address:
-            'เลขที่ 50 ถนนงามวงศ์วาน แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900',
-          customer_tel: '0-2649-5000',
-          items: [
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            },
-            {
-              sku: '116019',
-              item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
-              qty: '5000',
-              comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
-            }
-          ]
-        })
-      }
+      // let arr = []
+      // for (let i = 0; i < 13; i++) {
+      //   let random = Math.floor(Math.random() * 6)
+      //   random = random == 0 ? 1 : random
+      //   arr.push({
+      //     order_no: 'P0000001' + i,
+      //     customer_name: 'ปิยดา กิตติกรณ์กุล xxxxxxxxxxxx xxxxxxxxxxxxx ' + i,
+      //     order_date: '2022-09-02',
+      //     delivery_date: '2022-05-15',
+      //     delivery_success: '2022-11-02',
+      //     status_order_code: this.statusList[random].code,
+      //     status_order_title: this.statusList[random].title,
+      //     comment: '',
+      //     manufacturer_name: 'Jainoi Pirompairak',
+      //     company_name1: 'ABC Company',
+      //     company_name2: 'Uni Mitsubishi Pencil Official',
+      //     customer_address:
+      //       'เลขที่ 50 ถนนงามวงศ์วาน แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900',
+      //     customer_tel: '0-2649-5000',
+      //     items: [
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       },
+      //       {
+      //         sku: '116019',
+      //         item_name: 'Mechanical Pencil Quantum Atom QM220 (Light Green)',
+      //         qty: '5000',
+      //         comment: 'โปรดแพ็คสินค้าส่งรวมกล่อง'
+      //       }
+      //     ]
+      //   })
+      // }
       // this.data = arr
       // this.status = this.statusList
     }

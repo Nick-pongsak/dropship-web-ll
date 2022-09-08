@@ -34,7 +34,7 @@
       <div class="smaill-body">
         <div style="width:100%;padding:13px 0px 10px 20px">
           <div class="d-dialog-title">หมายเลขคำสั่งซื้อ</div>
-          <div class="d-dialog-value">{{ data.order_no }}</div>
+          <div class="d-dialog-value">{{ data.purchase_id }}</div>
         </div>
         <div style="width:100%;padding:0px 20px">
           <!------------------>
@@ -68,7 +68,7 @@
                   'padding-right': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                {{ data.customer_name }}
+                {{ data.cus_name }} {{data.cus_surname}}
               </div>
             </div>
             <div
@@ -127,7 +127,7 @@
                   'padding-bottom': windowSize < 600 ? '5px' : '0px'
                 }"
               >
-                {{ data.customer_address }}
+                {{ data.cus_address }}
               </div>
             </div>
             <div
@@ -153,7 +153,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ formatDate(data.delivery_date) }}
+                    {{ formatDate(data.order_delivery_date) }}
                   </div>
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
@@ -172,7 +172,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ formatDate(data.delivery_success) }}
+                    {{ formatDate(data.order_success_date) }}
                   </div>
                 </div>
               </div>
@@ -209,7 +209,7 @@
                   'padding-bottom': windowSize < 600 ? '5px' : '0px'
                 }"
               >
-                {{ data.customer_tel }}
+                {{ data.cus_phone }}
               </div>
             </div>
             <div
@@ -235,7 +235,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.status_order_title }}
+                    {{ data.order_status }}
                   </div>
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
@@ -254,14 +254,15 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    <span v-if="data.comment == ''"> </span>
+                  {{data.order_detail_remark}}
+                    <!-- <span v-if="data.comment == ''"> </span>
                     <span v-else>
                       {{
                         data.comment == 'customer'
                           ? 'พัสดุการนำจ่ายถึงลูกค้า'
                           : 'พัสดุส่งกลับผู้ขาย'
                       }}</span
-                    >
+                    > -->
                   </div>
                 </div>
               </div>
@@ -289,7 +290,7 @@
               <div
                 class="d-body-row"
                 v-for="(row, index) in data.items"
-                :key="index + row.sku"
+                :key="index + row.index"
                 :style="{
                   'border-radius': renderBorder(index),
                   'border-top':
@@ -330,7 +331,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ row.sku }}
+                      {{ row.product_sku }}
                     </div>
                   </div>
                 </div>
@@ -348,7 +349,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ row.item_name }}
+                      {{ row.product_name }}
                     </div>
                   </div>
                 </div>
@@ -368,7 +369,7 @@
                         width: windowSize < 600 ? '60%' : '100%'
                       }"
                     >
-                      {{ currency(row.qty) }}
+                      {{ currency(row.order_qty) }}
                     </div>
                   </div>
                 </div>
@@ -387,7 +388,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ row.comment }}
+                      {{ data.order_detail_remark  }}
                     </div>
                   </div>
                 </div>
@@ -417,7 +418,7 @@
     <v-dialog
       v-model="confirmDialog"
       max-width="500"
-      :width="data.status_order_code == 'delivering' ? 600 : 500"
+      :width="data.order_status == 'Delivering' ? 600 : 500"
     >
       <v-card>
         <div class="d-dialog">
@@ -438,7 +439,7 @@
               :style="{
                 display: windowSize < 600 ? 'grid' : 'flex'
               }"
-              v-if="data.status_order_code == 'delivering'"
+              v-if="data.order_status == 'Delivering'"
             >
               <div
                 style="display:flex;margin-right:25px"
@@ -527,13 +528,13 @@ export default {
       this.radio = val
     },
     renderBtn () {
-      if (this.data.status_order_code == 'new') {
+      if (this.data.order_status == 'New') {
         return 'Accept'
-      } else if (this.data.status_order_code == 'accept') {
+      } else if (this.data.order_status == 'Accept') {
         return 'Delivery'
-      } else if (this.data.status_order_code == 'delivery') {
+      } else if (this.data.order_status == 'Delivery') {
         return 'Delivering'
-      } else if (this.data.status_order_code == 'delivering') {
+      } else if (this.data.order_status == 'Delivering') {
         return 'Complete'
       } else {
         return ''
@@ -561,15 +562,15 @@ export default {
     },
     accept () {
       this.confirmPrint = false
-      if (this.data.status_order_code == 'new') {
+      if (this.data.order_status == 'New') {
         this.confirmText = 'คุณต้องการยืนยันรายการเป็นสถานะ Accept ใช่หรือไม่ ?'
-      } else if (this.data.status_order_code == 'accept') {
+      } else if (this.data.order_status == 'Accept') {
         this.confirmText =
           'คุณต้องการยืนยันรายการเป็นสถานะ Delivery ใช่หรือไม่ ?'
-      } else if (this.data.status_order_code == 'delivery') {
+      } else if (this.data.order_status == 'Delivery') {
         this.confirmText =
           'คุณต้องการยืนยันรายการเป็นสถานะ Delivering ใช่หรือไม่ ?'
-      } else if (this.data.status_order_code == 'delivering') {
+      } else if (this.data.order_status == 'Delivering') {
         this.confirmText = 'การจัดส่งพัสดุสำเร็จ'
       } else {
         this.confirmText = ''
@@ -629,6 +630,7 @@ export default {
       this.confirmPrint = false
     },
     onResize () {
+      console.log('V')
       let x = window.innerWidth
       let y = window.innerHeight
       this.windowSize = x
