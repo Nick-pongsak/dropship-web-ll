@@ -205,11 +205,10 @@ export default {
     },
     print (row) {
       let TheArray = []
-      console.log("🚀 ~ file: Detail.vue ~ line 206 ~ print ~ row",  row)
       // this.$emit('print', row)
       TheArray.push(row)
 
-       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+        Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
       setTimeout(() => {
         window.open("/#/PrintLabel");
       },100);

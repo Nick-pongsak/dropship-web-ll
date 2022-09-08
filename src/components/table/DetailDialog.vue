@@ -254,7 +254,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                  {{data.order_detail_remark}}
+                  {{data.order_remarks}}
                     <!-- <span v-if="data.comment == ''"> </span>
                     <span v-else>
                       {{
@@ -388,7 +388,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ data.order_detail_remark  }}
+                      {{ data.order_remarks  }}
                     </div>
                   </div>
                 </div>
@@ -401,7 +401,7 @@
         <div
           @click="printIcon()"
           style="padding-right:25px;padding-top:8px"
-          v-if="data.status_order_code == 'delivery'"
+          v-if="data.order_status == 'Delivery'"
         >
           <v-icon
             v-text="'mdi-printer'"
@@ -561,6 +561,7 @@ export default {
       this.$emit('close', {})
     },
     accept () {
+      
       this.confirmPrint = false
       if (this.data.order_status == 'New') {
         this.confirmText = 'คุณต้องการยืนยันรายการเป็นสถานะ Accept ใช่หรือไม่ ?'
@@ -580,36 +581,66 @@ export default {
       this.confirmDialog = true
     },
     submit () {
+      console.log(this.data.order_status)
       let process = ''
-      if (this.data.status_order_code == 'new') {
-        process = 'accept'
-      } else if (this.data.status_order_code == 'accept') {
-        process = 'delivery'
+      if (this.data.order_status == 'New') {
+        this.radio = ''
+        process = 'Accept'
+      } else if (this.data.order_status == 'Accept') {
+        this.radio = ''
+        process = 'Delivery'
       } else if (
-        this.data.status_order_code == 'delivery' &&
+        this.data.order_status== 'Delivery' &&
         !this.confirmPrint
       ) {
-        process = 'delivering'
+        this.radio = ''
+        process = 'Delivering'
       } else if (
-        this.data.status_order_code == 'delivery' &&
+        this.data.order_status == 'Delivery' &&
         this.confirmPrint
       ) {
         process = 'print'
       } else if (
-        this.data.status_order_code == 'delivering' &&
+        this.data.order_status == 'Delivering' &&
         this.radio !== null
       ) {
-        process = 'complete'
+        process = 'Complete'
       } else {
         process = ''
       }
+
+      console.log(process)
       if (process != '') {
-        let obj = {
-          event: process,
-          detail: this.radio
+        let detail_remark = ''
+        // let obj = {
+        //   event: process,
+        //   detail: this.radio
+        // }
+        if(this.radio == 'customer'){
+          detail_remark = 'พัสดุการนำจ่ายถึงลูกค้า'
+        }else if(this.radio == 'supply') {
+          detail_remark = 'พัสดุส่งกลับผู้ขาย'
         }
-        this.confirmDialog = false
+        console.log(detail_remark)
+        let obj = {
+          purchase_id: this.data.purchase_id ,
+          order_remark: detail_remark,
+          order_status: process 
+        }
+      
         this.$emit('submit', obj)
+        this.$store.dispatch('sendOrderStatus', obj).then(res => {
+        this.confirmDialog = false
+        // console.log(res.success.data)
+        this.data.order_status =  process
+        this.data.order_remarks = detail_remark
+      })
+      .catch(error => { 
+        if(error.response.status == 401){
+          this.tokenExpired = true
+          console.log('Error 401')
+        }
+       })
       }
     },
     printIcon () {

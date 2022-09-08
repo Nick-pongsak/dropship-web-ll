@@ -83,7 +83,6 @@ const store = {
               Object.assign(element , {checked: false});
             }
            
-           
             
           }
          

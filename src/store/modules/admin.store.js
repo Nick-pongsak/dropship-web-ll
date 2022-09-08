@@ -225,6 +225,28 @@ const store = {
       })
 
     },
+
+    sendOrderStatus({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/send-order-status`, {
+          purchase_id: data.purchase_id,
+          order_remark: data.order_remark,
+          order_status: data.order_status
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
   },
   getters: {
     user_create_profile(state) {
