@@ -239,7 +239,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          console.log(response)
+            console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)

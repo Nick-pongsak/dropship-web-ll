@@ -236,29 +236,24 @@ export default {
       let in1 =  this.checkErrorCase( 'inp-email' , this.txt_email)
         if(in1){
           this.$store
-              .dispatch('checkEmail',this.txt_email)
+              .dispatch('forgotSendEmail',this.txt_email)
               .then(res => {
                   console.log(res.success.data)
-                  if(res.success.data.length == 0){
-                    this.Error.errorClassEmail = 'error-case',
-                    this.Error.errorClassEmail_txt = this.$t('txt-wrong6')
-                  }else {
+                  
                     Vue.localStorage.set('EMAIL-FORGOT',this.txt_email)
                     Vue.localStorage.set('ACTION_FORGOT_STEP',2)
                     console.log('Send')
-
-                    this.$store.dispatch('sendMail', 'piyathat_j@dhas.com')
-                      .then(res => {
-                          console.log(res)
-                      })
-                      .catch(error => {})
                     // location.reload();
                     this.Error.errorClassEmail = '',
                     this.Error.errorClassEmail_txt = ''
-                  }
+                  
                 })
                 .catch(error => { 
-                  // console.log(error.response.status)
+                    if(error.response.status == 400){
+                      this.Error.errorClassEmail = 'error-case',
+                      this.Error.errorClassEmail_txt = this.$t('txt-wrong6')
+                    }
+                 console.log(error.response.status)
                 
                 })
         }
