@@ -16,8 +16,12 @@ import AdminProfile from '@/views/AdminProfile.vue'
 import AdminCreateAccount from '@/views/AdminCreateAccount.vue'
 
 
-// TEST
+// PRINT
 import Print from '@/views/PrintLabel.vue'
+
+// TEST
+import test from '@/views/test.vue'
+
 
 
 Vue.use(Router)
@@ -38,6 +42,11 @@ const routes = new Router({
       path: "/home",
       component: DefaultLayout,
       children: [
+        {
+          path: "/servicetest",
+          component: test
+        },
+        
         {
           path: "/PrintLabel",
           component: Print
@@ -86,7 +95,7 @@ const routes = new Router({
           path: "/logout",
           component: Logout,
           
-        },
+        }
         
       ]
     },

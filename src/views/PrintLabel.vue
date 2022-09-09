@@ -1,5 +1,11 @@
 <template>
+  
     <div id="printMe" style="margin:100px;" >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+
        
         <div 
         class="full-height"
@@ -9,6 +15,7 @@
         >
           <div style="font-family: 'Noto Sans Thai', sans-serif;font-size: 24px;"><img class="logo" src="@/assets/icons/logo.png">    Dropship portal   </div>
           <div style="font-family: 'Noto Sans Thai', sans-serif;width: 100%;padding:10px 0 0 0;font-size: 24px;">เลขที่ใบสั่งซื้อ : {{row.purchase_id}}  </div>
+            
              <div style="padding:0 10px 0 10px;display: flex;justify-content: center;width: 100%;">
               <div style="
               color:#000;
@@ -23,7 +30,7 @@
                   grid-auto-flow: row;
                   max-width: 100%;padding:0;" class="container">
                   <div style="border-width:0 0 1px 0;
-                  display: grid;
+                    display: grid;
                     grid-template-columns: 1fr 1fr;
                     grid-template-rows: 1fr;
                     gap: 0px 0px;

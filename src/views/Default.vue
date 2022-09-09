@@ -15,24 +15,22 @@
     <footers v-if="status_login" />
     <v-dialog v-model="dialog_expire" max-width="350">
       <v-card class="confirm-dialog">
-        <v-card-title v-text="errorDialog" :style="{ 'font-weight': '500' }">
-        </v-card-title>
+      
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="signOut()" class="save">
-            {{ $t('btn_ok') }}
+           
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog v-model="dialog_error" max-width="350">
       <v-card class="confirm-dialog">
-        <v-card-title v-text="errorDialog2" :style="{ 'font-weight': '500' }">
-        </v-card-title>
+        
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="closePop()" class="save">
-            {{ $t('btn_close') }}
+        
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -49,8 +47,6 @@ export default {
   data () {
     return {
       valueLoading: 0,
-      errorDialog: this.$t('popup.text14'),
-      errorDialog2: this.$t('popup.text15')
     }
   },
   components: {
@@ -65,7 +61,6 @@ export default {
       return this.$store.getters.dialog_expire
     },
     dialog_error () {
-      this.errorDialog2 = this.$t('popup.text15') + ' (Error Code 500)'
       return this.$store.getters.dialog_error
     },
     status_login(){
