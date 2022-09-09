@@ -38,10 +38,15 @@
           }}<span class="mdi mdi-menu-down"></span
         ></md-button>
         <md-menu-content class="option-detail">
-          <md-menu-item @click="user_profile" style="cursor: pointer;"
+          <md-menu-item @click="user_profile" style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >ข้อมูลส่วนตัว
           </md-menu-item>
-          <md-menu-item @click="logout" style="cursor: pointer;"
+          <md-menu-item
+            @click="policy"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+            >นโยบายความเป็นส่วนตัว</md-menu-item
+          >
+          <md-menu-item @click="logout" style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >ออกจากระบบ</md-menu-item
           >
         </md-menu-content>
@@ -129,6 +134,11 @@
           </md-menu-item>
 
           <md-menu-item
+            @click="policy"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+            >นโยบายความเป็นส่วนตัว</md-menu-item
+          >
+          <md-menu-item
             @click="logout"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >ออกจากระบบ</md-menu-item
@@ -167,6 +177,9 @@ export default {
     }
   },
   methods: {
+    policy () {
+      console.log('policy==>')
+    },
     onConfirm () {
       this.value = 'Yes'
       let reMove = ['login', 'SIZE_SCREEN', 'user_profile']
@@ -251,6 +264,7 @@ export default {
   min-height: 10px;
 }
 .md-menu-content {
+  height: auto;
   /* height: 270px !important; */
   max-height: 270px !important;
 }
