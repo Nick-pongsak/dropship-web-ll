@@ -401,7 +401,7 @@
         <div
           @click="printIcon()"
           style="padding-right:25px;padding-top:8px"
-          v-if="data.order_status == 'Delivery'"
+          v-if="detect_device == 'not_mobile' &&data.order_status == 'Delivery'"
         >
           <v-icon
             v-text="'mdi-printer'"
@@ -475,6 +475,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
   name: 'detail-dialog',
   props: {
@@ -510,6 +511,9 @@ export default {
     }
   },
   computed: {
+    detect_device(){
+      return Vue.localStorage.get('DETECTED_DEVICE')
+    },
     dialog: {
       get () {
         return this.show
@@ -550,12 +554,33 @@ export default {
       }
     },
     formatDate (val) {
-      let today = new Date(val)
-      const year = today.getFullYear()
-      const fullYear = year + 543
-      const days = today.getDate()
-      const monthName = this.monthsShort[today.getMonth()]
-      return days + ' ' + monthName + ' ' + fullYear
+      if (val !== null) {
+        let hours = ''
+        let min = ''
+        let today = new Date(val)
+        const year = today.getFullYear()
+        const fullYear = year + 543
+        const days = today.getDate()
+        const h = today.getHours()
+        const m = today.getMinutes()
+        const monthName = this.monthsShort[today.getMonth()]
+
+        if(h < 10){
+          hours = '0' + h
+        }else {
+          hours = h
+        }
+
+        if(m < 10){
+          min = '0' + m
+        }else {
+          min = m
+        }
+
+        return days + ' ' + monthName + ' ' + fullYear 
+      } else {
+        return val
+      }
     },
     close () {
       this.$emit('close', {})
@@ -621,7 +646,7 @@ export default {
         }else if(this.radio == 'supply') {
           detail_remark = 'พัสดุส่งกลับผู้ขาย'
         }
-        console.log(detail_remark)
+        // console.log(detail_remark)
         let obj = {
           purchase_id: this.data.purchase_id ,
           order_remark: detail_remark,
@@ -661,7 +686,6 @@ export default {
       this.confirmPrint = false
     },
     onResize () {
-      console.log('V')
       let x = window.innerWidth
       let y = window.innerHeight
       this.windowSize = x

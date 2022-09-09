@@ -76,7 +76,7 @@
             </div>
             <div @click="print(row)" style="padding-right:5px">
               <v-icon
-                v-if="row.order_status == 'Delivering'"
+                v-if="detect_device =='not_mobile' && row.order_status == 'Delivering'"
                 v-text="'mdi-printer'"
                 style="color:#000000;cursor:pointer"
                 size="20"
@@ -124,7 +124,11 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    detect_device(){
+      return Vue.localStorage.get('DETECTED_DEVICE')
+    }
+  },
   watch: {},
   methods: {
     formatDate (val) {
@@ -170,6 +174,8 @@ export default {
     }
     if(Deliver.length == this.select_order.length){
       this.checkboxALL = true
+    }else {
+      this.checkboxALL = false
     }
     let RowData = this.data.filter(x => x.order_status === 'Delivering' && x.checked === true);
     console.log('DATA - Check  => ',this.select_order)
@@ -177,6 +183,27 @@ export default {
     console.log('PRINT =>',RowData)
   },
     check_all(){
+
+      // if(this.checkboxALL){
+      //     this.select_order = []
+      //    for (let index = 0; index < this.data.length; index++) {
+      //       const element = this.data[index];
+      //         if( element.order_status == 'Delivering' ){
+      //           element.checked = true
+      //           this.select_order.push(element.purchase_id)
+      //         }
+      //     }
+      // }else {
+      //       this.select_order = []
+      //       for (let index = 0; index < this.data.length; index++) {
+      //       const element = this.data[index];
+      //         if( element.order_status == 'Delivering' ){
+      //           element.checked = false
+                
+      //         }
+      //     }
+      // }
+   
       for (let index = 0; index < this.data.length; index++) {
         const element = this.data[index];
         if(this.checkboxALL){

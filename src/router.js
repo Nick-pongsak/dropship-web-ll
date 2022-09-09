@@ -21,7 +21,6 @@ import Print from '@/views/PrintLabel.vue'
 
 // TEST
 import test from '@/views/test.vue'
-import viewImage from '@/views/ViewImage.vue'
 
 
 
@@ -39,10 +38,6 @@ const routes = new Router({
         rule: "isPublic"
       }
     },
-    {
-          path: "/view",
-          component: viewImage
-        },
     {
       path: "/home",
       component: DefaultLayout,
