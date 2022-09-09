@@ -24,9 +24,7 @@
       @print="printDialog"
     ></admin-order-manage-detail-dialog>
 
-    <token-dialog
-    v-if="tokenExpired"
-    ></token-dialog>
+    <token-dialog v-if="tokenExpired"></token-dialog>
   </div>
 </template>
 
@@ -42,7 +40,7 @@ export default {
   data () {
     return {
       data: [],
-      tokenExpired:false,
+      tokenExpired: false,
       status: [],
       selectedRow: {},
       showDialog: false,
@@ -58,7 +56,7 @@ export default {
         startDliveryDate: '',
         startOrderDate: '',
         startSuccessDelivery: '',
-        status: "all"
+        status: 'all'
       },
       statusList: [
         { code: 'all', title: 'All' },
@@ -84,6 +82,11 @@ export default {
       this.fetch()
     },
     viewDeatil (val) {
+      if (val.order_remarks == 'พัสดุการนำจ่ายถึงลูกค้า') {
+        val.order_remarks = 'customer'
+      } else if (val.order_remarks == 'พัสดุส่งกลับผู้ขาย') {
+        val.order_remarks = 'supply'
+      }
       this.selectedRow = val
       this.showDialog = true
       console.log('viewDeatil ==> ', val)
@@ -105,38 +108,61 @@ export default {
         let status = this.statusList.filter(a => a.code == val)
         this.selectedRow.status_order_title =
           status.length > 0 ? status[0].title : ''
-        if (val == 'complete') {
-          this.selectedRow.comment = result.detail
+        if (val == 'Complete') {
+          this.selectedRow.order_remarks = result.detail
         }
+        // console.log(this.selectedRow.order_remarks)
+        let order_remarks = ''
+        if (this.selectedRow.order_remarks == 'customer') {
+          order_remarks = 'พัสดุการนำจ่ายถึงลูกค้า'
+        } else if (this.selectedRow.order_remarks == 'supply') {
+          order_remarks = 'พัสดุส่งกลับผู้ขาย'
+        }
+        let obj = {
+          purchase_id: this.selectedRow.purchase_id,
+          order_remark: order_remarks,
+          order_status: this.selectedRow.order_status
+        }
+        this.$store
+          .dispatch('sendOrderStatus', obj)
+          .then(res => {})
+          .catch(error => {
+            if (error.response.status == 401) {
+              console.log('Error 401')
+            }
+          })
       }
     },
     submitAction (val) {
       console.log('submitAction ==> ', val)
 
-      this.$store.dispatch('disableOrderAdmin', val)
-      .then(res => {
-        this.fetch ()
-      })
-      .catch(error => {})
+      this.$store
+        .dispatch('disableOrderAdmin', val)
+        .then(res => {
+          this.fetch()
+        })
+        .catch(error => {})
     },
     printDetail (val) {
       console.log('printDetail ==> ', val)
     },
     fetch () {
-      this.$store.dispatch('getOrderAdmin', this.filterData).then(res => {
-        console.log(res.success.data)
+      this.$store
+        .dispatch('getOrderAdmin', this.filterData)
+        .then(res => {
+          console.log(res.success.data)
 
-        this.data = res.success.data
-        this.status = this.statusList
-        // this.data = res.data
-        // this.status = this.statusList
-      })
-      .catch(error => { 
-        if(error.response.status == 401){
-          this.tokenExpired = true
-          console.log('Error 401')
-        }
-       })
+          this.data = res.success.data
+          this.status = this.statusList
+          // this.data = res.data
+          // this.status = this.statusList
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
       // let arr = []
       // for (let i = 0; i < 13; i++) {
       //   let random = Math.floor(Math.random() * 6)
@@ -245,7 +271,7 @@ export default {
     'admin-order-manage-filter': OrderFilter,
     'admin-order-manage-detail': detailTable,
     'admin-order-manage-detail-dialog': DetailDialog,
-    'token-dialog': TokenDetailDialog,
+    'token-dialog': TokenDetailDialog
   },
   mounted () {}
 }

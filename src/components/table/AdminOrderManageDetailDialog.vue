@@ -372,16 +372,16 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                  {{data.order_detail_remark}}
-                    <!-- <span v-if="data.comment == ''">
+                  <!-- {{data.order_remark}} -->
+                    <span v-if="data.order_remarks == ''">
                     </span>
                     <span v-else>
                       {{
-                        data.comment == 'customer'
+                        data.order_remarks == 'customer'
                           ? 'พัสดุการนำจ่ายถึงลูกค้า'
                           : 'พัสดุส่งกลับผู้ขาย'
                       }}</span
-                    > -->
+                    >
                   </div>
                 </div>
               </div>
@@ -507,7 +507,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ data.order_detail_remark }}
+                      {{ data.order_remark }}
                     </div>
                   </div>
                 </div>
