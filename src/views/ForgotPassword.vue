@@ -157,6 +157,7 @@ export default {
       return Vue.localStorage.get('loc_email_forgor')
     },
     val_email(){
+      console.log(window.atob(String(this.$route.query.email)))
       try { 
           return window.atob(String(this.$route.query.email))
       }
@@ -305,6 +306,10 @@ export default {
   },
   components: {Footers,VueCaptcha},
   created () {
+
+    console.log(this.$route.query.email)
+
+
     // console.log(Vue.config["url"])
     if (Vue.localStorage.get("login") != null || Vue.localStorage.get("ACTION_FORGOT_STEP") == null) {
         this.$router.push('/home')
