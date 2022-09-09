@@ -94,14 +94,12 @@
           <md-menu-item
             @click="action('adminProfile')"
             :style="{
-              'background-color': active_menu('adminProfile')
-                ? '#2372E7'
-                : '',
+              'background-color': active_menu('adminProfile') ? '#2372E7' : '',
               color: active_menu('adminProfile') ? '#fff' : ''
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;color:#fff;background-color: #2372E7;cursor: pointer;border-radius:5px;"
           >
-          จัดการบัญชี
+            จัดการบัญชี
           </md-menu-item>
 
           <md-menu-item
@@ -114,18 +112,20 @@
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
           >
-          จัดการ การสั่งซื้อสินค้า
+            จัดการ การสั่งซื้อสินค้า
           </md-menu-item>
 
           <md-menu-item
             @click="action('AdminUserManage')"
             :style="{
-              'background-color': active_menu('AdminUserManage') ? '#2372E7' : '',
+              'background-color': active_menu('AdminUserManage')
+                ? '#2372E7'
+                : '',
               color: active_menu('AdminUserManage') ? '#fff' : ''
             }"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
           >
-          จัดการผู้ใช้งาน
+            จัดการผู้ใช้งาน
           </md-menu-item>
 
           <md-menu-item
@@ -239,9 +239,9 @@ export default {
   border-radius: 6px !important;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  font-size: 12px !important;
   display: flex;
   padding: 10px;
-  font-size: 12px !important;
   align-items: flex-end;
   /* width: 139px;
   height: 74px;  */
@@ -249,6 +249,10 @@ export default {
 
 .md-list-item-button.md-list-item-content {
   min-height: 10px;
+}
+.md-menu-content {
+  height: 270px !important;
+  max-height: 270px !important;
 }
 .md-menu-content-container {
   display: flex;
