@@ -13,9 +13,9 @@ const store = {
   },
   actions: {
 
-    checkEmail({ state, commit, dispatch }, data) {
+    forgotSendEmail({ state, commit, dispatch }, data) {
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/auth/checkemail`, {
+        axios.post(`${url}/apiweb/api/auth/forgot-send-email`, {
           user_email: data
           
         }, {
@@ -82,10 +82,7 @@ const store = {
             }else {
               Object.assign(element , {checked: false});
             }
-           
-            
           }
-         
           resolve(response.data);
         }).catch(error => {
           reject(error)
