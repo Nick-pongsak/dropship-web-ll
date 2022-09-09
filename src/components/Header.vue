@@ -251,7 +251,7 @@ export default {
   min-height: 10px;
 }
 .md-menu-content {
-  height: 270px !important;
+  /* height: 270px !important; */
   max-height: 270px !important;
 }
 .md-menu-content-container {
