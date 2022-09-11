@@ -38,7 +38,9 @@
           }}<span class="mdi mdi-menu-down"></span
         ></md-button>
         <md-menu-content class="option-detail">
-          <md-menu-item @click="user_profile" style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+          <md-menu-item
+            @click="user_profile"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >ข้อมูลส่วนตัว
           </md-menu-item>
           <md-menu-item
@@ -46,7 +48,9 @@
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >นโยบายความเป็นส่วนตัว</md-menu-item
           >
-          <md-menu-item @click="logout" style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+          <md-menu-item
+            @click="logout"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >ออกจากระบบ</md-menu-item
           >
         </md-menu-content>
@@ -193,7 +197,11 @@ export default {
       this.$store.commit('SetTheme', val)
     },
     action (param) {
-      this.$router.push('/' + param)
+      if (param == 'Policy') {
+        this.$store.commit('ShowPolicy', true)
+      } else {
+        this.$router.push('/' + param)
+      }
     },
     active_menu (param) {
       let path = this.$router.app._route.path

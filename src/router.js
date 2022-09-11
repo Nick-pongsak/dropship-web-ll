@@ -14,7 +14,6 @@ import AdminOrdereManage from '@/views/AdminOrderManage.vue'
 import AdminUserManage from '@/views/AdminUserManage.vue'
 import AdminProfile from '@/views/AdminProfile.vue'
 import AdminCreateAccount from '@/views/AdminCreateAccount.vue'
-import Policy from '@/views/Policy.vue'
 
 
 // PRINT
@@ -97,11 +96,7 @@ const routes = new Router({
           component: Logout,
 
         },
-        {
-          path: "/Policy",
-          component: Policy,
 
-        }
 
       ]
     },

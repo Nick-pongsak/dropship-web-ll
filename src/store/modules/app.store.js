@@ -12,7 +12,8 @@ const store = {
     loadHome: false,
     language: '',
     systemTheme: 'dark',
-    timeServer:''
+    timeServer: '',
+    policy: false,
 
   },
   mutations: {
@@ -27,10 +28,13 @@ const store = {
     },
     SetTheme(state, data) {
       state.systemTheme = data;
+    },
+    ShowPolicy(state, data) {
+      state.policy = data;
     }
   },
   actions: {
-    getTimeServer: ({ commit, state }, ) => {
+    getTimeServer: ({ commit, state },) => {
       timeServer.getTimeServer()
         .then((response) => {
           state.timeServer = response
@@ -55,6 +59,9 @@ const store = {
     },
     timeServer(state) {
       return state.timeServer
+    },
+    policy(state) {
+      return state.policy
     }
   }
 }
