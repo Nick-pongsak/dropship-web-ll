@@ -73,7 +73,7 @@
     >
     <v-card style="padding: 0;">
         <v-card-text  style="padding: 0;" >
-          <v-container style="max-width: 100%;" >
+          <v-container style="" >
             <div style="margin:10px 20px 0 0;display: flex;justify-content: flex-end;">
               <v-icon
               @click="close_PDPA"
