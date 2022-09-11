@@ -42,7 +42,7 @@
             >ข้อมูลส่วนตัว
           </md-menu-item>
           <md-menu-item
-            @click="policy"
+            @click="action('Policy')"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >นโยบายความเป็นส่วนตัว</md-menu-item
           >
@@ -134,7 +134,7 @@
           </md-menu-item>
 
           <md-menu-item
-            @click="policy"
+            @click="action('Policy')"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >นโยบายความเป็นส่วนตัว</md-menu-item
           >
@@ -177,9 +177,6 @@ export default {
     }
   },
   methods: {
-    policy () {
-      console.log('policy==>')
-    },
     onConfirm () {
       this.value = 'Yes'
       let reMove = ['login', 'SIZE_SCREEN', 'user_profile']
