@@ -21,10 +21,7 @@
       @print="printDialog"
     ></detail-dialog>
 
-    <token-dialog
-    v-if="tokenExpired"
-    ></token-dialog>
-
+    <token-dialog v-if="tokenExpired"></token-dialog>
   </div>
 </template>
 
@@ -33,7 +30,11 @@ import OrderFilter from '@/components/filter/OrderFilter'
 import detailTable from '@/components/table/Detail'
 import DetailDialog from '@/components/table/DetailDialog'
 import TokenDetailDialog from '@/components/dialog/TokenDialog'
-
+const d = new Date()
+let year = d.getFullYear()
+let month = d.getMonth() + 1
+month = month > 9 ? month : '0' + month
+let startDay = year + '-' + month + '-' + '01'
 import Vue from 'vue'
 export default {
   name: 'homepage',
@@ -42,18 +43,18 @@ export default {
       data: [],
       status: [],
       selectedRow: {},
-      tokenExpired:false,
+      tokenExpired: false,
       filterData: {
         customer: '',
         endDliveryDate: '',
-        endOrderDate: '',
+        endOrderDate: new Date().toISOString().slice(0, 10),
         endSuccessDelivery: '',
         order: '',
         search: '',
         startDliveryDate: '',
-        startOrderDate: '',
+        startOrderDate: new Date(startDay).toISOString().slice(0, 10),
         startSuccessDelivery: '',
-        status: "all"
+        status: ''
       },
       showDialog: false,
       statusList: [
@@ -76,7 +77,7 @@ export default {
   methods: {
     ApplyFilter (val) {
       this.filterData = val
-       this.fetch()
+      this.fetch()
       console.log('ApplyFilter ==> ', val)
     },
     viewDeatil (val) {
@@ -114,17 +115,19 @@ export default {
       console.log('printDetail ==> ', val)
     },
     fetch () {
-        console.log(this.filterData)
-      this.$store.dispatch('getOrderSupplier', this.filterData).then(res => {
-        // console.log(res.success.data)
-        this.data = res.success.data
-      })
-      .catch(error => { 
-        if(error.response.status == 401){
-          this.tokenExpired = true
-          console.log('Error 401')
-        }
-       })
+      console.log(this.filterData)
+      this.$store
+        .dispatch('getOrderSupplier', this.filterData)
+        .then(res => {
+          // console.log(res.success.data)
+          this.data = res.success.data
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
       this.status = this.statusList
     }
   },
@@ -149,7 +152,7 @@ export default {
     'order-filter': OrderFilter,
     'detail-table': detailTable,
     'detail-dialog': DetailDialog,
-    'token-dialog': TokenDetailDialog,
+    'token-dialog': TokenDetailDialog
   },
   mounted () {}
 }

@@ -35,6 +35,12 @@ import detailTable from '@/components/table/AdminOrderManageDetail'
 import DetailDialog from '@/components/table/AdminOrderManageDetailDialog'
 import TokenDetailDialog from '@/components/dialog/TokenDialog'
 
+const d = new Date()
+let year = d.getFullYear()
+let month = d.getMonth() + 1
+month = month > 9 ? month : '0' + month
+let startDay = year + '-' + month + '-' + '01'
+
 export default {
   name: 'admin-order-manage',
   data () {
@@ -48,15 +54,15 @@ export default {
         company: '',
         customer: '',
         endDliveryDate: '',
-        endOrderDate: '',
+        endOrderDate: new Date().toISOString().slice(0, 10),
         endSuccessDelivery: '',
         manufacturer: '',
         order: '',
         search: '',
         startDliveryDate: '',
-        startOrderDate: '',
+        startOrderDate: new Date(startDay).toISOString().slice(0, 10),
         startSuccessDelivery: '',
-        status: 'all'
+        status: ''
       },
       statusList: [
         { code: 'all', title: 'All' },

@@ -432,7 +432,8 @@ export default {
     startOrderDate: {
       handler (newValue) {
         if (newValue == null) {
-          this.endOrderDate = null
+          this.startOrderDate = new Date(startDay).toISOString().slice(0, 10)
+          this.endOrderDate = new Date().toISOString().slice(0, 10)
         } else {
           if (this.endOrderDate == null) {
             this.endOrderDate = newValue
@@ -598,8 +599,8 @@ export default {
       this.orderInput = null
       this.manufacturerInput = null
       this.companyInput = null
-      this.startOrderDate = null
-      this.endOrderDate = null
+      this.startOrderDate = new Date(startDay).toISOString().slice(0, 10)
+      this.endOrderDate = new Date().toISOString().slice(0, 10)
       this.startDliveryDate = null
       this.endDliveryDate = null
       this.startSuccessDelivery = null
