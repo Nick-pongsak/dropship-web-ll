@@ -203,7 +203,7 @@
           <v-select
             v-model="statusInput"
             :items="statusList"
-            label=""
+            label="-"
             item-text="title"
             item-value="code"
             solo
@@ -347,6 +347,11 @@
 
 <script>
 // import moment from 'moment'
+const d = new Date()
+let year = d.getFullYear()
+let month = d.getMonth() + 1
+month = month > 9 ? month : '0' + month
+let startDay = year + '-' + month + '-' + '01'
 export default {
   name: 'order-filter',
   props: {
@@ -362,13 +367,13 @@ export default {
       manufacturerInput: null,
       orderInput: null,
       companyInput: null,
-      startOrderDate: null,
-      endOrderDate: null,
+      startOrderDate: new Date(startDay).toISOString().slice(0, 10),
+      endOrderDate: new Date().toISOString().slice(0, 10),
       startDliveryDate: null,
       endDliveryDate: null,
       startSuccessDelivery: null,
       endSuccessDelivery: null,
-      statusInput: 'all',
+      statusInput: '',
       statusList: this.status,
       lang: {
         formatLocale: {
@@ -599,7 +604,7 @@ export default {
       this.endDliveryDate = null
       this.startSuccessDelivery = null
       this.endSuccessDelivery = null
-      this.statusInput = 'all'
+      this.statusInput = ''
     },
     disabledSuccessDelivery (date) {
       const today = new Date(this.startSuccessDelivery)
