@@ -30,6 +30,7 @@ const store = {
       state.systemTheme = data;
     },
     ShowPolicy(state, data) {
+      console.log(data)
       state.policy = data;
     }
   },
