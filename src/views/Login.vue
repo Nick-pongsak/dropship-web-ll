@@ -72,7 +72,34 @@
       id="dialogCinfrim"
     >
     <v-card style="padding: 0;">
-        <v-card-text  style="padding: 0;" >
+      <div class="body">
+      <div
+        :style="{
+          'text-align': 'end',
+          width: '100%',
+          'padding-right': '30px',
+          'padding-top': '20px'
+        }"
+        @click="dialogPdpa = false"
+      >
+        <v-icon
+          v-text="'mdi-close'"
+          style="color:#000000;cursor:pointer"
+          size="24"
+        ></v-icon>
+      </div>
+      <div :style="{ width: '100%', 'text-align': 'center' }">
+        <img class="img-login" src="@/assets/pdf/PDPA-1.png" />
+        <img class="img-login" src="@/assets/pdf/PDPA-2.png" />
+        <img class="img-login" src="@/assets/pdf/PDPA-3.png" />
+        <img class="img-login" src="@/assets/pdf/PDPA-4.png" />
+        <img class="img-login" src="@/assets/pdf/PDPA-5.png" />
+        <img class="img-login" src="@/assets/pdf/PDPA-6.png" />
+        <img class="img-login" src="@/assets/pdf/PDPA-7.png" />
+      </div>
+    </div>
+      
+        <!-- <v-card-text  style="padding: 0;" >
           <v-container style="" >
             <div style="margin:10px 20px 0 0;display: flex;justify-content: flex-end;">
               <v-icon
@@ -90,7 +117,7 @@
           <img  class="img-login" src="@/assets/pdf/PDPA-6.png">
           <img  class="img-login" src="@/assets/pdf/PDPA-7.png">
           </v-container>
-        </v-card-text>
+        </v-card-text> -->
        
       </v-card>
     </v-dialog>
@@ -146,8 +173,6 @@ export default {
       textSnack: '',
       color: '#fff',
       timeout: 9999999,
-
-
 
       dialogPdpa:false,
       validateUsername:null,
@@ -229,6 +254,10 @@ export default {
 
         
       }
+    },
+    open_pdpa(){
+      console.log('open')
+      this.$store.commit('ShowPolicy', true)
     },
     close_PDPA(){
       this.dialogPdpa = false

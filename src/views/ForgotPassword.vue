@@ -129,7 +129,9 @@
           </div>
 <!-- --- -->
       </div>
-      <div style="padding: 0 30px 0 0;height:5%;"><footers /></div>
+      <div style="padding: 0 30px 0 0;height:5%;">
+        <footers :style="{'font-size': '14px' }" text="Copyright © 2019 DHA Siamwalla Ltd." />
+      </div>
     </div>  
   </div>
 
@@ -418,7 +420,7 @@ export default {
     }
   },
   components: {
-    Footers,
+    'footers' :Footers ,
     VueCaptcha,
     'token-dialog': TokenDetailDialog,
   },

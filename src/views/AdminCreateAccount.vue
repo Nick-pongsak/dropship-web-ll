@@ -590,6 +590,7 @@
                     <v-btn
                       style="border-radius: 8px;"
                       rounded
+                      :disabled="supplier.ID == null ? true :false"
                       class="ok"
                       @click="openDialog()"
                       >บันทึก</v-btn
@@ -797,13 +798,13 @@ export default {
       }
       this.admin = {
         ID: '-',
-        PASS: '6757567ghj',
+        PASS: '',
         NAME: '-',
         SERNAME: '-',
-        TEL: '0998989876',
+        TEL: '',
         TEL2: '-',
         COMPANY: '-',
-        EMAIL: 'ghjghj@dfsdf.com',
+        EMAIL: '-',
         ADDRESS: '-',
         PROVINCE: null,
         ZIP_CODE: null,
@@ -905,6 +906,7 @@ export default {
       console.log('API EDIT PROFILE =>', res)
     },
     OnCreate () {
+      this.clear_data()
       let data = {
         value: this.statusInput
       }
@@ -1112,6 +1114,58 @@ export default {
       } else {
         return false
       }
+    },
+    clear_data(){
+      
+      this.supplier.ID = null
+      this.supplier.PASS = null
+      this.supplier.NAME = null
+      this.supplier.SERNAME = null
+      this.supplier.TEL = null
+      this.supplier.TEL2 = null
+      this.supplier.COMPANY = null
+      this.supplier.EMAIL = null
+      this.supplier.ADDRESS = null
+      this.supplier.PROVINCE = null
+      this.supplier.ZIP_CODE = null
+      this.supplier.DISTRICT = null
+      this.supplier.SUB_DISTRICT = null
+      
+    
+      this.admin.ID = '-'
+      this.admin.PASS = ''
+      this.admin.NAME = '-'
+      this.admin.SERNAME = '-'
+      this.admin.TEL = ''
+      this.admin.TEL2 = '-'
+      this.admin.COMPANY = '-'
+      this.admin.EMAIL = '-'
+      this.admin.ADDRESS = '-'
+      this.admin.PROVINCE = null
+      this.admin.ZIP_CODE = null
+      this.admin.DISTRICT = null
+      this.admin.SUB_DISTRICT = null
+
+      
+        this.Error.errorClassPwd =  ''
+        this.Error.errorClassPwd_txt =  ''
+        this.Error.errorClassFirstName =  ''
+        this.Error.errorClassFirstName_txt =  ''
+        this.Error.errorClassFirstName =  ''
+        this.Error.errorClassFirstName_txt =  ''
+        this.Error.errorClassLastName =  ''
+        this.Error.errorClassLasttName_txt =  ''
+        this.Error.errorClassTel =  ''
+        this.Error.errorClassTel_txt =  ''
+        this.Error.errorClassCompany =  ''
+        this.Error.errorClassCompany_txt =  ''
+        this.Error.errorClassEmail =  ''
+        this.Error.errorClassEmail_txt =  ''
+
+        this.info_sup = ''
+      
+      
+      
     }
   },
   components: {},
