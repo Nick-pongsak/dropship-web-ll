@@ -300,6 +300,7 @@ let year = d.getFullYear()
 let month = d.getMonth() + 1
 month = month > 9 ? month : '0' + month
 let startDay = year + '-' + month + '-' + '01'
+
 export default {
   name: 'order-filter',
   props: {
@@ -378,7 +379,8 @@ export default {
     startOrderDate: {
       handler (newValue) {
         if (newValue == null) {
-          this.endOrderDate = null
+          this.startOrderDate = new Date(startDay).toISOString().slice(0, 10)
+          this.endOrderDate = new Date().toISOString().slice(0, 10)
         } else {
           if (this.endOrderDate == null) {
             this.endOrderDate = newValue
@@ -520,8 +522,8 @@ export default {
       this.searchInput = null
       this.customerInput = null
       this.orderInput = null
-      this.startOrderDate = null
-      this.endOrderDate = null
+      this.startOrderDate = new Date(startDay).toISOString().slice(0, 10)
+      this.endOrderDate = new Date().toISOString().slice(0, 10)
       this.startDliveryDate = null
       this.endDliveryDate = null
       this.startSuccessDelivery = null
