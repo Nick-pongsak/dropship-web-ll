@@ -2,21 +2,21 @@
   <!-- <div id="maincorp">
      -->
 <div id="Forgotpassword" v-resize="onResize">
-  {{this.user_id}}
-  {{this.token}}
     <div style="height:100%" class="md-layout">
     <div class="box-left f-w800 box-head font-Montserrat">
       <div id="" style="height:5%">Dropship portal</div>
       <!-- {{this.screen_Hight}} {{this.screen_Width }} -->
       <div style="height:95%">
-        <img :style="{'height': this.screen_Hight,'width':this.screen_Width }"  class="img-forgot" src="@/assets/images/person-forgot.png">
+        <img v-if="step != 4" :style="{'height': this.screen_Hight,'width':this.screen_Width }"  class="img-forgot" src="@/assets/images/person-forgot.png">
+        <img style="margin:25px 0 0 0;" v-else :style="{'height': this.screen_Hight,'width':this.screen_Width }"  class="img-forgot" src="@/assets/images/success.png">
       </div>
      
     </div>
     <div class="box-right">
       <div :style="{'transform' : this.tranformScale}" class="box-inp">
-        <div v-if="step != 3" class="f-w1000 txt-forgot font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
-        <div v-else class="f-w1000 txt-forgot2 font-Bai-Jamjuree">ตั้งรหัสผ่านใหม่</div>
+        <div v-if="step == 1 || step == 2" class="f-w1000 txt-forgot font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
+        <div v-else-if="step == 3" class="f-w1000 txt-forgot2 font-Bai-Jamjuree">ตั้งรหัสผ่านใหม่</div>
+        <div v-if="step==4" class="f-w1000 txt-forgot font-Bai-Jamjuree">เปลี่ยนสำเร็จ</div>
 
 <!-- Enter your E-mail  -->
 <!-- {{this.loc_email_forgot}} -->
@@ -33,6 +33,19 @@
                 <div class="pt-5 font-Bai-Jamjuree"><input  @click="send_email"  class="font-Bai-Jamjuree btn-send_email" type="button" value="ยืนยัน"></div>
                 <div @click="btn_back" class="txt-back pt-5 font-Bai-Jamjuree">กลับหน้าเข้าสู่ระบบ</div>
          </div>
+
+         <div v-if="step == 4" style="display: contents;">
+               <div class="pt-5 txt-detail-step1 font-Bai-Jamjuree">รหัสผ่านของคุณถูกเปลี่ยนเรียบร้อยแล้ว</div>
+                <div class="txt-detail-step1 font-Bai-Jamjuree">ใช้รหัสผ่านใหม่ของคุณเพื่อเข้าสู่ระบบ</div>
+                <div class="pt-5 font-Bai-Jamjuree">
+                </div>
+                <div v-if="this.Error.errorClassEmail != ''"  class="txt-wrong">
+                              <span class="mdi mdi-alert-octagon"></span>
+                              {{this.Error.errorClassEmail_txt}}
+                            </div>
+                <div class="pt-5 font-Bai-Jamjuree"><input @click="btn_back"    class="font-Bai-Jamjuree btn-send_email" type="button" value="กลับเข้าหน้าสู่ระบบ"></div>
+         </div>
+
          <div v-if="step == 2" style="display: contents;">
                <div class="pt-5 txt-detail font-Bai-Jamjuree">ส่งไปแล้วที่อีเมล :   <span style="font-weight: lighter;text-decoration: underline;color:#0085D1;">{{this.emailForgot}}</span></div>
                 <div class="pt-10- txt-detail2 font-Bai-Jamjuree">กรุณาตรวจสอบที่อีเมลของท่าน</div>
@@ -115,7 +128,6 @@
               <div class="pt-10"><input  @click.prevent="confirm()" class="btn-comfirm font-Bai-Jamjureef" type="button" value="ยืนยัน"></div>
           </div>
 <!-- --- -->
-
       </div>
       <div style="padding: 0 30px 0 0;height:5%;"><footers /></div>
     </div>  
@@ -129,16 +141,16 @@
 </div>
 
 </template>
-
 <script>
-
+const url = `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
+import axios from 'axios';
 import Footers from '@/components/Footer'
 import VueCaptcha from 'vue-captcha-code';
 import Vue from "vue";
 import { tickStep } from 'd3-array'
 var CryptoJS = require('crypto-js')
 
-import TokenDetailDialog from '@/components/dialog/TokenDialog'
+import TokenDetailDialog from '@/components/dialog/TokenDialog2'
 
 
 export default {
@@ -220,18 +232,24 @@ export default {
               new_password:encodeURI(encrypted),
               user_status:'',
             }
-            this.$store.
-              dispatch('changePwdStatus',res)
-              .then(res => {
-                  console.log(res)
-                })
-                .catch(error => { 
-                  console.log(error.response)
+            axios.post(`${url}/apiweb/api/change-pwd-status`, {
+              user_id: res.user_id,
+              new_password: res.new_password,
+              user_status: res.user_status,
+            }, {
+              headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${this.$route.query.token}`,
+              }
+            }).then(response => {
+              this.step = 4
+            }).catch(error => {
+              console.log(error.response.statu)
+                  this.tokenExpired  = true
                   if(error.response.status == 400){
+                    
                   }
-                })
-
-
+            })
             console.log('OK' ,this.txt_captchar)
       }
 
