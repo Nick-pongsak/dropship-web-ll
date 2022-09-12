@@ -157,7 +157,7 @@ export default {
       errorClassUs: false,
       activeClassPwd: '',
       errorClassPwd: false,
-      username: 'piyathat_j@dhas.com',
+      username: 'admin2@gmail.com',
       password: '123456a',
       wrong: false,
       tranformScale: '',

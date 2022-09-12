@@ -2,7 +2,8 @@
   <!-- <div id="maincorp">
      -->
 <div id="Forgotpassword" v-resize="onResize">
-  
+  {{this.user_id}}
+  {{this.token}}
     <div style="height:100%" class="md-layout">
     <div class="box-left f-w800 box-head font-Montserrat">
       <div id="" style="height:5%">Dropship portal</div>
@@ -14,12 +15,12 @@
     </div>
     <div class="box-right">
       <div :style="{'transform' : this.tranformScale}" class="box-inp">
-        <div v-if="stepForgot != 3" class="f-w1000 txt-forgot font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
+        <div v-if="step != 3" class="f-w1000 txt-forgot font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
         <div v-else class="f-w1000 txt-forgot2 font-Bai-Jamjuree">ตั้งรหัสผ่านใหม่</div>
 
 <!-- Enter your E-mail  -->
 <!-- {{this.loc_email_forgot}} -->
-          <div v-if="stepForgot == 1" style="display: contents;">
+          <div v-if="step == 1" style="display: contents;">
                <div class="pt-5 txt-detail-step1 font-Bai-Jamjuree">กรุณากรอกอีเมลที่ทำการลงทะเบียนไว้</div>
                 <div class="txt-detail-step1 font-Bai-Jamjuree">เพื่อทำการรีเซ็ตรหัสผ่านใหม่ของคุณ</div>
                 <div class="pt-5 font-Bai-Jamjuree">
@@ -32,7 +33,7 @@
                 <div class="pt-5 font-Bai-Jamjuree"><input  @click="send_email"  class="font-Bai-Jamjuree btn-send_email" type="button" value="ยืนยัน"></div>
                 <div @click="btn_back" class="txt-back pt-5 font-Bai-Jamjuree">กลับหน้าเข้าสู่ระบบ</div>
          </div>
-         <div v-if="stepForgot == 2" style="display: contents;">
+         <div v-if="step == 2" style="display: contents;">
                <div class="pt-5 txt-detail font-Bai-Jamjuree">ส่งไปแล้วที่อีเมล :   <span style="font-weight: lighter;text-decoration: underline;color:#0085D1;">{{this.emailForgot}}</span></div>
                 <div class="pt-10- txt-detail2 font-Bai-Jamjuree">กรุณาตรวจสอบที่อีเมลของท่าน</div>
               <div class="pt-10 font-Bai-Jamjuree"><input @click="btn_back"    class="btn-send_email" type="button" value="กลับหน้าเข้าสู่ระบบ"></div>
@@ -48,14 +49,14 @@
               </div>
          </div>
          
-         <div v-if="stepForgot == 3" style="">
+         <div v-if="step == 3" style="">
               <div style="font-weight: 400;font-size: 16px;" class="font-Bai-Jamjuree">รหัสผ่านใหม่ <span style="color:red">*</span></div>
              
               
               <div class="pt-3"> 
                 <md-field :md-toggle-password="false" v-bind:class="[Error.errorClassNewPwd]" :style="{'border': this.Error.errorClassNewPwd_txt != ''  ? '2px solid red' : '' }" style="top:0 ; left:0" class="inp-new-username">
                   <md-input type="password" v-model="txt_new_password"   style="font-size:28px;height:100%" ></md-input>
-                  <span :style="{'color':this.Error.errorClassNewPwd_txt != '' ? 'red' :'#1D4ED8'}" v-if="this.Error.errorClassNewPwd_txt != ''" class="md-suffix">
+                  <span :style="{'color':this.Error.errorClassNewPwd_txt != '' ? 'red' :'#1D4ED8'}" v-if="this.submit" class="md-suffix">
                     <span v-if="this.Error.errorClassNewPwd_txt != '' " style="margin:0 10px 0 0" class="mdi-24px mdi mdi-window-close"></span>
                     <span v-else style="margin:0 10px 0 0" class="mdi-24px mdi mdi-check"></span>
                   </span>
@@ -68,27 +69,34 @@
                     </div>
                 </div>
               </div>
-              <div v-if="err_new_password " class="pt-3 txt-wrong-new-password"> <span class="mdi mdi-alert-octagon"></span> Please enter your password more than 6 characters and </div>
-              <div v-if="err_new_password " class="txt-wrong-new-password"> use both of number and alphabet</div>
+              <!-- <div v-if="err_new_password " class="pt-3 txt-wrong-new-password"> <span class="mdi mdi-alert-octagon"></span> Please enter your password more than 6 characters and </div>
+              <div v-if="err_new_password " class="txt-wrong-new-password"> use both of number and alphabet</div> -->
 
               <div  style="font-weight: 400;font-size: 16px;" class="pt-5 font-Bai-Jamjuree">ยืนยันรหัสผ่านใหม่<span style="color:red"> *</span></div>
               
               
               <div class="pt-3"> 
-                <md-field :style="{'border': err_confirm_password  ? '2px solid red' : '' }" style="top:0 ; left:0" class="inp-new-username">
-                  <md-input v-model="txt_confirm_password" @focusout="confirm_password"   style="height:100%" ></md-input>
-                  <span :style="{'color':err_confirm_password ? 'red' :'#1D4ED8'}" v-if="txt_check_confirm_password" class="md-suffix">
-                    <span v-if="err_confirm_password" style="margin:0 10px 0 0" class="mdi-24px mdi mdi-window-close"></span>
-                    <span v-else style="margin:0 10px 0 0" class="mdi-24px mdi mdi-check"></span>
+                <md-field v-bind:class="[Error.errorClassConfNewPwd]" :md-toggle-password="false" :style="{'border': this.Error.errorClassConfNewPwd_txt  ? '2px solid red' : '' }" style="top:0 ; left:0" class="inp-new-username">
+                  <md-input v-model="txt_confirm_password"  type="password"  style="font-size:28px;height:100%" ></md-input>
+                  <span :style="{'color':this.Error.errorClassConfNewPwd_txt ? 'red' :'#1D4ED8'}" v-if="this.submit"  class="md-suffix">
+                    <span v-if="!err_confirm_password" style="margin:0 10px 0 0" class="mdi-24px mdi mdi-window-close"></span>
+                    <span v-else style="margin:0 10px 0 0" class="mdi-24px mdi  mdi-check"></span>
                   </span>
                 </md-field> 
+                
+                <div v-if="this.Error.errorClassConfNewPwd_txt != ''">
+                   <div  class="txt-wrong2">
+                         <span class="mdi mdi-alert-octagon"></span>
+                      {{this.Error.errorClassConfNewPwd_txt}}
+                    </div>
+                </div>
                 <!-- <input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_password" placeholder="" class="pl-5 inp-password" type="password" name="password" id="password"> -->
                 
                 </div>
               <div  style="font-weight: 400;font-size: 16px;" class="pt-10 font-Bai-Jamjuree">Captcha <span style="color:red"> *</span></div>
               <div class="pt-3" style="display: flex;width:100%">
 
-                 <div style="width: 70%;"><input :style="{'border': invalid_email || undefined_email ? '2px solid red' : '' }" v-model="txt_captchar" placeholder="" class="pl-5 inp-captcha" type="text" name="captchar" id="captchar"></div>
+                 <div style="width: 70%;"><input v-bind:class="[Error.errorClassCaptchar]" :style="{'border': this.Error.errorClassCaptchar ? '2px solid red' : '' }" v-model="txt_captchar" placeholder="" class="pl-5 inp-captcha" type="text" name="captchar" id="captchar"></div>
                  <div style="width: 25%;">
                     <vue-captcha 
                     ref="captcha" 
@@ -97,6 +105,12 @@
                     </vue-captcha>
                 </div>
                  <div style="height: 50%;cursor: pointer;display: flex;margin:10px; align-items:center;background-color:#fff;width: 5%;"><span  @click="refresh" class="mdi-rotate-135  mdi mdi-sync"></span></div>
+              </div>
+              <div v-if="this.Error.errorClassCaptchar_txt != ''">
+                   <div  class="txt-wrong2">
+                         <span class="mdi mdi-alert-octagon"></span>
+                      {{this.Error.errorClassCaptchar_txt}}
+                    </div>
               </div>
               <div class="pt-10"><input  @click.prevent="confirm()" class="btn-comfirm font-Bai-Jamjureef" type="button" value="ยืนยัน"></div>
           </div>
@@ -123,6 +137,8 @@ export default {
   name: 'forgot',
   data () {
     return {
+      step:'1',
+      submit:false,
       tranformScale:'',
       txt_email:'',
       txt_new_password:'',
@@ -143,6 +159,8 @@ export default {
       Error:{  
       errorClassEmail:'',
       errorClassEmail_txt:'',
+      errorClassCaptchar:'',
+      errorClassCaptchar_txt:'',
       errorClassNewPwd:'',
       errorClassNewPwd_txt:'',
       errorClassConfNewPwd:'',
@@ -156,14 +174,11 @@ export default {
     loc_email_forgot(){
       return Vue.localStorage.get('loc_email_forgor')
     },
-    val_email(){
-      console.log(window.atob(String(this.$route.query.email)))
-      try { 
-          return window.atob(String(this.$route.query.email))
-      }
-          catch(err) {
-           return 'err'
-      }
+    user_id(){ 
+          return this.$route.query.user_id
+    },
+    token(){ 
+          return this.$route.query.token
     },
     stepForgot(){
       return Vue.localStorage.get('ACTION_FORGOT_STEP')
@@ -175,25 +190,21 @@ export default {
   watch: {},
   methods: {
     confirm(){
+      console.log(this.txt_captchar , this.code)
+      this.submit = true
+      let inp4 = false
       let inp1 =  this.checkErrorCase('inp-new-password' ,this.txt_new_password )
-      console.log(inp1)
+      let inp2 =   this.checkErrorCase( 'inp-conf-new-password' ,this.txt_confirm_password )
+      let inp3 =   this.checkErrorCase( 'inp-captchar' ,this.txt_captchar )
+      
+      if(inp1 && inp2){
+         inp4 =   this.checkErrorCase( 'inp-check-conf-pass' ,'' )
+      }
+      if( inp1 && inp2 && inp3 && inp4 ){
+            console.log('OK' ,this.txt_captchar)
+      }
+
       },
-        confirm_password(){
-           console.log(this.err_new_password ,this.txt_new_password.length)
-            if(this.err_new_password == false && this.txt_new_password.length != 0){
-              if(this.txt_new_password != '' && this.txt_confirm_password != '' ){
-                    this.txt_check_confirm_password = true
-                if(this.txt_new_password == this.txt_confirm_password ){
-                    this.err_confirm_password = false
-                }else {
-                    this.err_confirm_password = true          
-                 }
-                        console.log('check conf')
-              }else {
-                 this.txt_check_confirm_password = false
-              }
-            }
-        },
      handleChange(code) {
       console.log('code: ', code);
     },
@@ -240,10 +251,10 @@ export default {
               .dispatch('forgotSendEmail',this.txt_email)
               .then(res => {
                   console.log(res.success.data)
-                  
-                    Vue.localStorage.set('EMAIL-FORGOT',this.txt_email)
-                    Vue.localStorage.set('ACTION_FORGOT_STEP',2)
-                    console.log('Send')
+                    this.step = 2
+                    // Vue.localStorage.set('EMAIL-FORGOT',this.txt_email)
+                    // Vue.localStorage.set('ACTION_FORGOT_STEP',2)
+                    // console.log('Send')
                     // location.reload();
                     this.Error.errorClassEmail = '',
                     this.Error.errorClassEmail_txt = ''
@@ -260,7 +271,6 @@ export default {
         }
     },
     checkErrorCase( type , value){
-
       if(type == 'inp-email'){
         if(value == null || value == ''){
           this.Error.errorClassEmail = 'error-case',
@@ -276,6 +286,25 @@ export default {
           return true
         }
       }
+
+      if(type == 'inp-captchar'){
+        console.log('cap')
+        if(value == null || value == ''){
+          this.Error.errorClassCaptchar = 'error-case',
+          this.Error.errorClassCaptchar_txt = this.$t('txt-wrong11')
+          return false
+        }else if(this.txt_captchar != this.code) {
+          console.log('s')
+          this.Error.errorClassCaptchar = 'error-case',
+          this.Error.errorClassCaptchar_txt = this.$t('txt-wrong13')
+          return false
+        }else {
+          this.Error.errorClassCaptchar = '',
+          this.Error.errorClassCaptchar_txt = ''
+          return true
+        }
+      }
+  
 
       if(type == 'inp-new-password'){
               if(value == null || value == ''){
@@ -293,6 +322,41 @@ export default {
               }
          }
 
+      if(type == 'inp-conf-new-password'){
+        if(value == null || value == ''){
+          this.Error.errorClassConfNewPwd = 'error-case'
+          this.Error.errorClassConfNewPwd_txt = this.$t('txt-wrong11')
+          this.err_confirm_password = false
+          return false
+        }else if(!this.syntaxPassword(value)){
+          this.Error.errorClassConfNewPwd = 'error-case'
+          this.Error.errorClassConfNewPwd_txt = this.$t('txt-wrong10')
+          this.err_confirm_password = false
+          return false
+        }else {
+          this.err_confirm_password = true
+          this.Error.errorClassConfNewPwd = ''
+          this.Error.errorClassConfNewPwd_txt = ''
+          return true
+        }
+      }
+
+      if(type == 'inp-check-conf-pass'){
+        if(this.txt_new_password != this.txt_confirm_password){
+          this.Error.errorClassConfNewPwd = 'error-case'
+          this.Error.errorClassNewPwd = 'error-case'
+          this.Error.errorClassConfNewPwd_txt = this.$t('txt-wrong8')
+          this.err_confirm_password = false
+          return false
+        }else {
+          this.Error.errorClassNewPwd = ''
+          this.Error.errorClassConfNewPwd = ''
+          this.Error.errorClassConfNewPwd_txt = ''
+          this.err_confirm_password = true
+          return true
+        }
+      }
+
     },
     goWeb(param){
       window.open(param)
@@ -306,33 +370,22 @@ export default {
   },
   components: {Footers,VueCaptcha},
   created () {
-
-    console.log(this.$route.query.email)
-
-
-    // console.log(Vue.config["url"])
-    if (Vue.localStorage.get("login") != null || Vue.localStorage.get("ACTION_FORGOT_STEP") == null) {
-        this.$router.push('/home')
-    } else {
-        // this.$store.dispatch('checkForgot',this.val_email)
-        // // console.log('==><==',this.stepForgot)
-        // if(this.val_email != 'err' && this.stepForgot != '3' ){
-          
-        //   setTimeout(() => {
-        //       // console.log('==> ',this.forgot_status ,this.stepForgot)
-        //     if(this.forgot_status ){
-        //       Vue.localStorage.set('ACTION_FORGOT_STEP','3')
-        //       // location.reload();
-        //     }else {
-        //       // this.$router.push('/home')
-        //     }
-        //    }, 150);
-        // }else {
-        //   // console.log('A')
-        //   // this.$router.push('/home')
-        // }
-
+    if( this.$route.query.user_id && this.$route.query.token){
+      this.$store
+              .dispatch('timeTokenForgot',this.$route.query.token)
+              .then(res => {
+               
+                })
+                .catch(error => { 
+                  console.log(error.response.statu)
+                  if(error.response.status == 400){
+                    
+                  }
+                })
+      this.step = 3
     }
+
+    
   },
   mounted () {
     
@@ -340,4 +393,9 @@ export default {
 }
 </script>
 <style>
+  .error-case{
+         border: 1px solid red;
+         font-size: 12px;
+         font-family:'Bai Jamjuree', sans-serif;
+        }
 </style>

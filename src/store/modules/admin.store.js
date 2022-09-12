@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Vue from 'vue'
 const url = `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
 const debug = process.env.VUE_APP_PRODUCTION_STATUS;
 
@@ -51,13 +52,14 @@ const store = {
     },
     getDataUserCreate({ state, commit, dispatch }, data) {
       return new Promise((resolve, reject) => {
-        let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+        let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
         axios.post(`${url}/apiweb/api/get-data-user`, { user_role: data.value }, {
           headers: {
             'Content-Type': 'application/json',
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.token)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -67,14 +69,15 @@ const store = {
     },
     getUserList({ state, commit, dispatch }, data) {
       return new Promise((resolve, reject) => {
-        console.log("getUserList ==>", JSON.stringify(data))
-        let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+        let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
         axios.post(`${url}/apiweb/api/get-user-list`, data, {
           headers: {
             'Content-Type': 'application/json',
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.token)
+          console.log(response.data.success)
           resolve(response.data.success);
         }).catch(error => {
           reject(error)
@@ -84,8 +87,7 @@ const store = {
     },
     disableOrderAdmin({ state, commit, dispatch }, data) {
       return new Promise((resolve, reject) => {
-        console.log("getUserList ==>", JSON.stringify(data))
-        let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+        let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
         axios.post(`${url}/apiweb/api/disable-order-admin`, {
           purchase_id: JSON.stringify(data)
         }, {
@@ -94,6 +96,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
           resolve(response);
         }).catch(error => {
           reject(error)
@@ -103,7 +106,7 @@ const store = {
     },
    
     changePwdStatus({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/change-pwd-status`, {
           user_id: data.user_id,
@@ -115,6 +118,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
           console.log(response)
           resolve(response.data);
         }).catch(error => {
@@ -125,7 +129,7 @@ const store = {
     },
 
     GetProvince({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get-province`, {
           province_id: data.province_id,
@@ -138,6 +142,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.token)
           console.log(response)
           resolve(response.data);
         }).catch(error => {
@@ -147,7 +152,7 @@ const store = {
 
     },
     getOrderAdmin({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get-order-admin`, {
           keyword:data.search,
@@ -173,6 +178,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.token)
           console.log(response)
           resolve(response.data);
         }).catch(error => {
@@ -182,7 +188,7 @@ const store = {
 
     },
     updateProfile({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/update-profile`, {
           user_id:data.user_id,
@@ -196,6 +202,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
           console.log(response)
           resolve(response.data);
         }).catch(error => {
@@ -205,7 +212,7 @@ const store = {
 
     },
     changePassword({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/change-password`, {
           user_id:data.user_id,
@@ -217,7 +224,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          
+          dispatch('newToken',response.data.success.data.token)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -227,7 +234,7 @@ const store = {
     },
 
     sendOrderStatus({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/send-order-status`, {
           purchase_id: data.purchase_id,
@@ -239,6 +246,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
             console.log(response)
           resolve(response.data);
         }).catch(error => {
@@ -247,6 +255,13 @@ const store = {
       })
 
     },
+
+    newToken({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      Profile.access_token = data
+      console.log( Profile)
+      Vue.localStorage.set('user_profile',JSON.stringify(Profile))
+    }
   },
   getters: {
     user_create_profile(state) {

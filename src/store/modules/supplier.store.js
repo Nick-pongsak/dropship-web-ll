@@ -1,10 +1,12 @@
 import axios from 'axios';
+import Vue from 'vue'
 const url = `${process.env.VUE_APP_API_URL}${process.env.VUE_APP_API_PORT}`;
 const debug = process.env.VUE_APP_PRODUCTION_STATUS;
 
 const store = {
   state: {
-        status_ : false
+        status_ : false,
+        token:''
   },
   mutations: {
     // SetLoading(state, data) {
@@ -54,7 +56,7 @@ const store = {
     },
 
     getOrderSupplier({ state, commit, dispatch }, data) {
-      let Profile = JSON.parse(sessionStorage.getItem('user_profile'))
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get-order-supplier `, {
           keyword:data.search,
@@ -73,7 +75,8 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          console.log(response.data.success.data)
+          console.log(response.data.success.token)
+          dispatch('newToken',response.data.success.token)
           for (let index = 0; index < response.data.success.data.length; index++) {
              const element = response.data.success.data[index];
 
@@ -90,6 +93,33 @@ const store = {
       })
 
     },
+    newToken({ state, commit, dispatch }, data) {
+        let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+        Profile.access_token = data
+        console.log( Profile)
+        Vue.localStorage.set('user_profile',JSON.stringify(Profile))
+
+    },
+    timeTokenForgot({ state, commit, dispatch }, data) {
+      console.log(data)
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/time-token-15-minutes`, {
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${data}`,
+          }
+        }).then(response => {
+          console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
+    
+
   },
   getters: {
     status_(state) {
