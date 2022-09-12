@@ -957,14 +957,15 @@ export default {
         })
       } else if (data == 'sub_district') {
         let res = {
-          province_id: this.admin.PROVINCE.id,
-          zip_code: this.admin.ZIP_CODE.id,
-          subdistrict_id: this.admin.SUB_DISTRICT.id,
-          district_id: ''
-        }
-        this.$store.dispatch('GetProvince', res).then(res => {
-          this.select_province = res.success.data
-          this.admin.DISTRICT.name_th = res.success.data.district.name_th
+            province_id  : this.admin.PROVINCE.id,
+            zip_code  :this.admin.ZIP_CODE.id,
+            subdistrict_id :this.admin.SUB_DISTRICT.id,
+            district_id :''
+          }
+        this.$store
+              .dispatch('GetProvince',res)
+              .then(res => {
+                this.select_province = res.success.data
         })
       } else {
       }
