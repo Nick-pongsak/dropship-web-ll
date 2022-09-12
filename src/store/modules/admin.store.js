@@ -20,6 +20,7 @@ const store = {
   },
   actions: {
     Register({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/auth/register`, {
           user_role: data.user_role,
@@ -39,12 +40,15 @@ const store = {
         }, {
           headers: {
             'Content-Type': 'application/json',
-            "Authorization": `Bearer ${store.getters.access_token}`,
+            "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
           console.log(response)
+          dispatch('newToken',response.data.success.data.token)
+         
           resolve(response.data);
         }).catch(error => {
+          console.log(error)
           reject(error)
         })
       })
@@ -59,12 +63,12 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          dispatch('newToken',response.data.success.data.token)
-          console.log(response.data.success.data.token)
+          dispatch('newToken',response.data.success.token)
+          console.log(response.data.success.token)
           resolve(response.data);
         }).catch(error => {
-          console.log(error)
-          dispatch('newToken',error)
+          dispatch('newToken',error.response.data.error.data.token)
+          console.log(error.response)
           reject(error)
         })
       })

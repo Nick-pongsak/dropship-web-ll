@@ -388,7 +388,6 @@ export default {
       this.$store
               .dispatch('timeTokenForgot',this.$route.query.token)
               .then(res => {
-               
                 })
                 .catch(error => { 
                   console.log(error.response.statu)
