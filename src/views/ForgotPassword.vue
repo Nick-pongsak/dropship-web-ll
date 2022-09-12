@@ -120,6 +120,12 @@
       <div style="padding: 0 30px 0 0;height:5%;"><footers /></div>
     </div>  
   </div>
+
+  <token-dialog
+    v-if="tokenExpired"
+    ></token-dialog>
+
+
 </div>
 
 </template>
@@ -133,10 +139,14 @@ import { tickStep } from 'd3-array'
 import { Verify } from 'crypto';
 
 
+import TokenDetailDialog from '@/components/dialog/TokenDialog'
+
+
 export default {
   name: 'forgot',
   data () {
     return {
+      tokenExpired:false,
       step:'1',
       submit:false,
       tranformScale:'',
@@ -368,7 +378,11 @@ export default {
       console.log('Test Method')
     }
   },
-  components: {Footers,VueCaptcha},
+  components: {
+    Footers,
+    VueCaptcha,
+    'token-dialog': TokenDetailDialog,
+  },
   created () {
     if( this.$route.query.user_id && this.$route.query.token){
       this.$store
@@ -378,6 +392,7 @@ export default {
                 })
                 .catch(error => { 
                   console.log(error.response.statu)
+                  this.tokenExpired  = true
                   if(error.response.status == 400){
                     
                   }

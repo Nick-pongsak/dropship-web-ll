@@ -867,7 +867,6 @@ export default {
               .dispatch('GetProvince',res)
               .then(res => {
                 this.select_province = res.success.data
-                this.admin.DISTRICT.name_th = res.success.data.district.name_th
         })
       }else {
 

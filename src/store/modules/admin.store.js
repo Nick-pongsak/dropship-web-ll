@@ -59,9 +59,12 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          dispatch('newToken',response.data.success.token)
+          dispatch('newToken',response.data.success.data.token)
+          console.log(response.data.success.data.token)
           resolve(response.data);
         }).catch(error => {
+          console.log(error)
+          dispatch('newToken',error)
           reject(error)
         })
       })
@@ -142,8 +145,6 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          dispatch('newToken',response.data.success.token)
-          console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -234,6 +235,7 @@ const store = {
     },
 
     sendOrderStatus({ state, commit, dispatch }, data) {
+      console.log('Pro')
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/send-order-status`, {
