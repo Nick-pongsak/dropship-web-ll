@@ -797,13 +797,13 @@ export default {
       }
       this.admin = {
         ID: '-',
-        PASS: '-',
+        PASS: '6757567ghj',
         NAME: '-',
         SERNAME: '-',
-        TEL: '-',
+        TEL: '0998989876',
         TEL2: '-',
         COMPANY: '-',
-        EMAIL: '-',
+        EMAIL: 'ghjghj@dfsdf.com',
         ADDRESS: '-',
         PROVINCE: null,
         ZIP_CODE: null,
@@ -829,6 +829,10 @@ export default {
             var pwd = this.admin.PASS
             let keyapp = 'DropShipSecretKey'
             var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
+            console.log(this.admin.DISTRICT )
+            // if(!t.DISTRICT.name_th){
+            //   console.log('null')
+            // }
             let res = {
               user_role: 'admin',
               user_id: t.ID,
@@ -840,14 +844,14 @@ export default {
               user_phone_secendary: t.TEL2,
               user_password: encodeURI(encrypted),
               user_address: t.ADDRESS,
-              user_district: t.DISTRICT.name_th,
-              user_subdistrict: t.SUB_DISTRICT.name_th,
-              user_province: t.PROVINCE.name_th,
-              user_postal: t.ZIP_CODE.id
+              user_district: t.DISTRICT == null ? '' : t.DISTRICT.name_th,
+              user_subdistrict: t.SUB_DISTRICT  == null ? '' : t.SUB_DISTRICT.name_th,
+              user_province: t.PROVINCE  == null ? '' : t.PROVINCE.name_th,
+              user_postal: t.ZIP_CODE  == null ? '' : t.ZIP_CODE.id
             }
             this.$store.dispatch('Register', res).then(res => {})
             this.dialog_success = true
-            // this.statusInput = null
+            this.statusInput = null
             console.log('Save => ', res)
           } else {
             console.log('Not Save', res)

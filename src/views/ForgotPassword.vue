@@ -136,8 +136,7 @@ import Footers from '@/components/Footer'
 import VueCaptcha from 'vue-captcha-code';
 import Vue from "vue";
 import { tickStep } from 'd3-array'
-import { Verify } from 'crypto';
-
+var CryptoJS = require('crypto-js')
 
 import TokenDetailDialog from '@/components/dialog/TokenDialog'
 
@@ -211,6 +210,28 @@ export default {
          inp4 =   this.checkErrorCase( 'inp-check-conf-pass' ,'' )
       }
       if( inp1 && inp2 && inp3 && inp4 ){
+
+        var pwd = this.txt_new_password
+                  let keyapp = 'DropShipSecretKey'
+                  var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
+
+             let res = {
+              user_id:this.$route.query.user_id,
+              new_password:encodeURI(encrypted),
+              user_status:'',
+            }
+            this.$store.
+              dispatch('changePwdStatus',res)
+              .then(res => {
+                  console.log(res)
+                })
+                .catch(error => { 
+                  console.log(error.response)
+                  if(error.response.status == 400){
+                  }
+                })
+
+
             console.log('OK' ,this.txt_captchar)
       }
 
@@ -388,6 +409,7 @@ export default {
       this.$store
               .dispatch('timeTokenForgot',this.$route.query.token)
               .then(res => {
+                this.step = 3
                 })
                 .catch(error => { 
                   console.log(error.response.statu)
@@ -396,10 +418,8 @@ export default {
                     
                   }
                 })
-      this.step = 3
+     
     }
-
-    
   },
   mounted () {
     
