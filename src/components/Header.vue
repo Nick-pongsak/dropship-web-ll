@@ -271,7 +271,7 @@ export default {
 .md-menu-content {
   height: auto;
   /* height: 270px !important; */
-  max-height: 270px !important;
+  /* max-height: 270px !important; */
 }
 .md-menu-content-container {
   display: flex;
