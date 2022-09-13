@@ -24,14 +24,9 @@
     <div class="action-bar" v-else style="padding:5px 0 5px 0">
       <div class="count-subtitle" style="">พบ {{ data.length }} รายการ</div>
     </div>
-<<<<<<< HEAD
-    <div class="table d-flex flex-wrap" :class="'justify-center'">
-      <!-- :class="data.length < 3 ? '' : 'justify-center'" -->
-=======
     <div
       class="table d-flex flex-wrap justify-center"
     >
->>>>>>> main
       <div
         id="test"
         :class="[
