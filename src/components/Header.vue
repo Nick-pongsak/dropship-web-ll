@@ -200,7 +200,10 @@ export default {
       if (param == 'Policy') {
         this.$store.commit('ShowPolicy', true)
       } else {
-        this.$router.push('/' + param)
+        let path = '/' + param
+        if (path !== this.$route.path) {
+          this.$router.push('/' + param)
+        }
       }
     },
     active_menu (param) {
