@@ -68,7 +68,7 @@
                   'padding-right': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                {{ data.cus_name }} {{data.cus_surname}}
+                {{ data.cus_name }} {{ data.cus_surname }}
               </div>
             </div>
             <div
@@ -254,7 +254,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                  {{data.order_remarks}}
+                    {{ data.order_remarks }}
                     <!-- <span v-if="data.comment == ''"> </span>
                     <span v-else>
                       {{
@@ -263,6 +263,25 @@
                           : 'พัสดุส่งกลับผู้ขาย'
                       }}</span
                     > -->
+                  </div>
+                </div>
+                <div style="width:100%;display:flex;padding-top:7px">
+                  <div
+                    class="d-dialog-title desc"
+                    :style="{
+                      width: windowSize < 600 ? '40%' : '30%',
+                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                    }"
+                  >
+                    จะต้องจัดส่งภายใน
+                  </div>
+                  <div
+                    class="d-dialog-title"
+                    :style="{
+                      width: windowSize < 600 ? '60%' : '70%'
+                    }"
+                  >
+                    <span> {{ formatDate(data.order_delivery_due_date) }}</span>
                   </div>
                 </div>
               </div>
@@ -388,7 +407,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ data.order_remarks  }}
+                      {{ data.order_remarks }}
                     </div>
                   </div>
                 </div>
@@ -401,7 +420,9 @@
         <div
           @click="printIcon()"
           style="padding-right:25px;padding-top:8px"
-          v-if="detect_device == 'not_mobile' &&data.order_status == 'Delivery'"
+          v-if="
+            detect_device == 'not_mobile' && data.order_status == 'Delivery'
+          "
         >
           <v-icon
             v-text="'mdi-printer'"
@@ -511,7 +532,7 @@ export default {
     }
   },
   computed: {
-    detect_device(){
+    detect_device () {
       return Vue.localStorage.get('DETECTED_DEVICE')
     },
     dialog: {
@@ -565,19 +586,19 @@ export default {
         const m = today.getMinutes()
         const monthName = this.monthsShort[today.getMonth()]
 
-        if(h < 10){
+        if (h < 10) {
           hours = '0' + h
-        }else {
+        } else {
           hours = h
         }
 
-        if(m < 10){
+        if (m < 10) {
           min = '0' + m
-        }else {
+        } else {
           min = m
         }
 
-        return days + ' ' + monthName + ' ' + fullYear 
+        return days + ' ' + monthName + ' ' + fullYear
       } else {
         return val
       }
@@ -586,7 +607,6 @@ export default {
       this.$emit('close', {})
     },
     accept () {
-      
       this.confirmPrint = false
       if (this.data.order_status == 'New') {
         this.confirmText = 'คุณต้องการยืนยันรายการเป็นสถานะ Accept ใช่หรือไม่ ?'
@@ -614,16 +634,10 @@ export default {
       } else if (this.data.order_status == 'Accept') {
         this.radio = ''
         process = 'Delivery'
-      } else if (
-        this.data.order_status== 'Delivery' &&
-        !this.confirmPrint
-      ) {
+      } else if (this.data.order_status == 'Delivery' && !this.confirmPrint) {
         this.radio = ''
         process = 'Delivering'
-      } else if (
-        this.data.order_status == 'Delivery' &&
-        this.confirmPrint
-      ) {
+      } else if (this.data.order_status == 'Delivery' && this.confirmPrint) {
         process = 'print'
       } else if (
         this.data.order_status == 'Delivering' &&
@@ -641,31 +655,33 @@ export default {
         //   event: process,
         //   detail: this.radio
         // }
-        if(this.radio == 'customer'){
+        if (this.radio == 'customer') {
           detail_remark = 'พัสดุการนำจ่ายถึงลูกค้า'
-        }else if(this.radio == 'supply') {
+        } else if (this.radio == 'supply') {
           detail_remark = 'พัสดุส่งกลับผู้ขาย'
         }
         // console.log(detail_remark)
         let obj = {
-          purchase_id: this.data.purchase_id ,
+          purchase_id: this.data.purchase_id,
           order_remark: detail_remark,
-          order_status: process 
+          order_status: process
         }
-      
+
         this.$emit('submit', obj)
-        this.$store.dispatch('sendOrderStatus', obj).then(res => {
-        this.confirmDialog = false
-        // console.log(res.success.data)
-        this.data.order_status =  process
-        this.data.order_remarks = detail_remark
-      })
-      .catch(error => { 
-        if(error.response.status == 401){
-          this.tokenExpired = true
-          console.log('Error 401')
-        }
-       })
+        this.$store
+          .dispatch('sendOrderStatus', obj)
+          .then(res => {
+            this.confirmDialog = false
+            // console.log(res.success.data)
+            this.data.order_status = process
+            this.data.order_remarks = detail_remark
+          })
+          .catch(error => {
+            if (error.response.status == 401) {
+              this.tokenExpired = true
+              console.log('Error 401')
+            }
+          })
       }
     },
     printIcon () {

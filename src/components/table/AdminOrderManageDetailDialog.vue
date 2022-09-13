@@ -107,7 +107,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    {{ data.sup_name }} {{data.sup_surname}}
+                    {{ data.sup_name }} {{ data.sup_surname }}
                   </div>
                 </div>
               </div>
@@ -204,7 +204,7 @@
                   'padding-right': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                {{ data.cus_name }} {{data.cus_surname }}
+                {{ data.cus_name }} {{ data.cus_surname }}
               </div>
             </div>
             <div
@@ -372,9 +372,8 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                  <!-- {{data.order_remark}} -->
-                    <span v-if="data.order_remarks == ''">
-                    </span>
+                    <!-- {{data.order_remark}} -->
+                    <span v-if="data.order_remarks == ''"> </span>
                     <span v-else>
                       {{
                         data.order_remarks == 'customer'
@@ -382,6 +381,25 @@
                           : 'พัสดุส่งกลับผู้ขาย'
                       }}</span
                     >
+                  </div>
+                </div>
+                <div style="width:100%;display:flex;padding-top:7px">
+                  <div
+                    class="d-dialog-title desc"
+                    :style="{
+                      width: windowSize < 600 ? '40%' : '30%',
+                      'padding-bottom': windowSize < 600 ? '0px' : '0px'
+                    }"
+                  >
+                    จะต้องจัดส่งภายใน
+                  </div>
+                  <div
+                    class="d-dialog-title"
+                    :style="{
+                      width: windowSize < 600 ? '60%' : '70%'
+                    }"
+                  >
+                    <span> {{ formatDate(data.order_delivery_due_date) }}</span>
                   </div>
                 </div>
               </div>
