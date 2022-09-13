@@ -226,7 +226,8 @@
               <div
                 class="d-dialog-title"
                 :style="{
-                  width: windowSize < 600 ? '60%' : '70%'
+                  width: windowSize < 600 ? '60%' : '70%',
+                  'padding-top': '6px'
                 }"
               >
                 {{ formatDate(data.order_delivery_date) }}
@@ -689,6 +690,7 @@ export default {
     formatDate (val) {
       let today = new Date(val)
       const year = today.getFullYear()
+      // const fullYear = year
       const fullYear = year + 543
       const days = today.getDate()
       const monthName = this.monthsShort[today.getMonth()]
