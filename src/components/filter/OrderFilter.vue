@@ -24,63 +24,73 @@
         class="filter-box"
         :style="{ width: windowSize <= 600 ? '100%' : '40%' }"
       >
-        <div style="width:100%">
-          <div class="subtitle">
-            ค้นหา
+        <div
+          :style="{ width: '100%', display: windowSize <= 600 ? '' : 'flex' }"
+        >
+          <div
+            :style="{
+              width: '100%',
+              'margin-top': windowSize <= 600 ? '7px' : '6px'
+            }"
+          >
+            <div class="subtitle">
+              ชื่อลูกค้า
+            </div>
+            <v-text-field solo dense v-model="customerInput">
+              <v-icon
+                v-if="showClearInput('customer')"
+                slot="append"
+                size="18"
+                @click="clearInput('customer')"
+              >
+                mdi-close
+              </v-icon>
+            </v-text-field>
           </div>
-          <v-text-field solo dense v-model="searchInput">
-            <v-icon slot="append" color="#D7D7D7" size="18">
-              mdi-magnify
-            </v-icon>
-            <v-icon
-              v-if="showClearInput('search')"
-              slot="append"
-              size="18"
-              @click="clearInput('search')"
-            >
-              mdi-close
-            </v-icon>
-          </v-text-field>
         </div>
         <div
-          :style="{
-            width: '100%',
-            'margin-top': windowSize <= 600 ? '7px' : '6px'
-          }"
+          :style="{ width: '100%', display: windowSize <= 600 ? '' : 'flex' }"
         >
-          <div class="subtitle">
-            ชื่อลูกค้า
+          <div
+            :style="{
+              width: windowSize <= 600 ? '100%' : '50%',
+              'margin-top': windowSize <= 600 ? '7px' : '6px',
+              'padding-right': windowSize <= 600 ? '' : '3%'
+            }"
+          >
+            <div class="subtitle">
+              หมายเลขคำสั่งซื้อ
+            </div>
+            <v-text-field solo dense v-model="orderInput">
+              <v-icon
+                v-if="showClearInput('orderNo')"
+                slot="append"
+                size="18"
+                @click="clearInput('orderNo')"
+              >
+                mdi-close
+              </v-icon>
+            </v-text-field>
           </div>
-          <v-text-field solo dense v-model="customerInput">
-            <v-icon
-              v-if="showClearInput('customer')"
-              slot="append"
-              size="18"
-              @click="clearInput('customer')"
-            >
-              mdi-close
-            </v-icon>
-          </v-text-field>
-        </div>
-        <div
-          :style="{
-            width: '100%',
-            'margin-top': windowSize <= 600 ? '7px' : '6px'
-          }"
-        >
-          <div class="subtitle">
-            หมายเลขคำสั่งซื้อ
+          <div
+            :style="{
+              width: windowSize <= 600 ? '100%' : '50%',
+              'margin-top': windowSize <= 600 ? '7px' : '6px'
+            }"
+          >
+            <div class="subtitle">
+              สถานะ
+            </div>
+            <v-select
+              v-model="statusInput"
+              :items="statusList"
+              label=""
+              item-text="title"
+              item-value="code"
+              solo
+              dense
+            ></v-select>
           </div>
-          <v-text-field solo dense v-model="orderInput">
-            <v-icon
-              v-if="showClearInput('orderNo')"
-              slot="append"
-              size="18"
-              @click="clearInput('orderNo')"
-            >
-              mdi-close
-            </v-icon>
-          </v-text-field>
         </div>
       </div>
       <div
@@ -139,7 +149,7 @@
             :disabled-date="disabledOrderDate"
           ></date-picker>
         </div>
-        <div
+        <!-- <div
           :style="{
             width: '100%',
             'margin-top': '5px'
@@ -151,13 +161,13 @@
           <v-select
             v-model="statusInput"
             :items="statusList"
-            label="-"
+            label=""
             item-text="title"
             item-value="code"
             solo
             dense
           ></v-select>
-        </div>
+        </div> -->
       </div>
       <div
         class="filter-box"
@@ -300,7 +310,9 @@ let year = d.getFullYear()
 let month = d.getMonth() + 1
 month = month > 9 ? month : '0' + month
 let startDay = year + '-' + month + '-' + '01'
-
+let dateStep1 = new Date(startDay)
+let dateStep2 = dateStep1.setDate(dateStep1.getDate() - 20)
+let dateStep3 = new Date(dateStep2).toISOString().slice(0, 10)
 export default {
   name: 'order-filter',
   props: {
@@ -311,16 +323,15 @@ export default {
       expandFilter: true,
       windowSize: 1366,
       formatDate: 'DD MMM YYYY',
-      searchInput: null,
       customerInput: null,
       orderInput: null,
-      startOrderDate: new Date(startDay).toISOString().slice(0, 10),
+      startOrderDate: new Date(dateStep3).toISOString().slice(0, 10),
       endOrderDate: new Date().toISOString().slice(0, 10),
       startDliveryDate: null,
       endDliveryDate: null,
       startSuccessDelivery: null,
       endSuccessDelivery: null,
-      statusInput: '',
+      statusInput: 'new',
       statusList: this.status,
       lang: {
         formatLocale: {
@@ -416,9 +427,9 @@ export default {
     startOrderDate: {
       handler (newValue) {
         if (newValue == null) {
-          this.startOrderDate = null
-          // this.startOrderDate = new Date(startDay).toISOString().slice(0, 10)
-          // this.endOrderDate = new Date().toISOString().slice(0, 10)
+          // this.startOrderDate = null
+          this.startOrderDate = new Date(dateStep3).toISOString().slice(0, 10)
+          this.endOrderDate = new Date().toISOString().slice(0, 10)
         } else {
           if (this.endOrderDate == null) {
             this.endOrderDate = newValue
@@ -475,7 +486,8 @@ export default {
     endOrderDate: {
       handler (newValue) {
         if (newValue == null) {
-          this.endOrderDate = this.startOrderDate
+          this.endOrderDate = new Date().toISOString().slice(0, 10)
+          // this.endOrderDate = this.startOrderDate
         }
       }
     },
@@ -516,14 +528,6 @@ export default {
         } else {
           return true
         }
-      } else if (val == 'search') {
-        if (this.searchInput == null) {
-          return false
-        } else if (this.searchInput.trim().length == 0) {
-          return false
-        } else {
-          return true
-        }
       }
     },
     clearInput (val) {
@@ -531,8 +535,6 @@ export default {
         this.customerInput = null
       } else if (val == 'orderNo') {
         this.orderInput = null
-      } else if (val == 'search') {
-        this.searchInput = null
       }
     },
     onResize () {
@@ -543,7 +545,7 @@ export default {
     },
     apply () {
       let result = {
-        search: this.searchInput,
+        search: '',
         customer: this.customerInput,
         order: this.orderInput,
         startOrderDate: this.startOrderDate,
@@ -560,7 +562,7 @@ export default {
       this.searchInput = null
       this.customerInput = null
       this.orderInput = null
-      this.startOrderDate = new Date(startDay).toISOString().slice(0, 10)
+      this.startOrderDate = new Date(dateStep3).toISOString().slice(0, 10)
       this.endOrderDate = new Date().toISOString().slice(0, 10)
       this.startDliveryDate = null
       this.endDliveryDate = null
