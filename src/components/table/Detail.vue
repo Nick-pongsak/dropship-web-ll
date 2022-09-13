@@ -183,27 +183,6 @@ export default {
     console.log('PRINT =>',RowData)
   },
     check_all(){
-
-      // if(this.checkboxALL){
-      //     this.select_order = []
-      //    for (let index = 0; index < this.data.length; index++) {
-      //       const element = this.data[index];
-      //         if( element.order_status == 'Delivering' ){
-      //           element.checked = true
-      //           this.select_order.push(element.purchase_id)
-      //         }
-      //     }
-      // }else {
-      //       this.select_order = []
-      //       for (let index = 0; index < this.data.length; index++) {
-      //       const element = this.data[index];
-      //         if( element.order_status == 'Delivering' ){
-      //           element.checked = false
-                
-      //         }
-      //     }
-      // }
-   
       for (let index = 0; index < this.data.length; index++) {
         const element = this.data[index];
         if(this.checkboxALL){

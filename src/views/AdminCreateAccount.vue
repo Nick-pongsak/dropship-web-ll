@@ -728,13 +728,13 @@ export default {
       info_sup: '',
       admin: {
         ID: '-',
-        PASS: '-',
+        PASS: '1234hhh5a',
         NAME: '-',
         SERNAME: '-',
-        TEL: '-',
+        TEL: '0982713122',
         TEL2: '-',
         COMPANY: '-',
-        EMAIL: '-',
+        EMAIL: 'piyathat_j@dhas.com',
         ADDRESS: '-',
         PROVINCE: null,
         ZIP_CODE: null,
@@ -850,9 +850,19 @@ export default {
               user_province: t.PROVINCE  == null ? '' : t.PROVINCE.name_th,
               user_postal: t.ZIP_CODE  == null ? '' : t.ZIP_CODE.id
             }
-            this.$store.dispatch('Register', res).then(res => {})
-            this.dialog_success = true
-            this.statusInput = null
+            this.$store.dispatch('Register', res).then(res => { 
+              this.dialog_success = true
+              this.statusInput = null
+          })
+            .catch(error => { 
+              console.log(error.response.status)
+                  if(error.response.status == 400){
+                    this.Error.errorClassEmail = 'error-case'
+                    this.Error.errorClassEmail_txt = this.$t('txt-wrong14')
+                    console.log('Error 400')
+                  }
+                })
+           
             console.log('Save => ', res)
           } else {
             console.log('Not Save', res)

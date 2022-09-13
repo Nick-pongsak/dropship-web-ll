@@ -48,7 +48,8 @@ const store = {
          
           resolve(response.data);
         }).catch(error => {
-          console.log(error)
+          dispatch('newToken',error.response.data.error.data.token)
+          console.log(error.response)
           reject(error)
         })
       })
@@ -211,6 +212,8 @@ const store = {
           console.log(response)
           resolve(response.data);
         }).catch(error => {
+          dispatch('newToken',error.response.data.error.data.token)
+          console.log(error.response)
           reject(error)
         })
       })
