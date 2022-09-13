@@ -313,6 +313,10 @@ let startDay = year + '-' + month + '-' + '01'
 let dateStep1 = new Date(startDay)
 let dateStep2 = dateStep1.setDate(dateStep1.getDate() - 20)
 let dateStep3 = new Date(dateStep2).toISOString().slice(0, 10)
+
+var dayEnd = d.toLocaleString('default', { day: '2-digit' })
+let endDate = year + '-' + month + '-' + dayEnd
+
 export default {
   name: 'order-filter',
   props: {
@@ -326,7 +330,7 @@ export default {
       customerInput: null,
       orderInput: null,
       startOrderDate: new Date(dateStep3).toISOString().slice(0, 10),
-      endOrderDate: new Date().toISOString().slice(0, 10),
+      endOrderDate: endDate,
       startDliveryDate: null,
       endDliveryDate: null,
       startSuccessDelivery: null,
@@ -429,7 +433,7 @@ export default {
         if (newValue == null) {
           // this.startOrderDate = null
           this.startOrderDate = new Date(dateStep3).toISOString().slice(0, 10)
-          this.endOrderDate = new Date().toISOString().slice(0, 10)
+          this.endOrderDate = endDate
         } else {
           if (this.endOrderDate == null) {
             this.endOrderDate = newValue
@@ -486,7 +490,7 @@ export default {
     endOrderDate: {
       handler (newValue) {
         if (newValue == null) {
-          this.endOrderDate = new Date().toISOString().slice(0, 10)
+          this.endOrderDate = endDate
           // this.endOrderDate = this.startOrderDate
         }
       }
@@ -563,7 +567,7 @@ export default {
       this.customerInput = null
       this.orderInput = null
       this.startOrderDate = new Date(dateStep3).toISOString().slice(0, 10)
-      this.endOrderDate = new Date().toISOString().slice(0, 10)
+      this.endOrderDate = endDate
       this.startDliveryDate = null
       this.endDliveryDate = null
       this.startSuccessDelivery = null

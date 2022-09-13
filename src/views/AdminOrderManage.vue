@@ -41,6 +41,8 @@ let month = d.getMonth() + 1
 month = month > 9 ? month : '0' + month
 let startDay = year + '-' + month + '-' + '01'
 
+var dayEnd = d.toLocaleString('default', { day: '2-digit' })
+let endDate = year + '-' + month + '-' + dayEnd
 export default {
   name: 'admin-order-manage',
   data () {
@@ -54,7 +56,7 @@ export default {
         company: '',
         customer: '',
         endDliveryDate: '',
-        endOrderDate: new Date().toISOString().slice(0, 10),
+        endOrderDate: endDate,
         endSuccessDelivery: '',
         manufacturer: '',
         order: '',
