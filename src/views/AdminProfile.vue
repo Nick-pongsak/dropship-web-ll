@@ -434,7 +434,13 @@ export default {
                 this.dialog_success = true
                
                 this.cancel()
-            })
+            }).catch(error => { 
+                  if(error.response.status == 400){
+                    this.Error.errorClassEmail = 'error-case'
+                    this.Error.errorClassEmail_txt = this.$t('txt-wrong14')
+                    console.log('Error 400')
+                  }
+                })
              console.log('save Profile ==> OK')
 
              
