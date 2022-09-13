@@ -25,8 +25,7 @@
       <div class="count-subtitle" style="">พบ {{ data.length }} รายการ</div>
     </div>
     <div
-      class="table d-flex flex-wrap"
-      :class="data.length < 3 ? '' : 'justify-center'"
+      class="table d-flex flex-wrap justify-center"
     >
       <div
         id="test"
