@@ -351,7 +351,7 @@
               <b-col xl>
                 <div class="md-layout">
                   <div class="head">
-                    Admin ID <span style="color:red">*</span>
+                    Suppile ID <span style="color:red">*</span>
                   </div>
                   <div class="detail" style="">
                     <v-select
@@ -934,6 +934,7 @@ export default {
       // this.$store.dispatch('getDataUserCreate', data )
     },
     selectSup_ () {
+    
       let t = this.supplier
       let user = this.sup_list.findIndex(x => x.user_id === this.info_sup)
       t.ID = this.sup_list[user].user_id
