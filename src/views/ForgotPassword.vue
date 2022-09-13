@@ -47,7 +47,7 @@
          </div>
 
          <div v-if="step == 2" style="display: contents;">
-               <div class="pt-5 txt-detail font-Bai-Jamjuree">ส่งไปแล้วที่อีเมล :   <span style="font-weight: lighter;text-decoration: underline;color:#0085D1;">{{this.emailForgot}}</span></div>
+               <div class="pt-5 txt-detail font-Bai-Jamjuree">ส่งไปแล้วที่อีเมล :   <span style="font-weight: lighter;text-decoration: underline;color:#0085D1;">{{this.email_step2}}</span></div>
                 <div class="pt-10- txt-detail2 font-Bai-Jamjuree">กรุณาตรวจสอบที่อีเมลของท่าน</div>
               <div class="pt-10 font-Bai-Jamjuree"><input @click="btn_back"    class="btn-send_email" type="button" value="กลับหน้าเข้าสู่ระบบ"></div>
              
@@ -178,6 +178,7 @@ export default {
       txt_check_confirm_password:false,
       err_new_password:false,
       err_confirm_password:false,
+      email_step2:'',
 
       Error:{  
       errorClassEmail:'',
@@ -303,6 +304,7 @@ export default {
               .then(res => {
                   console.log(res.success.data)
                     this.step = 2
+                    this.email_step2 = this.txt_email
                     // Vue.localStorage.set('EMAIL-FORGOT',this.txt_email)
                     // Vue.localStorage.set('ACTION_FORGOT_STEP',2)
                     // console.log('Send')
