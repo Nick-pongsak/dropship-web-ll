@@ -373,7 +373,7 @@ export default {
       endDliveryDate: null,
       startSuccessDelivery: null,
       endSuccessDelivery: null,
-      statusInput: '',
+      statusInput: 'new',
       statusList: this.status,
       lang: {
         formatLocale: {
