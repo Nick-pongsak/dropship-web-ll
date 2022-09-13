@@ -631,18 +631,30 @@ export default {
       confirmPrint: false,
       radio: 'customer',
       monthsShort: [
-        'ม.ค.',
-        'ก.พ.',
-        'มี.ค.',
-        'เม.ย.',
-        'พ.ค.',
-        'มิ.ย.',
-        'ก.ค.',
-        'ส.ค.',
-        'ก.ย.',
-        'ต.ค.',
-        'พ.ย.',
-        'ธ.ค.'
+        'JAN',
+        'FEB',
+        'MAR',
+        'APR',
+        'MAY',
+        'JUN',
+        'JUL',
+        'AUG',
+        'SEP',
+        'OCT',
+        'NOV',
+        'DEC'
+        // 'ม.ค.',
+        // 'ก.พ.',
+        // 'มี.ค.',
+        // 'เม.ย.',
+        // 'พ.ค.',
+        // 'มิ.ย.',
+        // 'ก.ค.',
+        // 'ส.ค.',
+        // 'ก.ย.',
+        // 'ต.ค.',
+        // 'พ.ย.',
+        // 'ธ.ค.'
       ],
       headColum: ['#', 'SKU', 'รายการสินค้า', 'จำนวน', 'หมายเหตุ']
     }
@@ -690,7 +702,8 @@ export default {
     formatDate (val) {
       let today = new Date(val)
       const year = today.getFullYear()
-      const fullYear = year + 543
+      const fullYear = year
+      // const fullYear = year + 543
       const days = today.getDate()
       const monthName = this.monthsShort[today.getMonth()]
       return days + ' ' + monthName + ' ' + fullYear

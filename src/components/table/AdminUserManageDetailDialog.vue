@@ -417,18 +417,30 @@ export default {
         errorClassConfNewPwd_txt:'',
       },
       monthsShort: [
-        'ม.ค.',
-        'ก.พ.',
-        'มี.ค.',
-        'เม.ย.',
-        'พ.ค.',
-        'มิ.ย.',
-        'ก.ค.',
-        'ส.ค.',
-        'ก.ย.',
-        'ต.ค.',
-        'พ.ย.',
-        'ธ.ค.'
+        // 'ม.ค.',
+        // 'ก.พ.',
+        // 'มี.ค.',
+        // 'เม.ย.',
+        // 'พ.ค.',
+        // 'มิ.ย.',
+        // 'ก.ค.',
+        // 'ส.ค.',
+        // 'ก.ย.',
+        // 'ต.ค.',
+        // 'พ.ย.',
+        // 'ธ.ค.'
+        'JAN',
+        'FEB',
+        'MAR',
+        'APR',
+        'MAY',
+        'JUN',
+        'JUL',
+        'AUG',
+        'SEP',
+        'OCT',
+        'NOV',
+        'DEC'
       ]
     }
   },
@@ -605,7 +617,8 @@ export default {
         let min = ''
         let today = new Date(val)
         const year = today.getFullYear()
-        const fullYear = year + 543
+        const fullYear = year
+        // const fullYear = year + 543
         const days = today.getDate()
         const h = today.getHours()
         const m = today.getMinutes()

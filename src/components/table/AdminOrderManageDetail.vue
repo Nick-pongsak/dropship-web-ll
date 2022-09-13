@@ -24,10 +24,8 @@
     <div class="action-bar" v-else style="padding:5px 0 5px 0">
       <div class="count-subtitle" style="">พบ {{ data.length }} รายการ</div>
     </div>
-    <div
-      class="table d-flex flex-wrap"
-      :class="data.length < 3 ? '' : 'justify-center'"
-    >
+    <div class="table d-flex flex-wrap" :class="'justify-center'">
+      <!-- :class="data.length < 3 ? '' : 'justify-center'" -->
       <div
         id="test"
         :class="[
@@ -176,18 +174,30 @@ export default {
       deviceType: null,
       calcCardWidth: 20,
       monthsShort: [
-        'ม.ค.',
-        'ก.พ.',
-        'มี.ค.',
-        'เม.ย.',
-        'พ.ค.',
-        'มิ.ย.',
-        'ก.ค.',
-        'ส.ค.',
-        'ก.ย.',
-        'ต.ค.',
-        'พ.ย.',
-        'ธ.ค.'
+        'JAN',
+        'FEB',
+        'MAR',
+        'APR',
+        'MAY',
+        'JUN',
+        'JUL',
+        'AUG',
+        'SEP',
+        'OCT',
+        'NOV',
+        'DEC'
+        // 'ม.ค.',
+        // 'ก.พ.',
+        // 'มี.ค.',
+        // 'เม.ย.',
+        // 'พ.ค.',
+        // 'มิ.ย.',
+        // 'ก.ค.',
+        // 'ส.ค.',
+        // 'ก.ย.',
+        // 'ต.ค.',
+        // 'พ.ย.',
+        // 'ธ.ค.'
       ]
     }
   },
@@ -227,7 +237,8 @@ export default {
         let min = ''
         let today = new Date(val)
         const year = today.getFullYear()
-        const fullYear = year + 543
+        const fullYear = year
+        // const fullYear = year + 543
         const days = today.getDate()
         const h = today.getHours()
         const m = today.getMinutes()

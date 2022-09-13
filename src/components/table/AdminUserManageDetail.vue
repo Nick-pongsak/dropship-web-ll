@@ -28,7 +28,9 @@
         <div class="row-card">
           <div style="width:7%"></div>
           <div class="title-card">ชื่อ</div>
-          <div class="value-card">{{ row.user_name + ' '+ row.user_surname }}</div>
+          <div class="value-card">
+            {{ row.user_name + ' ' + row.user_surname }}
+          </div>
         </div>
         <div class="row-card">
           <div style="width:7%"></div>
@@ -97,18 +99,30 @@ export default {
       deviceType: null,
       calcCardWidth: 20,
       monthsShort: [
-        'ม.ค.',
-        'ก.พ.',
-        'มี.ค.',
-        'เม.ย.',
-        'พ.ค.',
-        'มิ.ย.',
-        'ก.ค.',
-        'ส.ค.',
-        'ก.ย.',
-        'ต.ค.',
-        'พ.ย.',
-        'ธ.ค.'
+        // 'ม.ค.',
+        // 'ก.พ.',
+        // 'มี.ค.',
+        // 'เม.ย.',
+        // 'พ.ค.',
+        // 'มิ.ย.',
+        // 'ก.ค.',
+        // 'ส.ค.',
+        // 'ก.ย.',
+        // 'ต.ค.',
+        // 'พ.ย.',
+        // 'ธ.ค.'
+        'JAN',
+        'FEB',
+        'MAR',
+        'APR',
+        'MAY',
+        'JUN',
+        'JUL',
+        'AUG',
+        'SEP',
+        'OCT',
+        'NOV',
+        'DEC'
       ]
     }
   },
@@ -118,36 +132,48 @@ export default {
     renderStatus (row, mode) {
       if (mode == 'class') {
         return row.user_status == 1 ? 'active' : 'inactive'
-      } else { 
+      } else {
         return row.user_status == 1 ? 'Active' : 'Inactive'
       }
     },
     formatDate (val) {
       if (val !== null) {
-        let hours= ''
-        let min= ''
+        let hours = ''
+        let min = ''
         let today = new Date(val)
         const year = today.getFullYear()
-        const fullYear = year + 543
+        const fullYear = year
+        // const fullYear = year + 543
         const days = today.getDate()
         const h = today.getHours()
         const m = today.getMinutes()
         const monthName = this.monthsShort[today.getMonth()]
 
-        if(h < 10){
+        if (h < 10) {
           hours = '0' + h
           console.log('a')
-        }else {
+        } else {
           hours = h
         }
 
-        if(m < 10){
+        if (m < 10) {
           min = '0' + m
           console.log('a')
-        }else {
+        } else {
           min = m
         }
-        return days + ' ' + monthName + ' ' + fullYear + '  '+hours + ':' + min + ' น.'
+        return (
+          days +
+          ' ' +
+          monthName +
+          ' ' +
+          fullYear +
+          '  ' +
+          hours +
+          ':' +
+          min +
+          ' น.'
+        )
       } else {
         return val
       }
