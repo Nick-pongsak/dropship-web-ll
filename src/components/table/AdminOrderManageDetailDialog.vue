@@ -690,7 +690,6 @@ export default {
     formatDate (val) {
       let today = new Date(val)
       const year = today.getFullYear()
-      // const fullYear = year
       const fullYear = year + 543
       const days = today.getDate()
       const monthName = this.monthsShort[today.getMonth()]
