@@ -419,7 +419,7 @@ export default {
               user_email:this.profile.user_email,
               user_name:this.profile.user_name,
               user_surname:this.profile.user_surname,
-              user_phone:this.profile.user_phone,
+              user_phone:this.profile.user_phone.replace(/ |_/g, ''),
             }
             // console.log(res)
             this.$store
@@ -442,8 +442,6 @@ export default {
                   }
                 })
              console.log('save Profile ==> OK')
-
-             
           }else {
             console.log('save Profile ==> NOT OK!!!')
           }

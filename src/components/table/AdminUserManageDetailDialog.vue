@@ -132,7 +132,7 @@
               <div  class="md-layout">
                 <div class="head">เข้าใช้งานล่าสุด</div>
                 <div class="detail" style="">
-                  {{formatDate(data.user_create_date)}}
+                  {{formatDate(data.user_latest_login)}}
                 </div>
               </div>
             </b-col>

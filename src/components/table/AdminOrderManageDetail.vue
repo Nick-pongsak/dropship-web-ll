@@ -328,6 +328,19 @@ export default {
       }
     },
     view (row) {
+
+      this.$store
+        .dispatch('getOrderDetail', row.purchase_id)
+        .then(res => {
+          this.$emit('view',res.success.data[0])
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      // console.log("🚀 ~ file: AdminOrderManageDetail.vue ~ line 331 ~ view ~ row", row)
       this.$emit('view', row)
     },
     print (row) {

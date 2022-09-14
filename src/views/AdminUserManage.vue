@@ -41,9 +41,9 @@
         style="border-radius:4px 0 0 4px;height:100%;width:3%;"
         :style="{'background-color':this.textSnack.status_code == 1 ? '#008525' :'#DA0707'}"></div>
 
-         <div >    
+         <div>    
           <div style="padding:0 0 0 20px;width: 100%;height: 50%;display: flex;justify-content: center;align-items: flex-end;;color:#000">{{ textSnack.status }} <span style="margin:0 0 0 5px;font-weight:bold;"> "{{ textSnack.user_name }}" </span> </div>
-          <div style="height: 50%;display: flex;justify-content: center;color:#000">เรียบร้อยแล้ว</div>
+          <div style="height:50%;display: flex;justify-content: center;color:#000">เรียบร้อยแล้ว</div>
          </div>
     
         <!-- <div style="padding:0 0 0 10px;display: flex;align-items: center;color:#000;height: 100%;width: 97%;"> 
@@ -51,8 +51,6 @@
         </div> -->
           
     </div>
-    
-     
     </v-snackbar>
 
   </div>
@@ -84,6 +82,7 @@ export default {
       openDialog:false,
       dialogDetail:true,
       systemList: [
+        { code: 'all', title: 'All' },
         { code: 'active', title: 'Active' },
         { code: 'inactive', title: 'Inactive' }
       ],

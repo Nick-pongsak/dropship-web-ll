@@ -66,7 +66,7 @@ const store = {
         }).then(response => {
           dispatch('newToken',response.data.success.token)
           // console.log(response.data.success.token)
-          // resolve(response.data);
+          resolve(response.data);
         }).catch(error => {
           dispatch('newToken',error.response.data.error.data.token)
           // console.log(error.response)

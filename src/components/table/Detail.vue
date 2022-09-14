@@ -238,6 +238,7 @@ export default {
       }
     },
     push (param) {
+      console.log(param)
       let Deliver = this.data.filter(x => x.order_status === 'Delivery')
       if (this.select_order.length == 0) {
         this.select_order.push(param)

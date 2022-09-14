@@ -118,6 +118,27 @@ const store = {
       })
 
     },
+    getOrderDetail({ state, commit, dispatch }, data) {
+      // console.log(data)
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/get-order-detail`, {
+          purchase_id: data
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          // console.log(response)
+          dispatch('newToken',response.data.success.token)
+          resolve(response.data);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
     
 
   },
