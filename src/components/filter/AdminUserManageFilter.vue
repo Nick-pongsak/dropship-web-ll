@@ -22,9 +22,9 @@
     >
       <div
         class="filter-box"
-        :style="{ width: windowSize <= 600 ? '100%' : '70%' }"
+        :style="{ width: windowSize <= 600 ? '100%' : '100%' }"
       >
-        <div style="width:100%">
+        <!-- <div style="width:100%">
           <div class="subtitle">
             ค้นหา
           </div>
@@ -41,7 +41,8 @@
               mdi-close
             </v-icon>
           </v-text-field>
-        </div>
+        </div> -->
+
         <div
           :style="{
             width: '100%',
@@ -51,7 +52,7 @@
           <div
             :style="{ display: windowSize <= 600 ? '' : 'flex', width: '100%' }"
           >
-            <div :style="{ width: windowSize <= 600 ? '100%' : '35%' }">
+            <div :style="{ width: windowSize <= 600 ? '100%' : '30%' }">
               <div class="subtitle">
                 อีเมล
               </div>
@@ -88,7 +89,7 @@
             </div>
             <div
               :style="{
-                width: windowSize <= 600 ? '100%' : '30%',
+                width: windowSize <= 600 ? '100%' : '35%',
                 'margin-left': windowSize <= 600 ? '' : '8px'
               }"
             >
@@ -107,20 +108,11 @@
               </v-text-field>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        class="filter-box"
-        :style="{
-          width: windowSize <= 600 ? '100%' : '20%',
-          'margin-top': windowSize <= 600 ? '11px' : ''
-        }"
-      >
-        <div class="subtitle">
-          สถานะ
-        </div>
-        <div style="display:flex">
+          <div class="subtitle">
+            สถานะ
+          </div>
           <v-select
+          style="width:30% ;"
             v-model="statusInput"
             :items="systemList"
             label=""
@@ -130,15 +122,20 @@
             dense
           ></v-select>
         </div>
-        <div
-          :style="{
-            display: windowSize <= 600 ? '' : '',
-            'margin-top': windowSize <= 600 ? '3px' : '3px'
-          }"
-        >
-          <div class="subtitle">
+      </div>
+      <div
+        class="filter-box"
+        :style="{
+          width: windowSize <= 600 ? '100%' : '30%',
+          'margin-top': windowSize <= 600 ? '11px' : ''
+        }"
+      >
+       
+
+        <div class="subtitle">
             ชื่อ นามสกุล
           </div>
+        <div style="margin-top:12px;display:flex">
           <v-text-field solo dense v-model="fullnameInput">
             <v-icon
               v-if="showClearInput('fullname')"
@@ -150,8 +147,19 @@
             </v-icon>
           </v-text-field>
         </div>
+        <div
+          :style="{
+            display: windowSize <= 600 ? '' : '',
+            'margin-top': windowSize <= 600 ? '3px' : '3px'
+          }"
+        >
+        <div style="justify-content: flex-end;display:flex;padding-top:13px">
+          <v-btn style="margin:0 20px 0 0" rounded @click="clearFilter()" class="clear">Clear</v-btn>
+          <v-btn :disabled="loading_status ?true :false" rounded @click="apply()" class="ok">Apply</v-btn>
+        </div>
+        </div>
       </div>
-      <div
+      <!-- <div
         class="filter-box"
         :style="{
           width: windowSize <= 600 ? '100%' : '10%',
@@ -169,11 +177,10 @@
         >
           <v-btn :disabled="loading_status ?true :false" rounded @click="apply()" class="ok">Apply</v-btn>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
-
 <script>
 // import moment from 'moment'
 export default {
