@@ -894,9 +894,9 @@ export default {
               user_province: t.PROVINCE,
               user_postal: t.ZIP_CODE
             }
-            // this.$store.dispatch('Register', res).then(res => {})
-            // this.dialog_success = true
-            // this.statusInput = null
+            this.$store.dispatch('Register', res).then(res => {})
+            this.dialog_success = true
+            this.statusInput = null
             console.log('Save sup => ', res)
           } else {
             console.log('Not Save')
