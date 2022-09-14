@@ -167,7 +167,7 @@
             'margin-top': windowSize <= 600 ? '17px' : '22px'
           }"
         >
-          <v-btn rounded @click="apply()" class="ok">Apply</v-btn>
+          <v-btn :disabled="loading_status ?true :false" rounded @click="apply()" class="ok">Apply</v-btn>
         </div>
       </div>
     </div>

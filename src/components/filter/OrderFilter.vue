@@ -292,6 +292,7 @@
           <v-btn rounded @click="clearFilter()" class="clear">Clear</v-btn>
           <v-btn
             rounded
+            :disabled="loading_status ?true :false"
             @click="apply()"
             class="ok"
             :style="{ 'margin-left': windowSize <= 600 ? '10px' : '10px' }"
@@ -311,7 +312,7 @@ let month = d.getMonth() + 1
 month = month > 9 ? month : '0' + month
 let startDay = year + '-' + month + '-' + '01'
 let dateStep1 = new Date(startDay)
-let dateStep2 = dateStep1.setDate(dateStep1.getDate() - 20)
+let dateStep2 = dateStep1.setDate(dateStep1.getDate() - 19)
 let dateStep3 = new Date(dateStep2).toISOString().slice(0, 10)
 
 var dayEnd = d.toLocaleString('default', { day: '2-digit' })
@@ -320,7 +321,8 @@ let endDate = year + '-' + month + '-' + dayEnd
 export default {
   name: 'order-filter',
   props: {
-    status: Array
+    status: Array,
+    loading_status:Boolean
   },
   data () {
     return {

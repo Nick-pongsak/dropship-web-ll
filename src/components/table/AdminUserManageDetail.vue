@@ -11,6 +11,13 @@
       </div>
     </div>
     <div v-if="data.length != 0" class="table d-flex flex-wrap justify-center">
+      <div v-if="loading_status"  style="z-index:1;position: absolute;">
+      <v-progress-circular
+      :size="100"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
+    </div>
       <div
         :class="checkbox ? 'card selected' : 'card'"
         v-for="(row, index) in data"
@@ -88,7 +95,8 @@
 export default {
   name: 'detail-table',
   props: {
-    data: Array
+    data: Array,
+    loading_status: Boolean
   },
   data () {
     return {

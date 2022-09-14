@@ -3,10 +3,12 @@
     id="home-page">
     <div >
       <admin-user-manage-filter
+      :loading_status="loading_status"
         :status="systemList"
         @apply="ApplyFilter"
       ></admin-user-manage-filter>
       <admin-user-manage-detail
+      :loading_status="loading_status"
         :data="data"
         @view="viewDeatil"
         @submit="submitAction"
@@ -74,7 +76,7 @@ export default {
       color: '#fff',
 
 
-
+      loading_status:false,
       data: [],
       status: [],
       selectedRow: {},
@@ -120,7 +122,9 @@ export default {
     },
     fetch () {
       let arr = []
+      this.loading_status = true
       this.$store.dispatch('getUserList', this.filterData).then(res => {
+        this.loading_status = false
         // console.log(res.data)
         // for (let index = 0; index < res.data.length; index++) {
         //   const element = res.data[index]

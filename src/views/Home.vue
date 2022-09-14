@@ -4,8 +4,9 @@
     :style="{ background: showDialog ? 'rgba(0, 0, 0, 0.2)' : '' }"
   >
     <div v-show="!showDialog">
-      <order-filter :status="status" @apply="ApplyFilter"></order-filter>
+      <order-filter  :loading_status="loading_status" :status="status" @apply="ApplyFilter"></order-filter>
       <detail-table
+        :loading_status="loading_status"
         :data="data"
         :status="status"
         @view="viewDeatil"
@@ -44,6 +45,7 @@ export default {
       status: [],
       selectedRow: {},
       tokenExpired: false,
+      loading_status:false,
       filterData: {
         customer: '',
         endDliveryDate: '',
@@ -115,10 +117,12 @@ export default {
       console.log('printDetail ==> ', val)
     },
     fetch () {
+      this.loading_status = true
       console.log(this.filterData)
       this.$store
         .dispatch('getOrderSupplier', this.filterData)
         .then(res => {
+          this.loading_status = false
           // console.log(res.success.data)
           this.data = res.success.data
         })
