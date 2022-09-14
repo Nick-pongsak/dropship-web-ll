@@ -592,23 +592,9 @@ export default {
         let min = ''
         let today = new Date(val)
         const year = today.getFullYear()
-        const fullYear = year + 543
+        const fullYear = year
         const days = today.getDate()
-        const h = today.getHours()
-        const m = today.getMinutes()
         const monthName = this.monthsShort[today.getMonth()]
-
-        if (h < 10) {
-          hours = '0' + h
-        } else {
-          hours = h
-        }
-
-        if (m < 10) {
-          min = '0' + m
-        } else {
-          min = m
-        }
 
         return days + ' ' + monthName + ' ' + fullYear
       } else {

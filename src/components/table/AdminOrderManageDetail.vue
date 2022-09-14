@@ -257,29 +257,12 @@ export default {
         const m = today.getMinutes()
         const monthName = this.monthsShort[today.getMonth()]
 
-        if (h < 10) {
-          hours = '0' + h
-        } else {
-          hours = h
-        }
-
-        if (m < 10) {
-          min = '0' + m
-        } else {
-          min = m
-        }
-
         return (
           days +
           ' ' +
           monthName +
           ' ' +
-          fullYear +
-          '  ' +
-          hours +
-          ':' +
-          min +
-          ' น.'
+          fullYear
         )
       } else {
         return val

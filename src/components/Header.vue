@@ -65,7 +65,7 @@
       <div
         style="padding:0 10px 0 0;font-weight: 400;font-size: 16px;display: flex; align-items: center;font-family:'Bai Jamjuree', sans-serif;"
       >
-        {{ this.timeServer }}
+        {{ formatDate(this.timeServer) }}
       </div>
       <md-menu md-size="medium" md-align-trigger>
         <md-button
