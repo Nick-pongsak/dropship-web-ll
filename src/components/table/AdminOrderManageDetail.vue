@@ -17,7 +17,7 @@
         >Submit</v-btn
       >
       <div class="count-subtitle">
-        พบ {{ data.length }} รายการ (เลือกแล้ว
+        พบ {{ data.length }} รายการ  (เลือกแล้ว
         {{ this.select_order.length }} รายการ)
       </div>
     </div>
@@ -27,6 +27,15 @@
     <div
       class="table d-flex flex-wrap justify-center"
     >
+
+    <div v-if="loading_status"  style="z-index:1;position: absolute;">
+      <v-progress-circular
+      :size="100"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
+    </div>
+    
       <div
         id="test"
         :class="[
@@ -160,7 +169,8 @@
 export default {
   name: 'detail-table',
   props: {
-    data: Array
+    data: Array,
+    loading_status: Boolean
   },
   data () {
     return {

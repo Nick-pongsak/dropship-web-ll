@@ -179,7 +179,8 @@
 export default {
   name: 'order-filter',
   props: {
-    status: Array
+    status: Array,
+    loading_status:Boolean
   },
   data () {
     return {

@@ -24,6 +24,15 @@
       <div class="count-subtitle" style="">พบ {{ data.length }} รายการ</div>
     </div>
     <div class="table d-flex flex-wrap justify-center">
+
+      <div v-if="loading_status"  style="z-index:1;position: absolute;">
+      <v-progress-circular
+      :size="100"
+      color="primary"
+      indeterminate
+    ></v-progress-circular>
+    </div>
+
       <div
         :class="
           row.checked && row.order_status == 'Delivering'
@@ -115,7 +124,8 @@ export default {
   name: 'detail-table',
   props: {
     data: Array,
-    status: Array
+    status: Array,
+    loading_status:Boolean
     // device: String
   },
   data () {
