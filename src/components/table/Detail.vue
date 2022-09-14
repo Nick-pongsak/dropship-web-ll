@@ -35,7 +35,7 @@
 
       <div
         :class="
-          row.checked && row.order_status == 'Delivering'
+          row.checked && row.order_status == 'Delivery'
             ? 'card selected'
             : 'card'
         "
@@ -46,7 +46,7 @@
           <div style="display:flex;width:100%">
             <div style="padding-top: 0px;width:7%">
               <v-checkbox
-                :disabled="row.order_status != 'Delivering' ? true : false"
+                :disabled="row.order_status != 'Delivery' ? true : false"
                 v-model="row.checked"
                 @change="push(row.purchase_id)"
                 hide-details
@@ -232,14 +232,14 @@ export default {
         const element = this.data[index]
         if (this.checkboxALL) {
           if (
-            element.order_status == 'Delivering' &&
+            element.order_status == 'Delivery' &&
             element.checked == false
           ) {
             element.checked = true
             this.push(element.purchase_id)
           }
         } else {
-          if (element.order_status == 'Delivering') {
+          if (element.order_status == 'Delivery') {
             element.checked = false
             this.push(element.purchase_id)
           }

@@ -80,7 +80,7 @@ const store = {
           for (let index = 0; index < response.data.success.data.length; index++) {
              const element = response.data.success.data[index];
 
-            if(element.order_status != 'Delivering'){
+            if(element.order_status != 'Delivery'){
               Object.assign(element , {checked: true});
             }else {
               Object.assign(element , {checked: false});
