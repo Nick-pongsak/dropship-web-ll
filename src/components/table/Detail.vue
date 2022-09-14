@@ -114,6 +114,13 @@
           </div>
         </div>
       </div>
+      <div
+        style="padding-top:8%;font-size: 40px;color: rgba(0, 0, 0, 0.6);"
+        class="table d-flex flex-wrap justify-center"
+        v-if="data.length == 0"
+      >
+        ไม่พบข้อมูลที่ค้นหา กรุณากรอกข้อมูลใหม่
+      </div>
     </div>
 
     <v-dialog v-model="confirmDisable" max-width="400" width="400">
