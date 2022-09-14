@@ -247,6 +247,8 @@ export default {
         let hours = ''
         let min = ''
         let today = new Date(val)
+        // const year = today.getFullYear()
+        // const fullYear = year
         const year = today.getFullYear()
         const fullYear = year
         // const fullYear = year + 543
