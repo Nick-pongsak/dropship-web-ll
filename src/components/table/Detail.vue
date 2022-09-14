@@ -115,6 +115,38 @@
         </div>
       </div>
     </div>
+
+    <v-dialog v-model="confirmDisable" max-width="400" width="400">
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:end;padding:15px 20px 20px 20px;">
+              <span style="cursor: pointer;" @click="confirmDisable = false" class="mdi mdi-close"></span>
+            </div>
+            <div style="padding:0px 10px">
+              มีรายการสถานะ Delivery สามารถที่
+              <span style="font-weight: bold;">Print label </span
+              ><br>จำนวน {{ this.show_count }} รายการ
+            </div>
+          </div>
+          <div class="bg-confirm-action">
+            <div>
+              <v-btn
+                rounded
+                @click="print_confrim"
+                class="ok"
+                style="margin-right:45px"
+                >ตกลง</v-btn
+              >
+              <v-btn rounded @click="confirmDisable = false" class="clear"
+                >ยกเลิก</v-btn
+              >
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+    
   </div>
 </template>
 
@@ -130,6 +162,8 @@ export default {
   },
   data () {
     return {
+      confirmDisable:false,
+      show_count:'',
       windowSize: 1366,
       checkboxALL: false,
       count: 0,
@@ -249,25 +283,26 @@ export default {
       }
     },
     submit () {
-      console.log(this.row_select)
       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.row_select))
-      setTimeout(() => {
-        window.open('/#/PrintLabel')
-      }, 200)
+      this.show_count = this.select_order.length
+      this.confirmDisable = true
       this.$emit('submit', this.dataPage)
     },
     view (row) {
       this.$emit('view', row)
     },
-    print (row) {
-      let TheArray = []
-      // this.$emit('print', row)
-      TheArray.push(row)
-
-      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+    print_confrim(){
       setTimeout(() => {
         window.open('/#/PrintLabel')
       }, 100)
+      this.confirmDisable = false
+    },
+    print (row) {
+      let TheArray = []
+      this.show_count = 1
+      this.confirmDisable = true
+      TheArray.push(row)
+      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
     },
     onResize () {
       let x = window.innerWidth

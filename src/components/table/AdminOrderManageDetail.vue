@@ -141,8 +141,8 @@
             </div>
             <div style="padding:0px 10px">
               คุณต้องการ
-              <span style="font-weight: bold;">ลบหมายเลขคำสั่งซื้อใ</span
-              >ช่หรือไม่
+              <span style="font-weight: bold;">ลบหมายเลขคำสั่งซื้อ</span
+              >ใช่หรือไม่
             </div>
           </div>
           <div class="bg-confirm-action">
