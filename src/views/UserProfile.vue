@@ -621,7 +621,7 @@ export default {
       this.dialog_success = false
     },
     syntaxPassword(password){
-      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{7,}$/
+      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
       if(regex.test(password)){
         return true
       }else {

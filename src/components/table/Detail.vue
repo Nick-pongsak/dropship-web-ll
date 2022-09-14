@@ -284,13 +284,41 @@ export default {
       }
     },
     submit () {
-      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.row_select))
+      let TheArray = []
+      let perc_id = []
+      perc_id.push(this.select_order)
+      this.$store
+        .dispatch('getOrderDetail', JSON.stringify(this.select_order))
+        .then(res => {
+          TheArray.push(res.success.data)
+          Vue.localStorage.set('PRINT_LABEL', JSON.stringify(res.success.data))
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      // Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.row_select))
       this.show_count = this.select_order.length
       this.confirmDisable = true
       this.$emit('submit', this.dataPage)
     },
     view (row) {
-      this.$emit('view', row)
+      let theArray = []
+      theArray.push(row.purchase_id)
+      this.$store
+        .dispatch('getOrderDetail',JSON.stringify(theArray))
+        .then(res => {
+          this.$emit('view',res.success.data[0])
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      // this.$emit('view', row)
     },
     print_confrim(){
       setTimeout(() => {
@@ -300,10 +328,23 @@ export default {
     },
     print (row) {
       let TheArray = []
+      let perc_id = []
+      perc_id.push(row.purchase_id)
       this.show_count = 1
       this.confirmDisable = true
-      TheArray.push(row)
-      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+      
+      this.$store
+        .dispatch('getOrderDetail', JSON.stringify(perc_id))
+        .then(res => {
+          TheArray.push(res.success.data[0])
+          Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
     },
     onResize () {
       let x = window.innerWidth

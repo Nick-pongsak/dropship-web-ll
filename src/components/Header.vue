@@ -30,7 +30,7 @@
       <div
         style="padding:0 10px 0 0;font-weight: 400;font-size: 16px;display: flex; align-items: center;font-family:'Bai Jamjuree', sans-serif;"
       >
-        {{ this.timeServer }}
+        {{ formatDate(this.timeServer) }}
       </div>
       <md-menu md-size="medium" md-align-trigger>
         <md-button style="text-transform:none" md-menu-trigger
@@ -166,7 +166,33 @@ export default {
       width: '30px',
       resizeHeader: true,
       active: false,
-      value: null
+      value: null,
+      monthsShort: [
+        'JAN',
+        'FEB',
+        'MAR',
+        'APR',
+        'MAY',
+        'JUN',
+        'JUL',
+        'AUG',
+        'SEP',
+        'OCT',
+        'NOV',
+        'DEC'
+        // 'ม.ค.',
+        // 'ก.พ.',
+        // 'มี.ค.',
+        // 'เม.ย.',
+        // 'พ.ค.',
+        // 'มิ.ย.',
+        // 'ก.ค.',
+        // 'ส.ค.',
+        // 'ก.ย.',
+        // 'ต.ค.',
+        // 'พ.ย.',
+        // 'ธ.ค.'
+      ]
     }
   },
   watch: {},
@@ -181,6 +207,44 @@ export default {
     }
   },
   methods: {
+    formatDate (val) {
+      if (val !== null) {
+        let hours = ''
+        let min = ''
+        let today = new Date()
+        const year = today.getFullYear()
+        const fullYear = year
+        // const fullYear = year + 543
+        const days = today.getDate()
+        const h = today.getHours()
+        const m = today.getMinutes()
+        const monthName = this.monthsShort[today.getMonth()]
+
+        if (h < 10) {
+          hours = '0' + h
+        } else {
+          hours = h
+        }
+
+        if (m < 10) {
+          min = '0' + m
+        } else {
+          min = m
+        }
+
+        return (
+          days +
+          ' ' +
+          monthName +
+          ' ' +
+          fullYear
+        )
+      } else {
+        return val
+      }
+    },
+
+
     onConfirm () {
       this.value = 'Yes'
       let reMove = ['login', 'SIZE_SCREEN', 'user_profile']

@@ -166,6 +166,7 @@ export default {
     }
   },
   created () {
+
     if (
       this.$store.getters.user_profile === null &&
       sessionStorage.getItem('user_profile') === null
@@ -175,17 +176,11 @@ export default {
       })
     } else if (sessionStorage.getItem('user_profile') !== null) {
       let data = JSON.parse(sessionStorage.getItem('user_profile'))
-      if (data.user_role == 'user') {
+      if (data.user_role == 'supplier') {
         this.$router.push('/' + 'home')
-      } else {
-        // this.$store
-        //     .dispatch('getUserList')
-        //     .then(res => {
-        //       console.log(res.data)
-        //       this.data = res.data
-        //       console.log(this.data)
-        //   })
+      }else {
         this.fetch()
+        console.log('ADmin')
       }
     }
   },

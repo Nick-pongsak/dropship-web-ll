@@ -328,9 +328,10 @@ export default {
       }
     },
     view (row) {
-
+      let theArray = []
+      theArray.push(row.purchase_id)
       this.$store
-        .dispatch('getOrderDetail', row.purchase_id)
+        .dispatch('getOrderDetail', JSON.stringify(theArray))
         .then(res => {
           this.$emit('view',res.success.data[0])
         })
@@ -340,6 +341,8 @@ export default {
             console.log('Error 401')
           }
         })
+
+
       // console.log("🚀 ~ file: AdminOrderManageDetail.vue ~ line 331 ~ view ~ row", row)
       this.$emit('view', row)
     },

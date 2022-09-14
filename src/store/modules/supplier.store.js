@@ -130,7 +130,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          // console.log(response)
+          console.log(response.data.success.token)
           dispatch('newToken',response.data.success.token)
           resolve(response.data);
         }).catch(error => {
@@ -139,8 +139,6 @@ const store = {
       })
 
     },
-    
-
   },
   getters: {
     status_(state) {

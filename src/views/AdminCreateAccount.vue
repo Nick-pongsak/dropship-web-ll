@@ -894,8 +894,8 @@ export default {
               user_province: t.PROVINCE,
               user_postal: t.ZIP_CODE
             }
-            this.$store.dispatch('Register', res).then(res => {})
-            this.dialog_success = true
+            // this.$store.dispatch('Register', res).then(res => {})
+            // this.dialog_success = true
             // this.statusInput = null
             console.log('Save sup => ', res)
           } else {
@@ -1112,7 +1112,7 @@ export default {
       }
     },
     syntaxPassword (password) {
-      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{7,}$/
+      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
       if (regex.test(password)) {
         return true
       } else {
