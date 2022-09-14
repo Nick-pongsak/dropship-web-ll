@@ -204,7 +204,7 @@ export default {
       }
     },
     push (param) {
-      let Deliver = this.data.filter(x => x.order_status === 'Delivering')
+      let Deliver = this.data.filter(x => x.order_status === 'Delivery')
       if (this.select_order.length == 0) {
         this.select_order.push(param)
       } else {
@@ -220,28 +220,30 @@ export default {
       } else {
         this.checkboxALL = false
       }
+
       let RowData = this.data.filter(
-        x => x.order_status === 'Delivering' && x.checked === true
+        x => x.order_status === 'Delivery' && x.checked === true
       )
       console.log('DATA - Check  => ', this.select_order)
       this.row_select = RowData
       console.log('PRINT =>', RowData)
     },
     check_all () {
+      this.select_order = []
+      this.row_select = []
       for (let index = 0; index < this.data.length; index++) {
         const element = this.data[index]
         if (this.checkboxALL) {
           if (
-            element.order_status == 'Delivery' &&
-            element.checked == false
+            element.order_status == 'Delivery' 
           ) {
             element.checked = true
-            this.push(element.purchase_id)
+            this.select_order.push(element.purchase_id)
+            this.row_select.push(element)
           }
         } else {
           if (element.order_status == 'Delivery') {
             element.checked = false
-            this.push(element.purchase_id)
           }
         }
       }

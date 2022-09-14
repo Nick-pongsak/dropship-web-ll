@@ -628,7 +628,7 @@ export default {
       this.endDliveryDate = null
       this.startSuccessDelivery = null
       this.endSuccessDelivery = null
-      this.statusInput = ''
+      this.statusInput = 'new'
     },
     disabledSuccessDelivery (date) {
       const today = new Date(this.startSuccessDelivery)

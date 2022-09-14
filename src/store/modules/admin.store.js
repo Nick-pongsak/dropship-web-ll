@@ -43,13 +43,13 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          console.log(response)
+          // console.log(response)
           dispatch('newToken',response.data.success.data.token)
          
           resolve(response.data);
         }).catch(error => {
           dispatch('newToken',error.response.data.error.data.token)
-          console.log(error.response)
+          // console.log(error.response)
           reject(error)
         })
       })
@@ -65,11 +65,11 @@ const store = {
           }
         }).then(response => {
           dispatch('newToken',response.data.success.token)
-          console.log(response.data.success.token)
-          resolve(response.data);
+          // console.log(response.data.success.token)
+          // resolve(response.data);
         }).catch(error => {
           dispatch('newToken',error.response.data.error.data.token)
-          console.log(error.response)
+          // console.log(error.response)
           reject(error)
         })
       })
@@ -85,7 +85,7 @@ const store = {
           }
         }).then(response => {
           dispatch('newToken',response.data.success.token)
-          console.log(response.data.success)
+          // console.log(response.data.success)
           resolve(response.data.success);
         }).catch(error => {
           reject(error)
@@ -127,7 +127,7 @@ const store = {
           }
         }).then(response => {
           dispatch('newToken',response.data.success.data.token)
-          console.log(response)
+          // console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -185,7 +185,7 @@ const store = {
           }
         }).then(response => {
           dispatch('newToken',response.data.success.token)
-          console.log(response)
+          // console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -209,11 +209,11 @@ const store = {
           }
         }).then(response => {
           dispatch('newToken',response.data.success.data.token)
-          console.log(response)
+          // console.log(response)
           resolve(response.data);
         }).catch(error => {
           dispatch('newToken',error.response.data.error.data.token)
-          console.log(error.response)
+          // console.log(error.response)
           reject(error)
         })
       })
@@ -242,7 +242,7 @@ const store = {
     },
 
     sendOrderStatus({ state, commit, dispatch }, data) {
-      console.log('Pro')
+      // console.log('Pro')
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/send-order-status`, {
@@ -256,7 +256,7 @@ const store = {
           }
         }).then(response => {
           dispatch('newToken',response.data.success.data.token)
-            console.log(response)
+            // console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -268,7 +268,7 @@ const store = {
     newToken({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       Profile.access_token = data
-      console.log( Profile)
+      // console.log( Profile)
       Vue.localStorage.set('user_profile',JSON.stringify(Profile))
     }
   },

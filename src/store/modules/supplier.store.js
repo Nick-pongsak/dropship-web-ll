@@ -25,7 +25,7 @@ const store = {
             'Content-Type': 'application/json',
           }
         }).then(response => {
-          console.log(response)
+          // console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)
@@ -35,7 +35,7 @@ const store = {
     },
     
     sendMail({ state, commit, dispatch }, data) {
-      console.log("sendMail API => ", data)
+      // console.log("sendMail API => ", data)
  
       // return new Promise((resolve, reject) => {
       //   axios.post(`${url}/apiweb/api/auth/sendmail`, {
@@ -75,7 +75,7 @@ const store = {
             "Authorization": `Bearer ${Profile.access_token}`,
           }
         }).then(response => {
-          console.log(response.data.success.token)
+          // console.log(response.data.success.token)
           dispatch('newToken',response.data.success.token)
           for (let index = 0; index < response.data.success.data.length; index++) {
              const element = response.data.success.data[index];
@@ -96,12 +96,12 @@ const store = {
     newToken({ state, commit, dispatch }, data) {
         let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
         Profile.access_token = data
-        console.log( Profile)
+        // console.log( Profile)
         Vue.localStorage.set('user_profile',JSON.stringify(Profile))
 
     },
     timeTokenForgot({ state, commit, dispatch }, data) {
-      console.log(data)
+      // console.log(data)
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/time-token-15-minutes`, {
         }, {
@@ -110,7 +110,7 @@ const store = {
             "Authorization": `Bearer ${data}`,
           }
         }).then(response => {
-          console.log(response)
+          // console.log(response)
           resolve(response.data);
         }).catch(error => {
           reject(error)
