@@ -255,14 +255,6 @@
                     }"
                   >
                     {{ data.order_remarks }}
-                    <!-- <span v-if="data.comment == ''"> </span>
-                    <span v-else>
-                      {{
-                        data.comment == 'customer'
-                          ? 'พัสดุการนำจ่ายถึงลูกค้า'
-                          : 'พัสดุส่งกลับผู้ขาย'
-                      }}</span
-                    > -->
                   </div>
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
@@ -492,6 +484,39 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="confirmDialog_print"
+      max-width="500"
+      :width="data.order_status == 'Delivering' ? 600 : 500"
+    >
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:center">
+              <img
+                
+                class="img"
+                src="@/assets/images/other.png"
+              />
+            </div>
+            <div style="padding:0px 20px">{{ confirmText_print }}</div>
+          </div>
+          <div class="bg-confirm-action">
+            <div>
+              <v-btn
+                rounded
+                @click="submit_print( data )"
+                class="ok"
+                style="color:#fff;margin-right:45px"
+                > ใช่ </v-btn
+              >
+              <v-btn rounded @click="confirmDialog_print = false" class="clear">ไม่</v-btn>
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -510,6 +535,8 @@ export default {
     return {
       windowSize: 1366,
       confirmText: '',
+      confirmDialog_print:false,
+      confirmText_print:'',
       confirmBtn: '',
       confirmDialog: false,
       confirmPrint: false,
@@ -604,6 +631,17 @@ export default {
     close () {
       this.$emit('close', {})
     },
+    submit_print( param ){
+      let TheArray = []
+      TheArray.push(param)
+      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+
+      setTimeout(() => {
+        window.open('/#/PrintLabel')
+      }, 1000)
+      this.confirmDialog_print = false
+      // console.log(param)
+    },
     accept () {
       this.confirmPrint = false
       if (this.data.order_status == 'New') {
@@ -624,7 +662,6 @@ export default {
       this.confirmDialog = true
     },
     submit () {
-      console.log(this.data.order_status)
       let process = ''
       if (this.data.order_status == 'New') {
         this.radio = ''
@@ -635,9 +672,7 @@ export default {
       } else if (this.data.order_status == 'Delivery' && !this.confirmPrint) {
         this.radio = ''
         process = 'Delivering'
-      } else if (this.data.order_status == 'Delivery' && this.confirmPrint) {
-        process = 'print'
-      } else if (
+      }  else if (
         this.data.order_status == 'Delivering' &&
         this.radio !== null
       ) {
@@ -683,10 +718,8 @@ export default {
       }
     },
     printIcon () {
-      this.confirmPrint = true
-      this.confirmBtn = 'ใช่'
-      this.confirmText = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
-      this.confirmDialog = true
+      this.confirmText_print = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
+      this.confirmDialog_print = true
     },
     print () {
       this.confirmPrint = false
