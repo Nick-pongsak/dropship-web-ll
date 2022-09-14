@@ -104,7 +104,7 @@
               <v-icon
                 v-if="
                   detect_device == 'not_mobile' &&
-                    row.order_status == 'Delivering'
+                    row.order_status == 'Delivery'
                 "
                 v-text="'mdi-printer'"
                 style="color:#000000;cursor:pointer"
