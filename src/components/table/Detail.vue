@@ -123,9 +123,9 @@
       </div>
     </div>
 
-    <v-dialog v-model="confirmDisable" max-width="400" width="400">
+    <v-dialog  v-model="confirmDisable" max-width="400" width="400">
       <v-card>
-        <div class="d-dialog">
+        <div style="font-family:'Bai Jamjuree', sans-serif" class="d-dialog">
           <div class="bg-confirm">
             <div style="text-align:end;padding:15px 20px 20px 20px;">
               <span style="cursor: pointer;" @click="confirmDisable = false" class="mdi mdi-close"></span>
