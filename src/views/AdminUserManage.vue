@@ -30,7 +30,7 @@
     ></token-dialog>
 
     <v-snackbar
-    style="padding:0;margin:4.5% 0 0 0;"
+    style="width: 25%;padding:0;margin:4.5% 0 0 0;"
       v-model="snackbar"
       :multi-line="multiLine"
       :color="color"
@@ -196,6 +196,6 @@ export default {
 <style>
   .v-snack__content{
     padding:0;
-    height: 68px
+    height: 70px
   }
 </style>

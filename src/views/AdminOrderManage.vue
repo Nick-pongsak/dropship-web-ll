@@ -95,9 +95,9 @@ export default {
     },
     viewDeatil (val) {
       if (val.order_remarks == 'พัสดุการนำจ่ายถึงลูกค้า') {
-        val.order_remarks = 'customer'
+        val.order_remarks = 'พัสดุการนำจ่ายถึงลูกค้า'
       } else if (val.order_remarks == 'พัสดุส่งกลับผู้ขาย') {
-        val.order_remarks = 'supply'
+        val.order_remarks = 'พัสดุส่งกลับผู้ขาย'
       }
       this.selectedRow = val
       this.showDialog = true

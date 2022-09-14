@@ -259,6 +259,7 @@ const store = {
             // console.log(response)
           resolve(response.data);
         }).catch(error => {
+          dispatch('newToken',error.response.data.error.data.token)
           reject(error)
         })
       })

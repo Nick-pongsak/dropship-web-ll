@@ -696,7 +696,7 @@ export default {
         // console.log(detail_remark)
         let obj = {
           purchase_id: this.data.purchase_id,
-          order_remark: detail_remark,
+          order_remarks: detail_remark,
           order_status: process
         }
 
@@ -707,7 +707,7 @@ export default {
             this.confirmDialog = false
             // console.log(res.success.data)
             this.data.order_status = process
-            this.data.order_remarks = detail_remark
+            this.data.order_remarks = res.order_remarks
           })
           .catch(error => {
             if (error.response.status == 401) {

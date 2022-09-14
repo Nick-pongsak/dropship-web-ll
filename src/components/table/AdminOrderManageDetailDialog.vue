@@ -373,10 +373,9 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    
                     <span v-if="data.order_remarks == ''"> </span>
                     <span v-else>
-                        {{data.order_remark}}
+                        {{data.order_remarks}}
                     </span
                     >
                   </div>
