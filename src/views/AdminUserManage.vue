@@ -27,14 +27,18 @@
     <token-dialog v-if="tokenExpired"></token-dialog>
 
     <v-snackbar
-      style="padding:0;margin:4.5% 0 0 0;"
+      :style="{
+        padding: 0,
+        margin: '4.5% 0 0 0',
+        width: 'inherit'
+      }"
       v-model="snackbar"
       :color="color"
       :top="true"
     >
       <!-- :multi-line="multiLine" -->
       <div
-        style="font-family: 'Bai Jamjuree', sans-serif;border-radius: 4px;height: 100%;"
+        style="font-family: 'Bai Jamjuree', sans-serif;border-radius: 4px;height: 100%;width:400px;"
         class="md-layout"
       >
         <div
@@ -45,7 +49,7 @@
           }"
         ></div>
 
-        <div>
+        <div style=" width: 97%;">
           <div
             style="
                   padding-left:5px;
