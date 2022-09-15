@@ -682,7 +682,8 @@
     padding: 80px 44px 40px 44px;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: calc(100vh - 55px);
+    height: calc(100vh - 20px);
+    // height: calc(100vh - 55px);
 
     .body {
       padding: 12px;

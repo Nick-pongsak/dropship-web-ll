@@ -184,9 +184,8 @@ export default {
         })
     },
     snack (param) {
-      console.log(param)
       this.textSnack = param
-      this.snackbar = true
+      this.snackbar = param.show
       this.fetch()
     }
   },
