@@ -322,7 +322,7 @@
           <v-btn rounded @click="clearFilter()" class="clear">Clear</v-btn>
           <v-btn
             rounded
-            :disabled="loading_status ?true :false"
+            :disabled="loading_status ? true : false"
             @click="apply()"
             class="ok"
             :style="{ 'margin-left': windowSize <= 600 ? '10px' : '10px' }"
@@ -340,9 +340,7 @@ const d = new Date()
 let year = d.getFullYear()
 let month = d.getMonth() + 1
 month = month > 9 ? month : '0' + month
-let startDay = year + '-' + month + '-' + '01'
-let dateStep1 = new Date(startDay)
-let dateStep2 = dateStep1.setDate(dateStep1.getDate() - 19)
+let dateStep2 = new Date().setDate(d.getDate() - 30)
 let dateStep3 = new Date(dateStep2).toISOString().slice(0, 10)
 
 var dayEnd = d.toLocaleString('default', { day: '2-digit' })
@@ -351,7 +349,7 @@ export default {
   name: 'order-filter',
   props: {
     status: Array,
-    loading_status:Boolean
+    loading_status: Boolean
   },
   data () {
     return {
@@ -386,18 +384,6 @@ export default {
             'October',
             'November',
             'December'
-            // 'มกราคม',
-            // 'กุมภาพันธ์',
-            // 'มีนาคม',
-            // 'เมษายน',
-            // 'พฤษภาคม',
-            // 'มิถุนายน',
-            // 'กรกฎาคม',
-            // 'สิงหาคม',
-            // 'กันยายน',
-            // 'ตุลาคม',
-            // 'พฤศจิกายน',
-            // 'ธันวาคม'
           ],
           monthsShort: [
             'JAN',
@@ -412,21 +398,8 @@ export default {
             'OCT',
             'NOV',
             'DEC'
-            // 'ม.ค.',
-            // 'ก.พ.',
-            // 'มี.ค.',
-            // 'เม.ย.',
-            // 'พ.ค.',
-            // 'มิ.ย.',
-            // 'ก.ค.',
-            // 'ส.ค.',
-            // 'ก.ย.',
-            // 'ต.ค.',
-            // 'พ.ย.',
-            // 'ธ.ค.'
           ],
           weekdaysMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-          // weekdaysMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส']
         },
         months: [
           'January',
@@ -441,18 +414,6 @@ export default {
           'October',
           'November',
           'December'
-          // 'มกราคม',
-          // 'กุมภาพันธ์',
-          // 'มีนาคม',
-          // 'เมษายน',
-          // 'พฤษภาคม',
-          // 'มิถุนายน',
-          // 'กรกฎาคม',
-          // 'สิงหาคม',
-          // 'กันยายน',
-          // 'ตุลาคม',
-          // 'พฤศจิกายน',
-          // 'ธันวาคม'
         ],
         monthFormat: 'MMMM',
         monthBeforeYear: false
