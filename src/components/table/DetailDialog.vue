@@ -399,7 +399,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                      {{ data.order_detail_remark }}
+                         {{ row.order_detail_remark }}
                     </div>
                   </div>
                 </div>

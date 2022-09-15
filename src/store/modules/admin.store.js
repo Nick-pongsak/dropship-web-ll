@@ -247,7 +247,7 @@ const store = {
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/send-order-status`, {
           purchase_id: data.purchase_id,
-          order_remark: data.order_remark,
+          order_remark: data.order_remarks,
           order_status: data.order_status
         }, {
           headers: {
