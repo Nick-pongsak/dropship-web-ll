@@ -1,277 +1,655 @@
 <template>
-  
-    <div id="printMe" style="margin:100px;" >
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
-
-       
-        <div 
-        class="full-height"
-        style="height: 100%;"
-        v-for="(row, index) in PoDetail"
-        :key="'card-' + index" 
-        >
-          <div style="font-family: 'Noto Sans Thai', sans-serif;font-size: 24px;"><img class="logo" src="@/assets/icons/logo.png">    Dropship portal   </div>
-          <div style="font-family: 'Noto Sans Thai', sans-serif;width: 100%;padding:10px 0 0 0;font-size: 24px;">เลขที่ใบสั่งซื้อ : {{row.purchase_id}}  </div>
-            
-             <div style="padding:0 10px 0 10px;display: flex;justify-content: center;width: 100%;">
-              <div style="
-              color:#000;
-              font-size:18px;
-              font-family: 'Noto Sans Thai', sans-serif;
-                  margin:20px 0 0 0;
-                  border:1px solid #000;
-                  display: grid;
-                  grid-auto-columns: 1fr;
-                  grid-auto-rows: 1fr;
-                  gap: 0px 0px;
-                  grid-auto-flow: row;
-                  max-width: 100%;padding:0;" class="container">
-                  <div style="border-width:0 0 1px 0;
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-rows: 1fr;
-                    gap: 0px 0px;
-                    grid-auto-flow: row;
-                    grid-template-areas:
-                      'sender recipient';" class="i1">
-                <div class="sender" 
-                    style="display: flex;
-                      justify-content: center;
-                      align-items: center;border:1px solid #000 ;
-                      border-width: 0px 1px 0px 0px; width: 100%;">
-                     ผู้ส่ง
-                  </div>
-                    <div style="display: flex;
-                        justify-content: center;
-                        align-items: center;width: 100%;" class="">
-                      ผู้รับ</div>
-                   </div>
-
-
-                  <div class="i2" style="
-                      font-size:14px;
-                      border:1px solid #000 ;
-                      border-width: 1px 0px 0px 0px;
-                      display: grid;
-                      grid-template-columns: 1fr 1fr;
-                      grid-template-rows: 1fr 1fr 1fr ;
-                      gap: 0px 0px;
-                      grid-auto-flow: row;">
-                    <div style=" grid-area: 1 / 1 / 2 / 2; padding:0 0 0 10px;  border:1px solid #000 ;border-width: 0px 1px 0px 0px;" class="sup_name">ชื่อ : {{row.sup_name}} {{row.sup_surname}}</div>
-                    <div style="grid-area: 1 / 2 / 2 / 3; padding:0 0 0 10px;" class="cus_name">ชื่อ : {{row.cus_name}} {{row.cus_surname}}</div>
-                    <div style=" grid-area: 2 / 1 / 3 / 2; padding:0 0 0 10px;border:1px solid #000 ;border-width: 0px 1px 0px 0px;" class="sup_phone">เบอร์โทร : {{info_cus.user_phone}}</div>
-                    <div style="grid-area: 2 / 2 / 3 / 3; padding:0 0 0 10px;" class="cus_phone">เบอร์โทร : {{row.cus_phone}}</div>
-                    <div style="grid-area: 3 / 1 / 4 / 2; padding:0 0 0 10px; border:1px solid #000 ;border-width: 0px 1px 0px 0px;" class="sup_address">ที่อยู่ : {{info_cus.user_address}}</div>
-                    <div style="grid-area: 3 / 2 / 4 / 3; padding:0 0 0 10px; " class="cus_address">ที่อยู่ : {{row.cus_address}}</div>
-                  </div>
-
-                  <div style="
-                        grid-area: 3 / 1 / 4 / 2; 
-                        border:1px solid #000;
-                        border-width:1px 0 0 0;
-                        display: flex;
-                        align-items: center;
-                        padding:0 0 0 10px;" class="comment">
-                    หมายเหตุ :
-                  </div>
-                </div>
-             </div>
-            <div style="padding:20px 0 0 0;color:#000000;font-size: 18px;font-family: 'Noto Sans Thai', sans-serif;">รายการสินค้า</div> 
-             <div style="font-family: 'Noto Sans Thai', sans-serif;color:#959595;font-size:12px;width:100%;margin:10px 0 0 30px;font-weight:bold;"> พิมพ์ใบปะหน้าพัสดุนี้และติดลงบนกล่องพัสดุ</div>
-             <div style="color:#959595;font-size:12px;width:100%;margin:10px 0 0 30px;font-weight:bold;"> 
-              <div style="  display: flex;" class="hr-droid">
-                <div style="   
-                    width: 5%;
-                    position: relative;
-                    margin: 5px;
-                    border-top: 3px dotted #959595;margin:10px 0 0 0;" class="hr-line hr-droid"></div>
-                <div > <img   src="@/assets/icons/Cut.png"> </div>
-                <div style="border-top: 3px dotted #959595;margin:10px 0 0 0;width: 95%; " class="hr-line hr-droid"></div>
-              </div>
-              <!-- <img height="100px" width="100%"  src="@/assets/icons/cut.png"> -->
-             </div>
-        
-             <div style="font-family: 'Noto Sans Thai', sans-serif;padding:0 10px 0 10px;display: flex;justify-content: center;width: 100%;">
-              <div style="
-              font-size:18px;
-                  margin:20px 0 0 0;
-                  border:1px solid #000;
-                  display: grid;
-                  grid-auto-columns: 1fr;
-                  grid-auto-rows: 1fr;
-                  gap: 0px 0px;
-                  grid-auto-flow: row;
-                  max-width: 100%;padding:0;" class="container">
-                <div style="border-width:0 0 0 0;
-                  display: grid;
-                    grid-template-columns: 0.7fr 2fr  4fr 2fr;
-                    grid-template-rows: 1fr;
-                    gap: 0px 0px;
-                    grid-auto-flow: row;
-                    grid-template-areas:
-                      'sender recipient';" class="i1">
-                <div class="sender" 
-                    style="
-                      display:flex;
-                      justify-content: center;
-                      align-items: center;border:1px solid #000 ;
-                      border-width: 0px 0px 1px 0px; width: 100%;">
-                     #
-                  </div>
-                    <div style="
-                    border:1px solid #000 ;
-                    padding:0 0 0 20px;
-                      border-width: 0px 0px 1px 0px;
-                        justify-content: center;
-                        align-items: center;width: 100%;" class="">
-                      SKU</div>
-                      <div class="sender" 
-                    style="padding:0 0 0 20px;
-                      justify-content: center;
-                      align-items: center;border:1px solid #000 ;
-                      border-width: 0px 0px 1px 0px; width: 100%;">
-                     รายการสินค้า
-                  </div>
-                    <div style="display: flex;
-                        justify-content: center;
-                        border:1px solid #000 ;
-                        border-width: 0px 0px 1px 0px;
-                        align-items: center;width: 100%;" class="">
-                      จำนวนสินค้า</div>
-                   </div>
-
-
-
-                <div v-for="(row, index) in row.items"
-                  :key="'card-' + index"  style="border-width:0 0 1px 0;
-                  display: grid;
-                    grid-template-columns:  0.7fr 2fr  4fr 2fr;
-                    grid-template-rows: 2fr;
-                    gap: 0px 0px;
-                    grid-auto-flow: row;
-                    grid-template-areas:
-                      'sender recipient';" class="i1">
-                <div class="sender" 
-                    style="
-                      display:flex;
-                      justify-content: center;
-                      border:1px solid #000 ;
-                      border-width: 0px 0px 0px 0px;
-                       width: 100%;">
-                  {{row.index +1}}
-                  </div>
-                    <div style="
-                       border:1px solid #000 ;
-                       padding:0 0 0 20px;
-                       border-width: 0px 0px 0px 0px;
-                        justify-content: center;
-                        align-items: center;width: 100%;" class="">
-                      {{row.product_sku}}
-                      </div>
-                      <div class="sender" 
-                    style=" padding:0 0 0 20px;
-                      justify-content: center;
-                      align-items: center;border:1px solid #000 ;
-                      border-width: 0px 0px 0px 0px; width: 100%;">
-                      {{row.product_name}}
-                  </div>
-                    <div style="display: flex;
-                        justify-content: center;
-                        align-items: center;width: 100%;" class="">
-                      
-                        {{row.order_qty}}
-                        </div>
-                   </div>
-                </div>
-             </div>
-
-             <div style="margin:50px 0 0 0;border-width:0 0 1px 0;
-                  display: grid;
-                    grid-template-columns:1fr 1fr 1fr 1fr 1fr;
-                    grid-template-rows: 1fr;
-                    gap: 0px 0px;
-                    grid-auto-flow: row;
-                    grid-template-areas:
-                      'sender recipient';" class="i1">
-                      <div style="1
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      width: 100%;" class=""> </div>
-                <div class="sender" 
-                    style="
-                      border:2px dotted #959595 ;
-                      border-width: 0px 0px 2px 0px; 
-                       display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      padding:40px
-                      width: 100%;">
-                      ลายเซ็นผู้ส่ง
-                  </div>
-                  <div style="
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      width: 100%;" class=""> </div>
-                    <div style="
-                       border:2px dotted #959595 ;
-                      border-width: 0px 0px 2px 0px; 
-                       display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      padding:40px
-                      width: 100%;" class="">
-                      ลายเซ็นผู้รับ
-                      </div>
-                      <div style="
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      width: 100%;" class=""> </div>
-                  
-                   </div>
-          <div style="break-after:page"></div>
-        </div>
-        
+  <div style="height: 100%; overflow: scroll">
+    <div
+      ref="printLable"
+      :style="displayPrintLabel('flex')"
+      style="justify-content: flex-end; margin: 0 30px; padding-top: 30px"
+    >
+      <div
+        @click="print()"
+        style="font-weight: bold; padding-right: 10px; cursor: pointer"
+      >
+        PRINT LABEL
+      </div>
+      <v-icon
+        @click="print()"
+        v-text="'mdi-printer'"
+        style="color: #000000; cursor: pointer"
+        size="20"
+      ></v-icon>
     </div>
+
+    <div id="print-label">
+      <div v-for="(row, index) in PoDetail" :key="'card-' + index">
+        <div class="grid-header-page">
+          <div class="header-page-box1">
+            <img src="@/assets/images/head.jpg" width="300" height="200" />
+          </div>
+          <div class="header-page-box2" style="font-weight: bold;">เลขที่คำสั่งซื้อ</div>
+          <div class="header-page-box3" style="font-weight: bold;">{{ row.order_num }}</div>
+          <div class="header-page-box4">SO No.</div>
+          <div class="header-page-box5">{{ row.salesorder_id }}</div>
+          <div class="header-page-box6">PO No.</div>
+          <div class="header-page-box7">{{ row.purchase_id }}</div>
+        </div>
+
+        <div class="grid-head-page">
+          <div class="head-box1">ผู้ส่ง</div>
+          <div class="head-box2">ผู้รับ</div>
+          <div class="head-box3">ชื่อ :</div>
+          <div class="head-box4">{{ row.user_company }}</div>
+          <div class="head-box5">ชื่อบริษัท :</div>
+          <div class="head-box6">{{ row.cus_company }}</div>
+          <div class="head-box7">เบอร์โทร :</div>
+          <div class="head-box8">{{ row.user_phone }}</div>
+          <div class="head-box9">ชื่อ-นามสกุลผู้รับ :</div>
+          <div class="head-box10">{{ row.cus_name }} {{ row.cus_surname }}</div>
+          <div class="head-box11">ที่อยู่ :</div>
+          <div class="head-box12">
+            {{ row.user_address }} {{ row.user_district }}
+            {{ row.user_subdistrict }} {{ row.user_province }}
+            {{ row.user_postal }}
+          </div>
+          <div class="head-box13">เบอร์โทรติดต่อผู้รับ :</div>
+          <div class="head-box14">{{ row.cus_phone_secendary }}</div>
+          <div class="head-box15">เบอร์โทรติดต่อบริษัท :</div>
+          <div class="head-box16">{{ row.cus_phone }}</div>
+          <div class="head-box17">ที่อยู่ :</div>
+          <div class="head-box18">
+            {{ row.cus_address }} {{ row.cus_district }}
+            {{ row.cus_subdistrict }} {{ row.cus_province }}
+            {{ row.cus_postal }}
+          </div>
+          <div class="head-box19">
+            หมายเหตุ (วันที่สั่งซื้อ) : {{ row.order_date }}
+          </div>
+          <!-- <div class="head-box20">{{ row.order_date }}</div> -->
+        </div>
+
+        <div
+          style="
+            font-family: 'Noto Sans Thai', sans-serif;
+            color: #959595;
+            font-size: 14px;
+            width: 100%;
+            margin: 20px 0 0 0;
+            font-weight: bold;
+          "
+        >
+          พิมพ์ใบปะหน้าพัสดุนี้และติดลงบนกล่องพัสดุ
+        </div>
+        <div
+          style="
+            color: #959595;
+            font-size: 12px;
+            width: 100%;
+            margin: 10px 0 0 0;
+            font-weight: bold;
+          "
+        >
+          <div style="display: flex" class="hr-droid">
+            <div
+              style="
+                width: 5%;
+                position: relative;
+                margin: 5px;
+                border-top: 3px dotted #959595;
+                margin: 10px 0 0 0;
+              "
+              class="hr-line hr-droid"
+            ></div>
+            <div><img src="@/assets/icons/Cut.png" /></div>
+            <div
+              style="
+                border-top: 3px dotted #959595;
+                margin: 10px 0 0 0;
+                width: 95%;
+              "
+              class="hr-line hr-droid"
+            ></div>
+          </div>
+        </div>
+
+        <div style="display: flex; margin: 20px 0 0 0; width: 100%">
+          <div style="width: 50%; font-size: 18px">รายการสินค้า</div>
+          <div style="width: 50%; font-size: 16px; text-align: right">
+            จำนวนรวม <span style="font-weight: bold;">{{ row.sum_order_item }}</span> รายการ
+          </div>
+        </div>
+
+        <div class="grid-detail" style="padding-top: 20px">
+          <div class="detail-h-box1">#</div>
+          <div class="detail-h-box2">SKU</div>
+          <div class="detail-h-box3">ชื่อรายการสินค้า</div>
+          <div class="detail-h-box4">จำนวน</div>
+          <div class="detail-h-box5">หมายเหตุ</div>
+        </div>
+
+        <div v-for="(d_row, d_index) in row.items" :key="'card-' + d_index">
+          <div class="grid-detail">
+            <div class="detail-box1">{{ d_index + 1 }}</div>
+            <div class="detail-box2">{{ d_row.product_sku }}</div>
+            <div class="detail-box3">
+              {{ d_row.product_name }}
+            </div>
+            <div class="detail-box4">{{ d_row.order_qty }}</div>
+            <div class="detail-box5">{{ d_row.order_detail_remark }}</div>
+          </div>
+        </div>
+
+        <div style="padding: 20px 0; text-align: right">เลขหน้า 1/1</div>
+
+        <div class="grid-footer" style="padding: 30px 0">
+          <div class="footer-box1">ลายเซ็นผู้ส่ง</div>
+          <div class="footer-box2">
+            .............................................................
+          </div>
+          <div class="footer-box3"></div>
+          <div class="footer-box4">ลายเซ็นผู้รับ</div>
+          <div class="footer-box5">
+            .............................................................
+          </div>
+        </div>
+
+        <div class="break-page"></div>
+      </div>
+    </div>
+  </div>
 </template>
   <script>
-  import Vue from "vue";
-  export default {
-    name: 'print-label',
-    data () {
-      return { output: null}
+import Vue from "vue";
+export default {
+  name: "print-label",
+  data() {
+    return { output: null };
+  },
+  computed: {
+    PoDetail() {
+      let printData = JSON.parse(Vue.localStorage.get("PRINT_LABEL"));
+      // console.log("printData ==>", printData);
+
+      let dataItems = [];
+      let sumOrderItem = 0;
+      let checkHead = "";
+      let newArrData = JSON.parse(JSON.stringify(printData));
+
+      for (let index_head = 0; index_head < printData.length; index_head++) {
+        if (
+          checkHead != "" &&
+          checkHead != printData[index_head]["order_num"]
+        ) {
+          sumOrderItem = 0;
+        }
+
+        dataItems = JSON.parse(JSON.stringify(printData[index_head]["items"]));
+
+        for (let index_item = 0; index_item < dataItems.length; index_item++) {
+          sumOrderItem += parseFloat(dataItems[index_item]["order_qty"]);
+        }
+
+        checkHead = printData[index_head]["order_num"];
+
+        Object.assign(newArrData[index_head], { sum_order_item: sumOrderItem });
+      }
+
+      // console.log("newArrData ==>", newArrData);
+      return newArrData;
+      // return JSON.parse(Vue.localStorage.get("PRINT_LABEL"));
     },
-    computed: {
-        PoDetail () {
-            return JSON.parse(Vue.localStorage.get('PRINT_LABEL'))
-        },
-        info_cus () {
-            return JSON.parse(Vue.localStorage.get('user_profile'))
-        },
+    info_cus() {
+      return JSON.parse(Vue.localStorage.get("user_profile"));
     },
-    watch: {},
-    methods: {
-    print () {
-      this.$htmlToPaper('printMe');
-      // Pass the element id here
-    //   window.print();
-    //    this.$htmlToPaper('printMe', {});
-    }
+  },
+  watch: {},
+  methods: {
+    print() {
+      if (this.$refs.printLable !== undefined) {
+        this.displayPrintLabel("none");
+        window.print();
+      }
     },
-    components: {},
-    created () {
-        setTimeout(() => {
-            this.$htmlToPaper('printMe');
-        },100);
+    displayPrintLabel(display) {
+      return "display: " + display + ";";
     },
-    mounted () {}
+  },
+  components: {},
+  created() {},
+  mounted() {},
+};
+</script>
+
+<style type="text/css">
+#print-label {
+  padding: 20px 30px;
+  width: 100%;
+}
+
+/* -- START HEADER -- */
+.grid-header-page {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 25px;
+  line-height: 25px;
+  font-size: 16px;
+  /* color: white; */
+  /* text-align: center; */
+}
+
+.header-page-box1 {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  /* line-height: 70px !important; */
+  font-weight: bold;
+  font-size: 25px;
+  /* background-color: pink; */
+}
+
+.header-page-box2 {
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  /* background-color: #f396b5; */
+  padding-left: 30px;
+}
+.header-page-box3 {
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.header-page-box4 {
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding-left: 30px;
+}
+.header-page-box5 {
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.header-page-box6 {
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding-left: 30px;
+}
+.header-page-box7 {
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+/* -- END HEADER -- */
+
+/* -- START TABLE HEAD -- */
+.grid-head-page {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 28px;
+  line-height: 28px;
+  font-size: 16px;
+  padding-top: 20px;
+}
+
+.head-box1 {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  text-align: center;
+}
+.head-box2 {
+  grid-column-start: 6;
+  grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  text-align: center;
+}
+.head-box3 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box4 {
+  grid-column-start: 2;
+  grid-column-end: 6;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding-left: 10px;
+}
+.head-box5 {
+  grid-column-start: 6;
+  grid-column-end: 9;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box6 {
+  grid-column-start: 8;
+  grid-column-end: 13;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  border-right: 1px solid black;
+}
+.head-box7 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box8 {
+  grid-column-start: 2;
+  grid-column-end: 6;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding-left: 10px;
+}
+.head-box9 {
+  grid-column-start: 6;
+  grid-column-end: 9;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box10 {
+  grid-column-start: 8;
+  grid-column-end: 13;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  border-right: 1px solid black;
+}
+.head-box11 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: 8;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box12 {
+  grid-column-start: 2;
+  grid-column-end: 6;
+  grid-row-start: 4;
+  grid-row-end: 8;
+  padding-left: 10px;
+}
+.head-box13 {
+  grid-column-start: 6;
+  grid-column-end: 9;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box14 {
+  grid-column-start: 8;
+  grid-column-end: 13;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  border-right: 1px solid black;
+}
+.head-box15 {
+  grid-column-start: 6;
+  grid-column-end: 9;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box16 {
+  grid-column-start: 8;
+  grid-column-end: 13;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  border-right: 1px solid black;
+}
+.head-box17 {
+  grid-column-start: 6;
+  grid-column-end: 9;
+  grid-row-start: 6;
+  grid-row-end: 8;
+  border-left: 1px solid black;
+  padding-left: 10px;
+}
+.head-box18 {
+  grid-column-start: 8;
+  grid-column-end: 13;
+  grid-row-start: 6;
+  grid-row-end: 8;
+  border-right: 1px solid black;
+}
+.head-box19 {
+  grid-column-start: 1;
+  grid-column-end: 13;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  /* padding-left: 10px; */
+}
+/* .head-box20 {
+  grid-column-start: 2;
+  grid-column-end: 13;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 10px;
+} */
+/* -- END TABLE HEAD -- */
+
+/* -- START TABLE DETAIL -- */
+.grid-detail {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-auto-rows: 28px;
+  line-height: 28px;
+  font-size: 16px;
+}
+
+.detail-h-box1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+.detail-h-box2 {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-left: 30px;
+}
+.detail-h-box3 {
+  grid-column-start: 5;
+  grid-column-end: 14;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-left: 30px;
+}
+.detail-h-box4 {
+  grid-column-start: 14;
+  grid-column-end: 16;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.detail-h-box5 {
+  grid-column-start: 16;
+  grid-column-end: 21;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 30px;
+}
+
+.detail-box1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  text-align: center;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+.detail-box2 {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  border-bottom: 1px solid black;
+  padding-left: 30px;
+}
+.detail-box3 {
+  grid-column-start: 5;
+  grid-column-end: 14;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  border-bottom: 1px solid black;
+  padding-left: 30px;
+}
+.detail-box4 {
+  grid-column-start: 14;
+  grid-column-end: 16;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+.detail-box5 {
+  grid-column-start: 16;
+  grid-column-end: 21;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 30px;
+}
+/* -- END TABLE DETAIL -- */
+
+/* -- START FOOTER -- */
+.grid-footer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: 28px;
+  line-height: 28px;
+  font-size: 16px;
+}
+
+.footer-box1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.footer-box2 {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.footer-box3 {
+  grid-column-start: 4;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.footer-box4 {
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.footer-box5 {
+  grid-column-start: 7;
+  grid-column-end: 9;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+/* -- END FOOTER -- */
+
+@media print {
+  @page {
+    margin: 0.5cm;
   }
-  </script>
-  <style>
-  </style>
+
+  html,
+  body {
+    /* height: 100vh; */
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  .body-main {
+    position: relative !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+  #print-label,
+  #print-label * {
+    visibility: visible;
+  }
+  #print-label {
+    /* position: absolute; */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .break-page {
+    page-break-inside: avoid;
+    page-break-before: avoid;
+    page-break-after: always;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact; /*Chrome, Safari */
+    color-adjust: exact; /*Firefox*/
+  }
+}
+</style>
   
