@@ -25,8 +25,12 @@
           <div class="header-page-box1">
             <img src="@/assets/images/head.jpg" width="300" height="200" />
           </div>
-          <div class="header-page-box2" style="font-weight: bold;">เลขที่คำสั่งซื้อ</div>
-          <div class="header-page-box3" style="font-weight: bold;">{{ row.order_num }}</div>
+          <div class="header-page-box2" style="font-weight: bold">
+            เลขที่คำสั่งซื้อ
+          </div>
+          <div class="header-page-box3" style="font-weight: bold">
+            {{ row.order_num }}
+          </div>
           <div class="header-page-box4">SO No.</div>
           <div class="header-page-box5">{{ row.salesorder_id }}</div>
           <div class="header-page-box6">PO No.</div>
@@ -61,7 +65,7 @@
             {{ row.cus_postal }}
           </div>
           <div class="head-box19">
-            หมายเหตุ (วันที่สั่งซื้อ) : {{ row.order_date }}
+            หมายเหตุ (วันที่สั่งซื้อ) : {{ datetoThaiDateString(row.order_date) }}
           </div>
           <!-- <div class="head-box20">{{ row.order_date }}</div> -->
         </div>
@@ -113,7 +117,9 @@
         <div style="display: flex; margin: 20px 0 0 0; width: 100%">
           <div style="width: 50%; font-size: 18px">รายการสินค้า</div>
           <div style="width: 50%; font-size: 16px; text-align: right">
-            จำนวนรวม <span style="font-weight: bold;">{{ row.sum_order_item }}</span> รายการ
+            จำนวนรวม
+            <span style="font-weight: bold">{{ row.sum_order_item }}</span>
+            รายการ
           </div>
         </div>
 
@@ -132,7 +138,9 @@
             <div class="detail-box3">
               {{ d_row.product_name }}
             </div>
-            <div class="detail-box4">{{ d_row.order_qty }}</div>
+            <div class="detail-box4">
+              {{ formatNumber(d_row.order_qty, 0) }}
+            </div>
             <div class="detail-box5">{{ d_row.order_detail_remark }}</div>
           </div>
         </div>
@@ -158,6 +166,8 @@
 </template>
   <script>
 import Vue from "vue";
+import AppServices from "@/services/app";
+
 export default {
   name: "print-label",
   data() {
@@ -189,6 +199,7 @@ export default {
 
         checkHead = printData[index_head]["order_num"];
 
+        // newArrData[0]["items"][0]["order_qty"] = 1000;
         Object.assign(newArrData[index_head], { sum_order_item: sumOrderItem });
       }
 
@@ -202,6 +213,12 @@ export default {
   },
   watch: {},
   methods: {
+    formatNumber(value, dicimal) {
+      return AppServices.formatNumber(value, dicimal);
+    },
+    datetoThaiDateString(value) {
+      return AppServices.datetoThaiDateString(new Date(value));
+    },
     print() {
       if (this.$refs.printLable !== undefined) {
         this.displayPrintLabel("none");
