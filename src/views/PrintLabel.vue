@@ -690,29 +690,30 @@ export default {
 @media print {
   @page {
     size: auto;
-    margin: 1cm;
+    /* margin: 1cm; */
+    margin: 0;
   }
 
   @page :first {
-    margin-top: -1cm !important;
+    margin-top: -1.6cm !important;
   }
 
-  @page :footer {
+  /* @page :footer {
     display: none;
   }
 
   @page :header {
     display: none;
-  }
+  } */
 
   /* @page {
     margin-top: 0;
     margin-bottom: 0;
   } */
-  body {
+  /* body {
     padding-top: 72px;
     padding-bottom: 72px;
-  }
+  } */
 
   html,
   body {
