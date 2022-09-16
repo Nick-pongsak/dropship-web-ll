@@ -689,17 +689,35 @@ export default {
 
 @media print {
   @page {
-    /* size: A4; */
-    margin:0;
-    /* margin: 0.5cm; */
-    /* size: auto; */
-    /* margin: 25mm 25mm 25mm 25mm; */
+    size: auto;
+    margin: 1cm;
+  }
+
+  @page :first {
+    margin-top: -1cm !important;
+  }
+
+  @page :footer {
+    display: none;
+  }
+
+  @page :header {
+    display: none;
+  }
+
+  /* @page {
+    margin-top: 0;
+    margin-bottom: 0;
+  } */
+  body {
+    padding-top: 72px;
+    padding-bottom: 72px;
   }
 
   html,
   body {
     /* height: 100vh; */
-    margin: 0 !important;
+    /* margin: 1cm !important; */
     padding: 0 !important;
     overflow: hidden;
   }
