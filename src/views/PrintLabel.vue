@@ -119,7 +119,9 @@
           <div style="width: 50%; font-size: 18px">รายการสินค้า</div>
           <div style="width: 50%; font-size: 16px; text-align: right">
             จำนวนรวม
-            <span style="font-weight: bold">{{ formatNumber(row.sum_order_item) }}</span>
+            <span style="font-weight: bold">{{
+              formatNumber(row.sum_order_item)
+            }}</span>
             รายการ
           </div>
         </div>
@@ -134,15 +136,25 @@
 
         <div v-for="(d_row, d_index) in row.items" :key="'card-' + d_index">
           <div class="grid-detail">
-            <div class="detail-box1">{{ d_index + 1 }}</div>
-            <div class="detail-box2">{{ d_row.product_sku }}</div>
+            <div class="detail-box1">
+              <div class="align-justify-center">{{ d_index + 1 }}</div>
+            </div>
+            <div class="detail-box2">
+              <div class="align-center">{{ d_row.product_sku }}</div>
+            </div>
             <div class="detail-box3">
-              {{ d_row.product_name }}
+              <div class="align-center">{{ d_row.product_name }}</div>
             </div>
             <div class="detail-box4">
-              {{ formatNumber(d_row.order_qty, 0) }}
+              <div class="align-center-justify-end">
+                {{ formatNumber(d_row.order_qty, 0) }}
+              </div>
             </div>
-            <div class="detail-box5">{{ d_row.order_detail_remark }}</div>
+            <div class="detail-box5">
+              <div class="align-center">
+                {{ d_row.order_detail_remark }}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -522,7 +534,7 @@ export default {
 }
 .detail-h-box3 {
   grid-column-start: 4;
-  grid-column-end: 13;
+  grid-column-end: 12;
   grid-row-start: 1;
   grid-row-end: 2;
   border-top: 1px solid black;
@@ -530,8 +542,8 @@ export default {
   padding-left: 30px;
 }
 .detail-h-box4 {
-  grid-column-start: 13;
-  grid-column-end: 15;
+  grid-column-start: 12;
+  grid-column-end: 14;
   grid-row-start: 1;
   grid-row-end: 2;
   text-align: center;
@@ -540,7 +552,7 @@ export default {
   text-align: right;
 }
 .detail-h-box5 {
-  grid-column-start: 15;
+  grid-column-start: 14;
   grid-column-end: 21;
   grid-row-start: 1;
   grid-row-end: 2;
@@ -548,6 +560,22 @@ export default {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
   padding-left: 30px;
+}
+
+.align-center {
+  grid-area: a;
+  align-self: center;
+  justify-self: start;
+}
+.align-justify-center {
+  grid-area: a;
+  align-self: center;
+  justify-self: center;
+}
+.align-center-justify-end {
+  grid-area: a;
+  align-self: center;
+  justify-self: end;
 }
 
 .detail-box1 {
@@ -558,6 +586,11 @@ export default {
   text-align: center;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "a a"
+    "a a";
 }
 .detail-box2 {
   grid-column-start: 2;
@@ -566,32 +599,49 @@ export default {
   grid-row-end: 3;
   border-bottom: 1px solid black;
   padding-left: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "a a"
+    "a a";
 }
 .detail-box3 {
   grid-column-start: 4;
-  grid-column-end: 13;
+  grid-column-end: 12;
   grid-row-start: 1;
   grid-row-end: 3;
   border-bottom: 1px solid black;
   padding-left: 30px;
+  display: grid;
+  grid-template-areas:
+    "a a"
+    "a a";
 }
 .detail-box4 {
-  grid-column-start: 13;
-  grid-column-end: 15;
+  grid-column-start: 12;
+  grid-column-end: 14;
   grid-row-start: 1;
   grid-row-end: 3;
   text-align: center;
   border-bottom: 1px solid black;
   text-align: right;
+  display: grid;
+  grid-template-areas:
+    "a a"
+    "a a";
 }
 .detail-box5 {
-  grid-column-start: 15;
+  grid-column-start: 14;
   grid-column-end: 21;
   grid-row-start: 1;
   grid-row-end: 3;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
   padding-left: 30px;
+  display: grid;
+  grid-template-areas:
+    "a a"
+    "a a";
 }
 /* -- END TABLE DETAIL -- */
 
@@ -639,7 +689,11 @@ export default {
 
 @media print {
   @page {
-    margin: 0.5cm;
+    /* size: A4; */
+    margin:0;
+    /* margin: 0.5cm; */
+    /* size: auto; */
+    /* margin: 25mm 25mm 25mm 25mm; */
   }
 
   html,
@@ -648,6 +702,11 @@ export default {
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact; /*Chrome, Safari */
+    color-adjust: exact; /*Firefox*/
   }
 
   .body-main {
@@ -673,11 +732,6 @@ export default {
     page-break-inside: avoid;
     page-break-before: avoid;
     page-break-after: always;
-  }
-
-  body {
-    -webkit-print-color-adjust: exact; /*Chrome, Safari */
-    color-adjust: exact; /*Firefox*/
   }
 }
 </style>
