@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <div class="grid-detail" style="padding-top: 20px">
+        <div class="grid-detail-head" style="padding-top: 20px">
           <div class="detail-h-box1">#</div>
           <div class="detail-h-box2">SKU</div>
           <div class="detail-h-box3">ชื่อรายการสินค้า</div>
@@ -146,9 +146,9 @@
           </div>
         </div>
 
-        <div style="padding: 20px 0; text-align: right">เลขหน้า 1/1</div>
+        <!-- <div style="padding: 20px 0; text-align: right">เลขหน้า 1/1</div> -->
 
-        <div class="grid-footer" style="padding: 30px 0">
+        <div class="grid-footer" style="padding: 50px 0 30px 0">
           <div class="footer-box1">ลายเซ็นผู้ส่ง</div>
           <div class="footer-box2">
             .............................................................
@@ -483,6 +483,15 @@ export default {
 /* -- END TABLE HEAD -- */
 
 /* -- START TABLE DETAIL -- */
+.grid-detail-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-auto-rows: 32px;
+  line-height: 32px;
+  font-size: 16px;
+}
+
 .grid-detail {
   width: 100%;
   display: grid;
@@ -504,7 +513,7 @@ export default {
 }
 .detail-h-box2 {
   grid-column-start: 2;
-  grid-column-end: 5;
+  grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 2;
   border-top: 1px solid black;
@@ -512,8 +521,8 @@ export default {
   padding-left: 30px;
 }
 .detail-h-box3 {
-  grid-column-start: 5;
-  grid-column-end: 14;
+  grid-column-start: 4;
+  grid-column-end: 13;
   grid-row-start: 1;
   grid-row-end: 2;
   border-top: 1px solid black;
@@ -521,16 +530,17 @@ export default {
   padding-left: 30px;
 }
 .detail-h-box4 {
-  grid-column-start: 14;
-  grid-column-end: 16;
+  grid-column-start: 13;
+  grid-column-end: 15;
   grid-row-start: 1;
   grid-row-end: 2;
   text-align: center;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+  text-align: right;
 }
 .detail-h-box5 {
-  grid-column-start: 16;
+  grid-column-start: 15;
   grid-column-end: 21;
   grid-row-start: 1;
   grid-row-end: 2;
@@ -551,30 +561,31 @@ export default {
 }
 .detail-box2 {
   grid-column-start: 2;
-  grid-column-end: 5;
+  grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 3;
   border-bottom: 1px solid black;
   padding-left: 30px;
 }
 .detail-box3 {
-  grid-column-start: 5;
-  grid-column-end: 14;
+  grid-column-start: 4;
+  grid-column-end: 13;
   grid-row-start: 1;
   grid-row-end: 3;
   border-bottom: 1px solid black;
   padding-left: 30px;
 }
 .detail-box4 {
-  grid-column-start: 14;
-  grid-column-end: 16;
+  grid-column-start: 13;
+  grid-column-end: 15;
   grid-row-start: 1;
   grid-row-end: 3;
   text-align: center;
   border-bottom: 1px solid black;
+  text-align: right;
 }
 .detail-box5 {
-  grid-column-start: 16;
+  grid-column-start: 15;
   grid-column-end: 21;
   grid-row-start: 1;
   grid-row-end: 3;
