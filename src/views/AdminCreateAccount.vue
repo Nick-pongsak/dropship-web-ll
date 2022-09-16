@@ -136,7 +136,7 @@
                   </div>
                   <div class="detail" style="">
                     <input
-                      type="number"
+                      type="text"
                       v-bind:class="[Error.errorClassTel]"
                       v-model="admin.TEL"
                       style="background: #fff;"
@@ -1073,11 +1073,7 @@ export default {
           ;(this.Error.errorClassTel = 'error-case'),
             (this.Error.errorClassTel_txt = this.$t('txt-wrong11'))
           return false
-        } else if (!re.test(value)) {
-          ;(this.Error.errorClassTel = 'error-case'),
-            (this.Error.errorClassTel_txt = this.$t('txt-wrong12'))
-          return false
-        } else {
+        }  else {
           ;(this.Error.errorClassTel = ''), (this.Error.errorClassTel_txt = '')
           return true
         }

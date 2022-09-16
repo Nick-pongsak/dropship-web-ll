@@ -496,15 +496,11 @@ export default {
 
       if(type == 'inp-phone'){
         console.log(value)
-        var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+       
         if(value == null || value == ''|| value == '-'){
           this.Error.errorClassTel = 'error-case',
           this.Error.errorClassTel_txt = this.$t('txt-wrong11')
           return false
-        }else if(!re.test(value))  {
-          this.Error.errorClassTel = 'error-case',
-          this.Error.errorClassTel_txt = this.$t('txt-wrong12')
-         return false
         }else {
             this.Error.errorClassTel = '',
           this.Error.errorClassTel_txt = '' 

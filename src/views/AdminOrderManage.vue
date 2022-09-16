@@ -132,7 +132,7 @@ export default {
         }
         let obj = {
           purchase_id: this.selectedRow.purchase_id,
-          order_remark: order_remarks,
+          order_remarks: order_remarks,
           order_status: this.selectedRow.order_status
         }
         this.$store
