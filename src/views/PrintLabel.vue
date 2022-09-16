@@ -37,18 +37,18 @@
           <div class="head-box1">ผู้ส่ง</div>
           <div class="head-box2">ผู้รับ</div>
           <div class="head-box3">ชื่อ :</div>
-          <div class="head-box4">{{ row.user_company }}</div>
+          <div class="head-box4">{{ row.sup_company }}</div>
           <div class="head-box5">ชื่อบริษัท :</div>
           <div class="head-box6">{{ row.cus_company }}</div>
           <div class="head-box7">เบอร์โทร :</div>
-          <div class="head-box8">{{ row.user_phone }}</div>
+          <div class="head-box8">{{ row.sup_phone }}</div>
           <div class="head-box9">ชื่อ-นามสกุลผู้รับ :</div>
           <div class="head-box10">{{ row.cus_name }} {{ row.cus_surname }}</div>
           <div class="head-box11">ที่อยู่ :</div>
           <div class="head-box12">
-            {{ row.user_address }} {{ row.user_district }}
-            {{ row.user_subdistrict }} {{ row.user_province }}
-            {{ row.user_postal }}
+            {{ row.sup_address }} {{ row.sup_district }}
+            {{ row.sup_subdistrict }} {{ row.sup_province }}
+            {{ row.sup_postal }}
           </div>
           <div class="head-box13">เบอร์โทรติดต่อผู้รับ :</div>
           <div class="head-box14">{{ row.cus_phone_secendary }}</div>
