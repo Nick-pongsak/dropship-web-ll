@@ -65,7 +65,8 @@
             {{ row.cus_postal }}
           </div>
           <div class="head-box19">
-            หมายเหตุ (วันที่สั่งซื้อ) : {{ datetoThaiDateString(row.order_date) }}
+            หมายเหตุ (วันที่สั่งซื้อ) :
+            {{ datetoThaiDateString(row.order_date) }}
           </div>
           <!-- <div class="head-box20">{{ row.order_date }}</div> -->
         </div>
@@ -118,7 +119,7 @@
           <div style="width: 50%; font-size: 18px">รายการสินค้า</div>
           <div style="width: 50%; font-size: 16px; text-align: right">
             จำนวนรวม
-            <span style="font-weight: bold">{{ row.sum_order_item }}</span>
+            <span style="font-weight: bold">{{ formatNumber(row.sum_order_item) }}</span>
             รายการ
           </div>
         </div>
