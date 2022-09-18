@@ -11,7 +11,7 @@
         v-if="info.user_role == 'Supplier'"
         @click="action('home')"
         class="sys-name"
-        :style="{ 'font-size': sysName }"
+        :style="{ 'font-size': windowSize > 600 ? '20px' : '18px' }"
       >
         Dropship portal
       </div>
@@ -19,7 +19,7 @@
         v-else
         @click="action(info.user_role == 'supplier' ? 'home' : 'adminHome')"
         class="sys-name"
-        :style="{ 'font-size': sysName }"
+        :style="{ 'font-size':  windowSize > 600 ? '20px' : '18px' }"
       >
         Dropship portal
       </div>
