@@ -1,10 +1,12 @@
 <template>
-  <div style="z-index:1" id="MenuBar" class="header-main">
+  <div style="z-index:1" id="MenuBar" class="header-main" v-resize="onResize">
     <div style="cursor: pointer;width:50%;display:flex;">
-      <img
-        src="@/assets/icons/logo.png"
-        :style="{ height: logo, width: width }"
-      />
+      <div :style="{ 'padding-top': windowSize > 600 ? '0px' : '5px' }">
+        <img
+          src="@/assets/icons/logo.png"
+          :style="{ height: logo, width: width }"
+        />
+      </div>
       <div
         v-if="info.user_role == 'Supplier'"
         @click="action('home')"
@@ -24,15 +26,31 @@
     </div>
     <div
       v-if="info.user_role == 'supplier'"
-      style="color:#fff;display: flex;width:50%"
+      :style="{
+        color: '#fff',
+        width: '50%',
+        display: windowSize > 600 ? 'flex' : ''
+      }"
       class="right-header justify-end"
     >
       <div
-        style="padding:0 10px 0 0;font-weight: 400;font-size: 16px;display: flex; align-items: center;font-family:'Bai Jamjuree', sans-serif;"
+        :style="{
+          padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
+          'font-weight': 400,
+          'font-size': '16px',
+          display: 'flex',
+          'align-items': 'center',
+          'font-family': 'Bai Jamjuree, sans-serif',
+          width: windowSize > 600 ? '' : '100%'
+        }"
       >
         {{ formatDate(this.timeServer) }}
       </div>
-      <md-menu md-size="medium" md-align-trigger>
+      <md-menu
+        :style="{ width: windowSize > 600 ? '' : '100%' }"
+        md-size="medium"
+        md-align-trigger
+      >
         <md-button style="text-transform:none" md-menu-trigger
           >{{ info.user_name }}{{ ' ' }}{{ info.user_surname
           }}<span class="mdi mdi-menu-down"></span
@@ -59,15 +77,31 @@
 
     <div
       v-else
-      style="color:#fff;display: flex;width:50%"
+      :style="{
+        color: '#fff',
+        width: '50%',
+        display: windowSize > 600 ? 'flex' : ''
+      }"
       class="right-header justify-end"
     >
       <div
-        style="padding:0 10px 0 0;font-weight: 400;font-size: 16px;display: flex; align-items: center;font-family:'Bai Jamjuree', sans-serif;"
+        :style="{
+          padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
+          'font-weight': 400,
+          'font-size': '16px',
+          display: 'flex',
+          'align-items': 'center',
+          'font-family': 'Bai Jamjuree, sans-serif',
+          width: windowSize > 600 ? '' : '100%'
+        }"
       >
         {{ formatDate(this.timeServer) }}
       </div>
-      <md-menu md-size="medium" md-align-trigger>
+      <md-menu
+        md-size="medium"
+        md-align-trigger
+        :style="{ width: windowSize > 600 ? '' : '100%' }"
+      >
         <md-button
           style="border: 1px solid #000000; border-radius: 64px;background-color:#fff;"
           md-menu-trigger
@@ -161,6 +195,7 @@ export default {
   props: {},
   data () {
     return {
+      windowSize: 1366,
       sysName: '20px',
       logo: '30px',
       width: '30px',
@@ -232,18 +267,11 @@ export default {
           min = m
         }
 
-        return (
-          days +
-          ' ' +
-          monthName +
-          ' ' +
-          fullYear
-        )
+        return days + ' ' + monthName + ' ' + fullYear
       } else {
         return val
       }
     },
-
 
     onConfirm () {
       this.value = 'Yes'
@@ -287,6 +315,9 @@ export default {
     },
     user_profile () {
       this.$router.push('/userprofile')
+    },
+    onResize () {
+      this.windowSize = window.innerWidth
     }
   },
   created () {

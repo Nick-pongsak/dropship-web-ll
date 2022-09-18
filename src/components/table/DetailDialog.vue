@@ -158,7 +158,11 @@
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
                   <div
-                    class="d-dialog-title desc"
+                    :class="
+                      windowSize < 800
+                        ? 'd-dialog-title'
+                        : 'd-dialog-title desc'
+                    "
                     :style="{
                       width: windowSize < 600 ? '40%' : '30%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
@@ -259,9 +263,13 @@
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
                   <div
-                    class="d-dialog-title desc"
+                    :class="
+                      windowSize < 800
+                        ? 'd-dialog-title'
+                        : 'd-dialog-title desc'
+                    "
                     :style="{
-                      width: windowSize < 600 ? '40%' : '30%',
+                      width: windowSize < 600 ? '40%' : '40%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
                     }"
                   >
@@ -270,7 +278,7 @@
                   <div
                     class="d-dialog-title"
                     :style="{
-                      width: windowSize < 600 ? '60%' : '70%'
+                      width: windowSize < 600 ? '60%' : '60%'
                     }"
                   >
                     <span> {{ formatDate(data.order_delivery_due_date) }}</span>
@@ -399,7 +407,7 @@
                       class="small-row-value"
                       :style="{ width: windowSize < 600 ? '60%' : '100%' }"
                     >
-                         {{ row.order_detail_remark }}
+                      {{ row.order_detail_remark }}
                     </div>
                   </div>
                 </div>
@@ -494,11 +502,7 @@
         <div class="d-dialog">
           <div class="bg-confirm">
             <div style="text-align:center">
-              <img
-                
-                class="img"
-                src="@/assets/images/other.png"
-              />
+              <img class="img" src="@/assets/images/other.png" />
             </div>
             <div style="padding:0px 20px">{{ confirmText_print }}</div>
           </div>
@@ -506,12 +510,15 @@
             <div>
               <v-btn
                 rounded
-                @click="submit_print( data )"
+                @click="submit_print(data)"
                 class="ok"
                 style="color:#fff;margin-right:45px"
-                > ใช่ </v-btn
               >
-              <v-btn rounded @click="confirmDialog_print = false" class="clear">ไม่</v-btn>
+                ใช่
+              </v-btn>
+              <v-btn rounded @click="confirmDialog_print = false" class="clear"
+                >ไม่</v-btn
+              >
             </div>
           </div>
         </div>
@@ -535,8 +542,8 @@ export default {
     return {
       windowSize: 1366,
       confirmText: '',
-      confirmDialog_print:false,
-      confirmText_print:'',
+      confirmDialog_print: false,
+      confirmText_print: '',
       confirmBtn: '',
       confirmDialog: false,
       confirmPrint: false,
@@ -631,7 +638,7 @@ export default {
     close () {
       this.$emit('close', {})
     },
-    submit_print( param ){
+    submit_print (param) {
       let TheArray = []
       TheArray.push(param)
       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
@@ -672,7 +679,7 @@ export default {
       } else if (this.data.order_status == 'Delivery' && !this.confirmPrint) {
         this.radio = ''
         process = 'Delivering'
-      }  else if (
+      } else if (
         this.data.order_status == 'Delivering' &&
         this.radio !== null
       ) {

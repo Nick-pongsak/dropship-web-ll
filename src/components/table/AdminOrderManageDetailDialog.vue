@@ -277,7 +277,11 @@
               <div style="width:100%">
                 <div style="width:100%;display:flex">
                   <div
-                    class="d-dialog-title desc"
+                    :class="
+                      windowSize < 800
+                        ? 'd-dialog-title'
+                        : 'd-dialog-title desc'
+                    "
                     :style="{
                       width: windowSize < 600 ? '40%' : '30%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
@@ -375,20 +379,23 @@
                   >
                     <span v-if="data.order_remarks == ''"> </span>
                     <span v-else>
-                        {{data.order_remarks}}
-                    </span
-                    >
+                      {{ data.order_remarks }}
+                    </span>
                   </div>
                 </div>
                 <div style="width:100%;display:flex;padding-top:7px">
                   <div
-                    class="d-dialog-title desc"
+                    :class="
+                      windowSize < 800
+                        ? 'd-dialog-title'
+                        : 'd-dialog-title desc'
+                    "
                     :style="{
                       width: windowSize < 600 ? '40%' : '30%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
                     }"
                   >
-                    จะต้องจัดส่งภายใน
+                    จะต้องจัด ส่งภายใน
                   </div>
                   <div
                     class="d-dialog-title"
@@ -396,7 +403,8 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    <span> {{ formatDate(data.order_delivery_due_date) }}</span>
+                    <span>{{ data.order_date }}</span>
+                    <!-- <span> {{ formatDate(data.order_delivery_due_date) }}</span> -->
                   </div>
                 </div>
               </div>
@@ -615,11 +623,7 @@
         <div class="d-dialog">
           <div class="bg-confirm">
             <div style="text-align:center">
-              <img
-                
-                class="img"
-                src="@/assets/images/other.png"
-              />
+              <img class="img" src="@/assets/images/other.png" />
             </div>
             <div style="padding:0px 20px">{{ confirmText_print }}</div>
           </div>
@@ -627,12 +631,15 @@
             <div>
               <v-btn
                 rounded
-                @click="submit_print( data )"
+                @click="submit_print(data)"
                 class="ok"
                 style="color:#fff;margin-right:45px"
-                > ใช่ </v-btn
               >
-              <v-btn rounded @click="confirmDialog_print = false" class="clear">ไม่</v-btn>
+                ใช่
+              </v-btn>
+              <v-btn rounded @click="confirmDialog_print = false" class="clear"
+                >ไม่</v-btn
+              >
             </div>
           </div>
         </div>
@@ -656,8 +663,8 @@ export default {
     return {
       windowSize: 1366,
       confirmText: '',
-      confirmDialog_print:false,
-      confirmText_print:'',
+      confirmDialog_print: false,
+      confirmText_print: '',
       confirmBtn: '',
       confirmDialog: false,
       confirmPrint: false,
@@ -732,24 +739,22 @@ export default {
       }
     },
     formatDate (val) {
-      if(val != null ){
-    let today = new Date(val)
-      const year = today.getFullYear()
-      const fullYear = year
-      // const fullYear = year + 543
-      const days = today.getDate()
-      const monthName = this.monthsShort[today.getMonth()]
+      if (val != null) {
+        let today = new Date(val)
+        const year = today.getFullYear()
+        const fullYear = year
+        // const fullYear = year + 543
+        const days = today.getDate()
+        const monthName = this.monthsShort[today.getMonth()]
         return days + ' ' + monthName + ' ' + fullYear
-      }else {
-       return val
+      } else {
+        return val
       }
-
-     
     },
     close () {
       this.$emit('close', {})
     },
-    submit_print( param ){
+    submit_print (param) {
       let TheArray = []
       TheArray.push(param)
       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
