@@ -690,12 +690,13 @@ export default {
 @media print {
   @page {
     size: auto;
-    /* margin: 1cm; */
-    margin: 0;
+    margin: 2cm;
+    /* margin: 0; */
   }
 
   @page :first {
-    margin-top: -1.6cm !important;
+    /* margin-top: -1.6cm !important; */
+    margin-top: -0.8cm !important;
   }
 
   /* @page :footer {
