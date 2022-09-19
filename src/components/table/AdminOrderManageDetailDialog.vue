@@ -403,7 +403,7 @@
                       width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
-                    <span>{{ data.order_date }}</span>
+                    <span>{{ formatDate(data.order_delivery_due_date) }}</span>
                     <!-- <span> {{ formatDate(data.order_delivery_due_date) }}</span> -->
                   </div>
                 </div>

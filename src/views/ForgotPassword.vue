@@ -2,17 +2,17 @@
   <!-- <div id="maincorp">
      -->
 <div id="Forgotpassword" v-resize="onResize">
-    <div style="height:100%" class="md-layout">
-    <div class="box-left f-w800 box-head font-Montserrat">
-      <div id="" style="height:5%">Dropship portal</div>
+    <div style="height:100%"  class="md-layout">
+    <div   :class="screenDevice == 'desktop' ? 'box-left' : 'box-left-mobile'" class="f-w800 box-head font-Montserrat">
+      <div v-if="screenDevice == 'desktop'" id="" style="height:5%">Dropship portal</div>
       <!-- {{this.screen_Hight}} {{this.screen_Width }} -->
-      <div style="height:95%">
-        <img v-if="step != 4" :style="{'height': this.screen_Hight,'width':this.screen_Width }"  class="img-forgot" src="@/assets/images/person-forgot.png">
+      <div v-if="screenDevice == 'desktop'"  style="height:95%">
+        <img v-if="step != 4"    class="img-forgot" src="@/assets/images/person-forgot.png">
         <img style="margin:25px 0 0 0;" v-else :style="{'height': this.screen_Hight,'width':this.screen_Width }"  class="img-forgot" src="@/assets/images/success.png">
       </div>
      
     </div>
-    <div class="box-right">
+    <div :class="screenDevice == 'desktop' ? 'box-right' : 'box-right-mobile'" >
       <div :style="{'transform' : this.tranformScale}" class="box-inp">
         <div v-if="step == 1 || step == 2" class="f-w1000 txt-forgot font-Bai-Jamjuree">ลืมรหัสผ่าน</div>
         <div v-else-if="step == 3" class="f-w1000 txt-forgot2 font-Bai-Jamjuree">ตั้งรหัสผ่านใหม่</div>
@@ -47,7 +47,7 @@
          </div>
 
          <div v-if="step == 2" style="display: contents;">
-               <div class="pt-5 txt-detail font-Bai-Jamjuree">ส่งไปแล้วที่อีเมล :   <span style="font-weight: lighter;text-decoration: underline;color:#0085D1;">{{this.email_step2}}</span></div>
+               <div style="display: flex;"  class="pt-5 txt-detail font-Bai-Jamjuree">ส่งไปแล้วที่อีเมล : <span style="padding:0 0 0 1px;font-weight: lighter;text-decoration: underline;color:#0085D1;">{{this.email_step2}}</span></div>
                 <div class="pt-10- txt-detail2 font-Bai-Jamjuree">กรุณาตรวจสอบที่อีเมลของท่าน</div>
               <div class="pt-10 font-Bai-Jamjuree"><input @click="btn_back"    class="btn-send_email" type="button" value="กลับหน้าเข้าสู่ระบบ"></div>
              
@@ -130,7 +130,7 @@
 <!-- --- -->
       </div>
       <div style="padding: 0 30px 0 0;height:5%;">
-        <footers :style="{'font-size': '14px' }" text="Copyright © 2019 DHA Siamwalla Ltd." />
+        <footers  :style="{'font-size': '14px' }" text="Copyright © 2019 DHA Siamwalla Ltd." />
       </div>
     </div>  
   </div>
@@ -159,6 +159,8 @@ export default {
   name: 'forgot',
   data () {
     return {
+      screenDevice:'',
+      screenDevice: '',
       tokenExpired:false,
       step:'1',
       submit:false,
@@ -264,19 +266,22 @@ export default {
       this.$refs.captcha.refreshCaptcha();
     },
     onResize () {
-
       let x = window.innerWidth
       let y = window.innerHeight
+      this.screenWidth = x
+      this.screenHeight = y
 
-      console.log(x , y)
-      this.screen_Width = (x)-(x*0.5)+'px'
-      this.screen_Hight = (y)-(y*0.10)+'px'
+      if (x <= 450) {
+        this.screenDevice = 'mobile'
+      } else {
+        this.screenDevice = 'desktop'
+      }
       if (x <= 375) {
-        this.tranformScale = 'scale(0.6)'
+        this.tranformScale = 'scale(0.65)'
       } else if (x > 375 && x <= 550) {
-        this.tranformScale = 'scale(0.6)'
+        this.tranformScale = 'scale(0.65)'
       } else if (x <= 1110 && x >= 960) {
-        this.tranformScale = 'scale(0.6)'
+        this.tranformScale = 'scale(0.8)'
       } else {
         this.tranformScale = 'scale(1)'
       }
@@ -419,7 +424,8 @@ export default {
     },
     moustout(){
       console.log('Test Method')
-    }
+    },
+   
   },
   components: {
     'footers' :Footers ,
