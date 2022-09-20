@@ -248,7 +248,9 @@ const store = {
         axios.post(`${url}/apiweb/api/send-order-status`, {
           purchase_id: data.purchase_id,
           order_remark: data.order_remarks,
-          order_status: data.order_status
+          order_status: data.order_status,
+          order_delivery_date:data.order_delivery_date,
+          order_success_date:data.order_success_date
         }, {
           headers: {
             'Content-Type': 'application/json',
