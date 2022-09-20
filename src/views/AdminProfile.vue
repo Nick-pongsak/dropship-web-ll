@@ -14,7 +14,7 @@
             'font-family': 'Bai Jamjuree, sans-serif'
           }"
         >
-          <div :style="{ width: '100%', padding: '12px 15px 12px 15px' }">
+          <div :style="{ width: '100%', padding: windowSize <= 600 ? '12px 15px 12px 15px' : '32px 15px 12px 15px' }">
             <div class="btn-filter">Profile</div>
           </div>
           <div
