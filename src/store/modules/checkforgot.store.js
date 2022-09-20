@@ -21,7 +21,7 @@ const store = {
       checkforgotservice.checkForgot(value)
           .then((response) => {
            state.forgot_status = response 
-             console.log('checkForgot=> ', response)
+            //  console.log('checkForgot=> ', response)
           })
           .catch((error) => console.error(error,'checkForgot'));
 

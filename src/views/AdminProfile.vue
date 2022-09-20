@@ -888,7 +888,7 @@ export default {
               }
             })
         } else {
-          console.log('save & cheang Password  ==> NOT OK!!!')
+          // console.log('save & cheang Password  ==> NOT OK!!!')
         }
       } else {
         if (inp1 && inp2 && inp3 && inp4) {
@@ -920,13 +920,13 @@ export default {
                 console.log('Error 400')
               }
             })
-          console.log('save Profile ==> OK')
+          // console.log('save Profile ==> OK')
         } else {
-          console.log('save Profile ==> NOT OK!!!')
+          // console.log('save Profile ==> NOT OK!!!')
         }
       }
 
-      console.log('save')
+      // console.log('save')
     },
     checkErrorCase (type, value) {
       // console.log(type , '==> ',value)
@@ -972,7 +972,7 @@ export default {
       }
 
       if (type == 'inp-phone') {
-        console.log(value)
+        // console.log(value)
 
         if (value == null || value == '' || value == '-') {
           ;(this.Error.errorClassTel = 'error-case'),

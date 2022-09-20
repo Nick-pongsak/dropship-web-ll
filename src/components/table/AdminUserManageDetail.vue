@@ -159,14 +159,12 @@ export default {
 
         if (h < 10) {
           hours = '0' + h
-          console.log('a')
         } else {
           hours = h
         }
 
         if (m < 10) {
           min = '0' + m
-          console.log('a')
         } else {
           min = m
         }

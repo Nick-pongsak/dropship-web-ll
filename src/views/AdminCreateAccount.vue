@@ -830,7 +830,7 @@ export default {
             var pwd = this.admin.PASS
             let keyapp = 'DropShipSecretKey'
             var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
-            console.log(this.admin.DISTRICT )
+            // console.log(this.admin.DISTRICT )
             // if(!t.DISTRICT.name_th){
             //   console.log('null')
             // }
@@ -855,7 +855,7 @@ export default {
               this.statusInput = null
           })
             .catch(error => { 
-              console.log(error.response.status)
+              // console.log(error.response.status)
                   if(error.response.status == 400){
                     this.Error.errorClassEmail = 'error-case'
                     this.Error.errorClassEmail_txt = this.$t('txt-wrong14')
@@ -863,9 +863,9 @@ export default {
                   }
                 })
            
-            console.log('Save => ', res)
+            // console.log('Save => ', res)
           } else {
-            console.log('Not Save', res)
+            // console.log('Not Save', res)
           }
 
           res = this.admin
@@ -897,9 +897,9 @@ export default {
             this.$store.dispatch('Register', res).then(res => {})
             this.dialog_success = true
             this.statusInput = null
-            console.log('Save sup => ', res)
+            // console.log('Save sup => ', res)
           } else {
-            console.log('Not Save')
+            // console.log('Not Save')
           }
           res = this.supplier
           this.dialog_save = false
@@ -913,7 +913,7 @@ export default {
         this.dialog_save = false
         this.dialog_success = false
       }
-      console.log('API EDIT PROFILE =>', res)
+      // console.log('API EDIT PROFILE =>', res)
     },
     OnCreate () {
       this.clear_data()
@@ -928,7 +928,7 @@ export default {
       } else {
         this.$store.dispatch('getDataUserCreate', data).then(res => {
           this.sup_list = res.success.data
-          console.log(res.success)
+          // console.log(res.success)
         })
       }
       // this.$store.dispatch('getDataUserCreate', data )
@@ -1067,7 +1067,7 @@ export default {
       }
 
       if (type == 'inp-tel') {
-        console.log(value)
+        // console.log(value)
         var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/
         if (value == null || value == '' || value == '-') {
           ;(this.Error.errorClassTel = 'error-case'),

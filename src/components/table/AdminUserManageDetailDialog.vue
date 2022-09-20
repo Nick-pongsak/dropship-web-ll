@@ -591,7 +591,7 @@ export default {
             this.$store
               .dispatch('changePwdStatus', res)
               .then(res => {
-                console.log(res)
+                // console.log(res)
               })
               .catch(error => {
                 console.log(error.response)
@@ -601,7 +601,7 @@ export default {
             this.dialogDetail = false
             this.dialog_success = true
           } else {
-            console.log('Not Save')
+            // console.log('Not Save')
           }
         } else {
           this.tempSnackbar = true
@@ -724,14 +724,12 @@ export default {
 
         if (h < 10) {
           hours = '0' + h
-          console.log('a')
         } else {
           hours = h
         }
 
         if (m < 10) {
           min = '0' + m
-          console.log('a')
         } else {
           min = m
         }
@@ -760,7 +758,7 @@ export default {
       if (param == 'OK') {
         this.editPassword = true
       } else {
-        console.log('cancel')
+        // console.log('cancel')
       }
     },
     renderStatus (row, mode) {

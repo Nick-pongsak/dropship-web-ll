@@ -216,7 +216,7 @@ export default {
   watch: {},
   methods: {
     confirm(){
-      console.log(this.txt_captchar , this.code)
+      // console.log(this.txt_captchar , this.code)
       this.submit = true
       let inp4 = false
       let inp1 =  this.checkErrorCase('inp-new-password' ,this.txt_new_password )
@@ -249,18 +249,18 @@ export default {
             }).then(response => {
               this.step = 4
             }).catch(error => {
-              console.log(error.response.statu)
+              // console.log(error.response.statu)
                   this.tokenExpired  = true
                   if(error.response.status == 400){
                     
                   }
             })
-            console.log('OK' ,this.txt_captchar)
+            // console.log('OK' ,this.txt_captchar)
       }
 
       },
      handleChange(code) {
-      console.log('code: ', code);
+      // console.log('code: ', code);
     },
     refresh() {
       this.$refs.captcha.refreshCaptcha();
@@ -307,7 +307,7 @@ export default {
           this.$store
               .dispatch('forgotSendEmail',this.txt_email)
               .then(res => {
-                  console.log(res.success.data)
+                  // console.log(res.success.data)
                     this.step = 2
                     this.email_step2 = this.txt_email
                     // Vue.localStorage.set('EMAIL-FORGOT',this.txt_email)
@@ -323,7 +323,7 @@ export default {
                       this.Error.errorClassEmail = 'error-case',
                       this.Error.errorClassEmail_txt = this.$t('txt-wrong6')
                     }
-                 console.log(error.response.status)
+                //  console.log(error.response.status)
                 
                 })
         }
@@ -346,13 +346,13 @@ export default {
       }
 
       if(type == 'inp-captchar'){
-        console.log('cap')
+        // console.log('cap')
         if(value == null || value == ''){
           this.Error.errorClassCaptchar = 'error-case',
           this.Error.errorClassCaptchar_txt = this.$t('txt-wrong11')
           return false
         }else if(this.txt_captchar != this.code) {
-          console.log('s')
+          // console.log('s')
           this.Error.errorClassCaptchar = 'error-case',
           this.Error.errorClassCaptchar_txt = this.$t('txt-wrong13')
           return false
@@ -423,7 +423,7 @@ export default {
       this.$router.push('/')
     },
     moustout(){
-      console.log('Test Method')
+      // console.log('Test Method')
     },
    
   },
@@ -440,13 +440,12 @@ export default {
                 this.step = 3
                 })
                 .catch(error => { 
-                  console.log(error.response.statu)
+                  // console.log(error.response.statu)
                   this.tokenExpired  = true
                   if(error.response.status == 400){
                     
                   }
                 })
-     
     }
   },
   mounted () {

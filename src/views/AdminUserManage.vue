@@ -134,11 +134,11 @@ export default {
     viewDeatil (val) {
       this.selectedRow = val
       this.showDialog = true
-      console.log('viewDeatil ==> ', val)
+      // console.log('viewDeatil ==> ', val)
     },
     closeDialog (val) {
       this.showDialog = false
-      console.log('closeDialog ==> ', val)
+      // console.log('closeDialog ==> ', val)
     },
     submitAction (val) {
       this.$router.push('/AdminCreateAccount')
@@ -203,7 +203,7 @@ export default {
         this.$router.push('/' + 'home')
       } else {
         this.fetch()
-        console.log('ADmin')
+        // console.log('ADmin')
       }
     }
   },
