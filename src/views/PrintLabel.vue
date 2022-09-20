@@ -117,7 +117,7 @@
           </div>
         </div>
 
-        <div style="display: flex; margin: 20px 0 0 0; width: 100%">
+        <div v-if="row.page_ == 1" style="display: flex; margin: 20px 0 0 0; width: 100%">
           <div style="width: 50%; font-size: 18px">รายการสินค้า</div>
           <div style="width: 50%; font-size: 16px; text-align: right">
             จำนวนรวม
