@@ -179,6 +179,7 @@ export default {
       dataPage: this.data,
       deviceType: null,
       calcCardWidth: 20,
+      mapObj : [],
       monthsShort: [
         'JAN',
         'FEB',
@@ -297,6 +298,12 @@ export default {
       this.$store
         .dispatch('getOrderDetail', JSON.stringify(this.select_order))
         .then(res => {
+          for (let index = 0; index < res.success.data.length; index++) {
+            const element = res.success.data[index];
+            console.log(element)
+            this.fromData(element)
+            
+          }
           TheArray.push(res.success.data)
           Vue.localStorage.set('PRINT_LABEL', JSON.stringify(res.success.data))
         })
@@ -306,14 +313,16 @@ export default {
             console.log('Error 401')
           }
         })
-      // Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.row_select))
-      this.show_count = this.select_order.length
-      this.confirmDisable = true
-      this.$emit('submit', this.dataPage)
+
+      // this.show_count = this.select_order.length
+      // this.confirmDisable = true
+      // this.$emit('submit', this.dataPage)
     },
     view (row) {
       let theArray = []
       theArray.push(row.purchase_id)
+
+      console.log(row.purchase_id)
       this.$store
         .dispatch('getOrderDetail',JSON.stringify(theArray))
         .then(res => {
@@ -325,26 +334,31 @@ export default {
             console.log('Error 401')
           }
         })
-      // this.$emit('view', row)
+      this.$emit('view', row)
     },
     print_confrim(){
-      setTimeout(() => {
-        window.open('/#/PrintLabel')
-      }, 100)
-      this.confirmDisable = false
+        let TheArray =[]
+        console.log(this.mapObj)
+        // TheArray.push(this.mapObj)
+        Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
+        setTimeout(() => {
+          window.open('/#/PrintLabel')
+        }, 100)
+        this.confirmDisable = false
     },
     print (row) {
+      this.mapObj = []
       let TheArray = []
       let perc_id = []
       perc_id.push(row.purchase_id)
-      this.show_count = 1
-      this.confirmDisable = true
-      
+      // this.show_count = 1
+      // this.confirmDisable = true
       this.$store
         .dispatch('getOrderDetail', JSON.stringify(perc_id))
         .then(res => {
           TheArray.push(res.success.data[0])
-          Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+          this.fromData(res.success.data[0])
+          // Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
         })
         .catch(error => {
           if (error.response.status == 401) {
@@ -359,6 +373,54 @@ export default {
       this.windowSize = x
       this.deviceType = window.deviceType()
       // console.log(x)
+    },
+
+    maps(po , param , head){ 
+      const clone = structuredClone(head);
+      Object.assign(clone , {page_: po+1});
+      if(po == 0){
+        const slicedArray = param.slice(0, 10);
+          // this.mapObj.set(head ,slicedArray) 
+          clone.items = slicedArray
+          // console.log('A' ,clone)
+          this.mapObj.push(clone)
+      }else {
+          clone.items = param
+          // console.log('B' , clone)
+          this.mapObj.push(clone)
+      }
+    },
+    fromData(data){
+      let count_po = ''
+      let count_item = data.items.length
+      if(count_item <= 10){
+           count_po = 1
+      }else if( (count_item - 10 ) <= 15 ) {
+           count_po = 2
+      }else {
+          var sum = (count_item - 10) / 15 
+          sum =  Math.floor(sum) + 1
+          //console.log((count_item - 10) % 15 ,'sum1 =>' , Math.floor(sum)+1)
+          if((count_item - 10) % 15 != 0){
+           sum =  Math.floor(sum) + 1
+          }
+          count_po = sum
+      }
+      Object.assign(data , {page_count: count_po});
+        if(count_po > 1){
+        this.maps(0, data.items, data)
+        var a =  data.items.slice(10)
+          , chunk
+          var po = 0
+        while (a.length > 0) {
+            chunk = a.splice(0,15)
+            po++
+            this.maps(po,chunk, data)
+        }
+        }else {
+            this.maps(0,data.items, data)
+        }
+        this.confirmDisable = true
     }
   }
 }

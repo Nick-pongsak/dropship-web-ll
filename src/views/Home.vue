@@ -56,7 +56,7 @@ export default {
         startDliveryDate: '',
         startOrderDate: new Date(startDay).toISOString().slice(0, 10),
         startSuccessDelivery: '',
-        status: 'new'
+        status: 'delivery'
       },
       showDialog: false,
       statusList: [

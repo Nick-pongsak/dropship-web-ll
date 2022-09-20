@@ -668,6 +668,7 @@ export default {
       confirmBtn: '',
       confirmDialog: false,
       confirmPrint: false,
+      mapObj : [],
       radio: 'customer',
       monthsShort: [
         'JAN',
@@ -754,14 +755,64 @@ export default {
     close () {
       this.$emit('close', {})
     },
-    submit_print (param) {
-      let TheArray = []
-      TheArray.push(param)
-      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
 
-      setTimeout(() => {
-        window.open('/#/PrintLabel')
-      }, 1000)
+    maps(po , param , head){ 
+      const clone = structuredClone(head);
+      Object.assign(clone , {page_: po+1});
+      if(po == 0){
+        const slicedArray = param.slice(0, 10);
+          // this.mapObj.set(head ,slicedArray) 
+          clone.items = slicedArray
+          // console.log('A' ,clone)
+          this.mapObj.push(clone)
+      }else {
+          clone.items = param
+          // console.log('B' , clone)
+          this.mapObj.push(clone)
+      }
+    },
+    fromData(data){
+      let count_po = ''
+      let count_item = data.items.length
+      if(count_item <= 10){
+           count_po = 1
+      }else if( (count_item - 10 ) <= 15 ) {
+           count_po = 2
+      }else {
+          var sum = (count_item - 10) / 15 
+          sum =  Math.floor(sum) + 1
+          //console.log((count_item - 10) % 15 ,'sum1 =>' , Math.floor(sum)+1)
+          if((count_item - 10) % 15 != 0){
+           sum =  Math.floor(sum) + 1
+          }
+          count_po = sum
+      }
+      Object.assign(data , {page_count: count_po});
+        if(count_po > 1){
+        this.maps(0, data.items, data)
+        var a =  data.items.slice(10)
+          , chunk
+          var po = 0
+        while (a.length > 0) {
+            chunk = a.splice(0,15)
+            po++
+            this.maps(po,chunk, data)
+        }
+        }else {
+            this.maps(0,data.items, data)
+        }
+        this.confirmDisable = true
+    },
+
+
+    submit_print (param) {
+      console.log(this.mapObj)
+      // let TheArray = []
+      // TheArray.push(param)
+      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
+      // setTimeout(() => {
+      //   window.open('/#/PrintLabel')
+      // }, 1000)
       this.confirmDialog_print = false
       // console.log(param)
     },
@@ -818,6 +869,8 @@ export default {
       }
     },
     printIcon () {
+
+      this.fromData(this.data)
       this.confirmText_print = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
       this.confirmDialog_print = true
     },

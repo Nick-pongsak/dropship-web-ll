@@ -21,7 +21,7 @@
 
     <div id="print-label">
       <div v-for="(row, index) in PoDetail" :key="'card-' + index">
-        <div class="grid-header-page">
+        <div v-if="row.page_ == 1" class="grid-header-page">
           <div class="header-page-box1">
             <img src="@/assets/images/head.jpg" width="300" height="200" />
           </div>
@@ -37,7 +37,7 @@
           <div class="header-page-box7">{{ row.purchase_id }}</div>
         </div>
 
-        <div class="grid-head-page">
+        <div v-if="row.page_ == 1" class="grid-head-page">
           <div class="head-box1">ผู้ส่ง</div>
           <div class="head-box2">ผู้รับ</div>
           <div class="head-box3">ชื่อ :</div>
@@ -72,6 +72,7 @@
         </div>
 
         <div
+        v-if="row.page_ == 1"
           style="
             font-family: 'Noto Sans Thai', sans-serif;
             color: #959595;
@@ -84,6 +85,7 @@
           พิมพ์ใบปะหน้าพัสดุนี้และติดลงบนกล่องพัสดุ
         </div>
         <div
+        v-if="row.page_ == 1"
           style="
             color: #959595;
             font-size: 12px;
@@ -137,7 +139,7 @@
         <div v-for="(d_row, d_index) in row.items" :key="'card-' + d_index">
           <div class="grid-detail">
             <div class="detail-box1">
-              <div class="align-justify-center">{{ d_index + 1 }}</div>
+              <div class="align-justify-center">{{ d_row.index + 1 }}</div>
             </div>
             <div class="detail-box2">
               <div class="align-center">{{ d_row.product_sku }}</div>
@@ -158,9 +160,9 @@
           </div>
         </div>
 
-        <!-- <div style="padding: 20px 0; text-align: right">เลขหน้า 1/1</div> -->
+        <div style="padding: 20px 0; text-align: right">เลขหน้า {{row.page_}} / {{row.page_count}}</div>
 
-        <div class="grid-footer" style="padding: 50px 0 30px 0">
+        <div  v-if="row.page_ == row.page_count " class="grid-footer" style="padding: 50px 0 30px 0">
           <div class="footer-box1">ลายเซ็นผู้ส่ง</div>
           <div class="footer-box2">
             .............................................................
