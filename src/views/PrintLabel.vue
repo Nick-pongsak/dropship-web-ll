@@ -167,10 +167,10 @@
           <div class="footer-box2">
             .............................................................
           </div>
-          <div class="footer-box3"></div>
+          <!-- <div class="footer-box3"></div> -->
           <div class="footer-box4">ลายเซ็นผู้รับ</div>
           <div class="footer-box5">
-            .............................................................
+            ...............................................................................
           </div>
         </div>
 
@@ -676,14 +676,18 @@ export default {
   grid-row-end: 2;
 }
 .footer-box4 {
-  grid-column-start: 6;
-  grid-column-end: 7;
+  grid-column-start: 5;
+  grid-column-end: 6;
+  /* grid-column-start: 6;
+  grid-column-end: 7; */
   grid-row-start: 1;
   grid-row-end: 2;
 }
 .footer-box5 {
-  grid-column-start: 7;
+  grid-column-start: 6;
   grid-column-end: 9;
+  /* grid-column-start: 7;
+  grid-column-end: 9; */
   grid-row-start: 1;
   grid-row-end: 2;
 }
