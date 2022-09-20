@@ -101,15 +101,15 @@ export default {
       }
       this.selectedRow = val
       this.showDialog = true
-      console.log('viewDeatil ==> ', val)
+      // console.log('viewDeatil ==> ', val)
     },
     closeDialog (val) {
       this.showDialog = false
-      console.log('closeDialog ==> ', val)
+      // console.log('closeDialog ==> ', val)
     },
     printDialog (val) {
       // this.showDialog = false
-      console.log('printDialog ==> ', val)
+      // console.log('printDialog ==> ', val)
     },
     submitDialog (result) {
       // this.showDialog = false
@@ -146,7 +146,7 @@ export default {
       }
     },
     submitAction (val) {
-      console.log('submitAction ==> ', val)
+      // console.log('submitAction ==> ', val)
 
       this.$store
         .dispatch('disableOrderAdmin', val)
@@ -156,14 +156,14 @@ export default {
         .catch(error => {})
     },
     printDetail (val) {
-      console.log('printDetail ==> ', val)
+      // console.log('printDetail ==> ', val)
     },
     fetch () {
       this.loading_status = true
       this.$store
         .dispatch('getOrderAdmin', this.filterData)
         .then(res => {
-          console.log(res.success.data)
+          // console.log(res.success.data)
 
           this.data = res.success.data
           this.status = this.statusList

@@ -33,19 +33,7 @@
       }"
       class="right-header justify-end"
     >
-      <div
-        :style="{
-          padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
-          'font-weight': 400,
-          'font-size': '16px',
-          display: 'flex',
-          'align-items': 'center',
-          'font-family': 'Bai Jamjuree, sans-serif',
-          width: windowSize > 600 ? '' : '100%'
-        }"
-      >
-        {{ formatDate(this.timeServer) }}
-      </div>
+     
       <md-menu
         :style="{ width: windowSize > 600 ? '' : '100%' }"
         md-size="medium"
@@ -73,6 +61,20 @@
           >
         </md-menu-content>
       </md-menu>
+      <div
+        :style="{
+          padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
+          'font-weight': 400,
+          'font-size': '16px',
+          'justify-content': 'flex-end',
+          display: 'flex',
+          'align-items': 'center',
+          'font-family': 'Bai Jamjuree, sans-serif',
+          width: windowSize > 600 ? '' : '100%'
+        }"
+      >
+        {{ formatDate(this.timeServer) }}
+      </div>
     </div>
 
     <div

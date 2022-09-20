@@ -183,7 +183,7 @@ export default {
       page_first:12,
       page_ohter:19,
       mapObj : [],
-      
+
       monthsShort: [
         'JAN',
         'FEB',
@@ -250,7 +250,7 @@ export default {
       }
     },
     push (param) {
-      console.log(param)
+      // console.log(param)
       let Deliver = this.data.filter(x => x.order_status === 'Delivery')
       if (this.select_order.length == 0) {
         this.select_order.push(param)
@@ -271,9 +271,9 @@ export default {
       let RowData = this.data.filter(
         x => x.order_status === 'Delivery' && x.checked === true
       )
-      console.log('DATA - Check  => ', this.select_order)
+      // console.log('DATA - Check  => ', this.select_order)
       this.row_select = RowData
-      console.log('PRINT =>', RowData)
+      // console.log('PRINT =>', RowData)
     },
     check_all () {
       this.select_order = []
@@ -304,7 +304,7 @@ export default {
         .then(res => {
           for (let index = 0; index < res.success.data.length; index++) {
             const element = res.success.data[index];
-            console.log(element)
+            // console.log(element)
             this.fromData(element)
             
           }
@@ -326,7 +326,7 @@ export default {
       let theArray = []
       theArray.push(row.purchase_id)
 
-      console.log(row.purchase_id)
+      // console.log(row.purchase_id)
       this.$store
         .dispatch('getOrderDetail',JSON.stringify(theArray))
         .then(res => {
@@ -342,7 +342,7 @@ export default {
     },
     print_confrim(){
         let TheArray =[]
-        console.log(this.mapObj)
+        // console.log(this.mapObj)
         // TheArray.push(this.mapObj)
         Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
         setTimeout(() => {

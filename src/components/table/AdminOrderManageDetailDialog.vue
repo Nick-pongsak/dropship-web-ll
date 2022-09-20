@@ -810,7 +810,7 @@ export default {
 
 
     submit_print (param) {
-      console.log(this.mapObj)
+      // console.log(this.mapObj)
       // let TheArray = []
       // TheArray.push(param)
       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))

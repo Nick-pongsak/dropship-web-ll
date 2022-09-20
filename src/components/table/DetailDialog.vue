@@ -627,8 +627,6 @@ export default {
     },
     formatDate (val) {
       if (val !== null) {
-        let hours = ''
-        let min = ''
         let today = new Date(val)
         const year = today.getFullYear()
         const fullYear = year
@@ -665,6 +663,7 @@ export default {
         this.confirmText =
           'คุณต้องการยืนยันรายการเป็นสถานะ Delivering ใช่หรือไม่ ?'
       } else if (this.data.order_status == 'Delivering') {
+        this.radio = 'customer'
         this.confirmText = 'การจัดส่งพัสดุสำเร็จ'
       } else {
         this.confirmText = ''
@@ -685,15 +684,14 @@ export default {
         this.radio = ''
         process = 'Delivering'
       } else if (
-        this.data.order_status == 'Delivering' &&
-        this.radio !== null
+        this.data.order_status == 'Delivering'
       ) {
         process = 'Complete'
       } else {
         process = ''
       }
 
-      console.log(process)
+     
       if (process != '') {
         let detail_remark = ''
         // let obj = {
@@ -711,7 +709,7 @@ export default {
           order_remarks: detail_remark,
           order_status: process
         }
-
+        // console.log(obj)
         this.$emit('submit', obj)
         this.$store
           .dispatch('sendOrderStatus', obj)
@@ -719,7 +717,22 @@ export default {
             this.confirmDialog = false
             // console.log(res.success.data)
             this.data.order_status = process
-            this.data.order_remarks = res.order_remarks
+            let perc_id = []
+            perc_id.push(obj.purchase_id)
+            this.$store
+              .dispatch('getOrderDetail', JSON.stringify(perc_id))
+              .then(res => {
+                this.data.order_delivery_date = res.success.data[0].order_delivery_date
+                this.data.order_success_date = res.success.data[0].order_success_date
+                this.data.order_remarks = res.success.data[0].order_remarks
+                  })
+              .catch(error => {
+                if (error.response.status == 401) {
+                  this.tokenExpired = true
+                  console.log('Error 401')
+                }
+              })
+
           })
           .catch(error => {
             if (error.response.status == 401) {
@@ -730,7 +743,7 @@ export default {
       }
     },
     printIcon () {
-      console.log(this.data)
+      // console.log(this.data)
       this.fromData(this.data)
       this.confirmText_print = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
       this.confirmDialog_print = true
@@ -754,7 +767,7 @@ export default {
     },
     maps(po , param , head){ 
       const clone = structuredClone(head);
-      console.log(clone)
+      // console.log(clone)
       Object.assign(clone , {page_: po+1});
       if(po == 0){
         const slicedArray = param.slice(0, this.page_first);
