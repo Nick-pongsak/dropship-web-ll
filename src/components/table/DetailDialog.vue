@@ -707,7 +707,9 @@ export default {
         let obj = {
           purchase_id: this.data.purchase_id,
           order_remarks: detail_remark,
-          order_status: process
+          order_status: process,
+          order_delivery_date: this.data.order_delivery_date,
+          order_success_date:this.data.order_success_date
         }
         // console.log(obj)
         this.$emit('submit', obj)

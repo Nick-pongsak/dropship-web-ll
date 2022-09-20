@@ -298,6 +298,7 @@ export default {
     submit () {
       let TheArray = []
       let perc_id = []
+      this.mapObj = []
       perc_id.push(this.select_order)
       this.$store
         .dispatch('getOrderDetail', JSON.stringify(this.select_order))
@@ -318,14 +319,13 @@ export default {
           }
         })
 
-      // this.show_count = this.select_order.length
-      // this.confirmDisable = true
-      // this.$emit('submit', this.dataPage)
+      this.show_count = this.select_order.length
+      this.confirmDisable = true
+      this.$emit('submit', this.dataPage)
     },
     view (row) {
       let theArray = []
       theArray.push(row.purchase_id)
-
       // console.log(row.purchase_id)
       this.$store
         .dispatch('getOrderDetail',JSON.stringify(theArray))
@@ -342,7 +342,7 @@ export default {
     },
     print_confrim(){
         let TheArray =[]
-        // console.log(this.mapObj)
+        console.log(this.mapObj)
         // TheArray.push(this.mapObj)
         Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
         setTimeout(() => {
@@ -355,7 +355,7 @@ export default {
       let TheArray = []
       let perc_id = []
       perc_id.push(row.purchase_id)
-      // this.show_count = 1
+      this.show_count = 1
       // this.confirmDisable = true
       this.$store
         .dispatch('getOrderDetail', JSON.stringify(perc_id))
