@@ -548,6 +548,11 @@ export default {
       confirmDialog: false,
       confirmPrint: false,
       radio: 'customer',
+
+      page_first:12,
+      page_ohter:19,
+      mapObj : [],
+
       monthsShort: [
         // 'ม.ค.',
         // 'ก.พ.',
@@ -641,7 +646,7 @@ export default {
     submit_print (param) {
       let TheArray = []
       TheArray.push(param)
-      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(TheArray))
+      Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
 
       setTimeout(() => {
         window.open('/#/PrintLabel')
@@ -725,6 +730,8 @@ export default {
       }
     },
     printIcon () {
+      console.log(this.data)
+      this.fromData(this.data)
       this.confirmText_print = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
       this.confirmDialog_print = true
     },
@@ -744,6 +751,55 @@ export default {
       let y = window.innerHeight
       this.windowSize = x
       this.deviceType = window.deviceType()
+    },
+    maps(po , param , head){ 
+      const clone = structuredClone(head);
+      console.log(clone)
+      Object.assign(clone , {page_: po+1});
+      if(po == 0){
+        const slicedArray = param.slice(0, this.page_first);
+          // this.mapObj.set(head ,slicedArray) 
+          clone.items = slicedArray
+          // console.log('A' ,clone)
+          this.mapObj.push(clone)
+      }else {
+          clone.items = param
+          // console.log('B' , clone)
+          this.mapObj.push(clone)
+      }
+    },
+    fromData(data){
+      let count_po = ''
+      let count_item = data.items.length
+      if(count_item <= this.page_first){
+           count_po = 1
+      }else if( (count_item - this.page_first ) <= this.page_ohter ) {
+           count_po = 2
+      }else {
+          var sum = (count_item - this.page_first) / this.page_ohter 
+          sum =  Math.floor(sum) + 1
+          //console.log((count_item - 10) % 15 ,'sum1 =>' , Math.floor(sum)+1)
+          if((count_item - this.page_first) % this.page_ohter != 0){
+           sum =  Math.floor(sum) + 1
+          }
+          count_po = sum
+      }
+     
+      Object.assign(data , {page_count: count_po});
+        if(count_po > 1){
+        this.maps(0, data.items, data)
+        var a =  data.items.slice(this.page_first)
+          , chunk
+          var po = 0
+        while (a.length > 0) {
+            chunk = a.splice(0,this.page_ohter)
+            po++
+            this.maps(po,chunk, data)
+        }
+        }else {
+            this.maps(0,data.items, data)
+        }
+        this.confirmDisable = true
     }
   }
 }
