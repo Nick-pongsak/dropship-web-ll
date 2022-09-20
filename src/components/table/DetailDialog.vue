@@ -269,7 +269,7 @@
                         : 'd-dialog-title desc'
                     "
                     :style="{
-                      width: windowSize < 600 ? '40%' : '40%',
+                      width: windowSize < 600 ? '40%' : '30%',
                       'padding-bottom': windowSize < 600 ? '0px' : '0px'
                     }"
                   >
@@ -278,7 +278,7 @@
                   <div
                     class="d-dialog-title"
                     :style="{
-                      width: windowSize < 600 ? '60%' : '60%'
+                      width: windowSize < 600 ? '60%' : '70%'
                     }"
                   >
                     <span> {{ formatDate(data.order_delivery_due_date) }}</span>
