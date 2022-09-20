@@ -133,11 +133,31 @@ export default {
         let obj = {
           purchase_id: this.selectedRow.purchase_id,
           order_remarks: order_remarks,
-          order_status: this.selectedRow.order_status
+          order_status: this.selectedRow.order_status,
+          order_delivery_date:this.selectedRow.order_delivery_date,
+          order_success_date:this.selectedRow.order_success_date 
         }
         this.$store
           .dispatch('sendOrderStatus', obj)
-          .then(res => {})
+          .then(res => {
+
+            let perc_id = []
+            perc_id.push(obj.purchase_id)
+            this.$store
+              .dispatch('getOrderDetail', JSON.stringify(perc_id))
+              .then(res => {
+                this.selectedRow.order_delivery_date = res.success.data[0].order_delivery_date
+                this.selectedRow.order_success_date = res.success.data[0].order_success_date
+                this.selectedRow.order_remarks = res.success.data[0].order_remarks
+                  })
+              .catch(error => {
+                if (error.response.status == 401) {
+                  this.tokenExpired = true
+                  console.log('Error 401')
+                }
+              })
+
+          })
           .catch(error => {
             if (error.response.status == 401) {
               console.log('Error 401')

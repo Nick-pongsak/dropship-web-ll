@@ -162,37 +162,15 @@
                     รหัสผ่านปัจจุบัน <span style="color:red">*</span>
                   </div>
                   <div class="detail-40">
-                    <md-field
-                      :md-toggle-password="false"
-                      :style="{
-                        'background-color': isDisabled ? '#DADADA' : '#fff'
-                      }"
-                      class="input-style"
-                      style="min-height:34px ;margin:0;top:0 ; left:0"
-                    >
-                      <md-input
-                        :disabled="true"
-                        class="input-style"
-                        type="password"
-                        v-model="pass"
-                      >
-                      </md-input>
-                      <div v-if="isDisabled">
-                        <span
-                          style="cursor: pointer;padding:0 10px 0 0;"
-                          @click="cheang('password')"
-                          class="md-suffix mdi mdi-eye-off"
-                        ></span>
-                      </div>
-
-                      <div style="display: flex;" v-else>
-                        <span
-                          @click="cheang_password"
-                          style="display: flex;padding:0 10px 0 0;font-size:12px;align-items: center;cursor: pointer;"
-                          >เปลี่ยน</span
-                        >
-                      </div>
-                    </md-field>
+                    <md-field v-bind:class="[Error.errorClassPwd]" :md-toggle-password="false" :style="{'background-color':'#fff'}" class="input-style"  style="min-height:34px ;margin:0;top:0 ; left:0" >
+                    <md-input autocomplete="off"  class="input-style" :type="!this.icon_eye.password ? 'password' : 'text'" v-model="edit_val.val_pass"></md-input>
+                    <span v-if="!this.icon_eye.password" @click="HideShow('password')" style="cursor: pointer;padding:0 10px 0 0;" class="md-suffix mdi mdi-eye-off"></span>
+                    <span v-else  @click="HideShow('password')" style="cursor: pointer;padding:0 10px 0 0;" class="md-suffix mdi mdi-eye"></span>
+                </md-field>
+                <div v-if="this.Error.errorClassPwd != ''"  class="txt-wrong">
+                      <span class="mdi mdi-alert-octagon"></span>
+                      {{this.Error.errorClassPwd_txt}}
+                 </div>
                   </div>
                 </div>
               </div>
@@ -717,7 +695,7 @@ export default {
         errorClassConfNewPwd_txt: ''
       },
       edit_val: {
-        val_pass: '',
+        val_pass: '9999999',
         new_password: '',
         confrim_new_password: ''
       },
@@ -888,7 +866,7 @@ export default {
       this.Error.errorClassConfNewPwd = ''
       this.Error.errorClassConfNewPwd_txt = ''
 
-      this.edit_val.val_pass = ''
+      this.edit_val.val_pass = '9999999'
       this.edit_val.new_password = ''
       this.edit_val.confrim_new_password = ''
 
