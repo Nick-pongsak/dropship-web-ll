@@ -389,8 +389,8 @@ export default {
         // objHtml = ' <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&family=Open+Sans:wght@500&display=swap" rel="stylesheet">'
         // objHtml = ' <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'
         objHtml = '</head>'
-        objHtml = '<body style="-webkit-print-color-adjust: exact;color-adjust: exact; padding: 0 !important;overflow: hidden;">'
-        objHtml += ' <div style="height: 100%; overflow: scroll">'
+        objHtml = '<body style="display:flex;-webkit-print-color-adjust: exact;color-adjust: exact; padding: 0 !important;overflow: hidden;">'
+        objHtml += ' <div style="height: 100%; overflow: scroll;width:100%;overflow-x: hidden">'
         // ----- Head------
         objHtml += '<div style="justify-content: flex-end; margin: 0 30px; padding-top: 30px;display: flex;">'
         objHtml += '  <div style="font-weight: bold; padding-right: 10px; cursor: pointer">PRINT LABEL</div>'
@@ -398,7 +398,7 @@ export default {
 
         let printLabel= 'left: 0;top: 0; width: 100%;height: 100%;'
         objHtml += ' <div id="print-label" style="'+printLabel+'">'
-          console.log("mapObj ==>",this.mapObj)
+          
         for (let i = 0; i < this.mapObj.length; i++) {
           let row = this.mapObj[i]
           objHtml += ' <div>'
@@ -484,9 +484,10 @@ export default {
 
           for (let k = 0; k < row.items.length; k++) {
           let d_row = row.items[k]
+          let runIndex = d_row.index+1
             objHtml += '  <div style="'+gridDetail+'">'
             objHtml += '    <div style="'+detailBox1+'">'
-            objHtml += '      <div style="'+alignJustifyCenter+'">'+d_row.index + 1 +'</div>'
+            objHtml += '      <div style="'+alignJustifyCenter+'">'+runIndex +'</div>'
             objHtml += '    </div>'
             objHtml += '    <div style="'+detailBox2+'">'
             objHtml += '      <div style="'+alignCenter+'">'+d_row.product_sku +'</div>'
@@ -523,6 +524,8 @@ export default {
             objHtml += ' </div>'
             objHtml += '</div>'
           }
+
+          objHtml += '<div style="page-break-inside: avoid;page-break-before: avoid;page-break-after: always;"></div>'
 
           objHtml += '</div>'
         }
