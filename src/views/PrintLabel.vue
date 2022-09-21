@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%; overflow: scroll">
+  <div style="height: 100%; overflow: scroll" id="printLablePage">
     <div
       ref="printLable"
       :style="displayPrintLabel('flex')"
@@ -176,6 +176,7 @@
           <div class="footer-box2">
             .............................................................
           </div>
+          <!-- <div class="footer-box3"></div> -->
           <div class="footer-box4">ลายเซ็นผู้รับ</div>
           <div class="footer-box5">
             ...............................................................................
@@ -183,7 +184,6 @@
         </div>
 
         <div class="break-page"></div>
-        <!-- <div class="break-page" v-if="index < PoDetail.length - 1"></div> -->
       </div>
     </div>
   </div>
@@ -250,11 +250,16 @@ export default {
       }
     },
     displayPrintLabel (display) {
+      // .v-application--wrap
       return 'display: ' + display + ';'
     }
   },
   components: {},
-  created () {},
+  created () {
+    // console.log("===>",document.getElementById('#MenuBar'))
+    // document.getElementById('#MenuBar').remove()
+    // #MenuBar
+  },
   mounted () {}
 }
 </script>
