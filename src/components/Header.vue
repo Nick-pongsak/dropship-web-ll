@@ -1,7 +1,12 @@
 <template>
-  <div style="z-index:1" id="MenuBar" class="header-main" v-resize="onResize">
+  <div
+    :style="{ 'z-index': 1, 'padding-top': windowSize > 600 ? '7px' : '0px' }"
+    id="MenuBar"
+    class="header-main"
+    v-resize="onResize"
+  >
     <div style="cursor: pointer;width:50%;display:flex;">
-      <div :style="{ 'padding-top': windowSize > 600 ? '0px' : '5px' }">
+      <div :style="{ 'padding-top': windowSize > 600 ? '0px' : '15px' }">
         <img
           src="@/assets/icons/logo.png"
           :style="{ height: logo, width: width }"
@@ -11,7 +16,10 @@
         v-if="info.user_role == 'Supplier'"
         @click="action('home')"
         class="sys-name"
-        :style="{ 'font-size': windowSize > 600 ? '20px' : '18px' }"
+        :style="{
+          'font-size': windowSize > 600 ? '20px' : '18px',
+          'padding-top': windowSize > 600 ? '0px' : '10px'
+        }"
       >
         Dropship portal
       </div>
@@ -19,7 +27,10 @@
         v-else
         @click="action(info.user_role == 'supplier' ? 'home' : 'adminHome')"
         class="sys-name"
-        :style="{ 'font-size':  windowSize > 600 ? '20px' : '18px' }"
+        :style="{
+          'font-size': windowSize > 600 ? '20px' : '18px',
+          'padding-top': windowSize > 600 ? '0px' : '10px'
+        }"
       >
         Dropship portal
       </div>
@@ -34,6 +45,7 @@
       class="right-header justify-end"
     >
       <div
+        v-if="windowSize > 600"
         :style="{
           padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
           'font-weight': 400,
@@ -47,7 +59,10 @@
         {{ formatDate(this.timeServer) }}
       </div>
       <md-menu
-        :style="{ width: windowSize > 600 ? '' : '100%' }"
+        :style="{
+          width: windowSize > 600 ? '' : '100%',
+          height: windowSize > 600 ? '' : '30px'
+        }"
         md-size="medium"
         md-align-trigger
       >
@@ -73,6 +88,20 @@
           >
         </md-menu-content>
       </md-menu>
+      <div
+        v-if="windowSize < 600"
+        :style="{
+          padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
+          'font-weight': 400,
+          'font-size': '16px',
+          display: 'flex',
+          'align-items': 'center',
+          'font-family': 'Bai Jamjuree, sans-serif',
+          width: windowSize > 600 ? '' : '100%'
+        }"
+      >
+        {{ formatDate(this.timeServer) }}
+      </div>
     </div>
 
     <div
@@ -85,6 +114,7 @@
       class="right-header justify-end"
     >
       <div
+        v-if="windowSize > 600"
         :style="{
           padding: windowSize > 600 ? '0 10px 0 0' : '0 10px 0 8px',
           'font-weight': 400,
@@ -183,6 +213,20 @@
           >
         </md-menu-content>
       </md-menu>
+      <div
+        v-if="windowSize < 600"
+        :style="{
+          padding: windowSize > 600 ? '0 10px 0 0' : '2px 10px 0 23px',
+          'font-weight': 400,
+          'font-size': '16px',
+          display: 'flex',
+          'align-items': 'center',
+          'font-family': 'Bai Jamjuree, sans-serif',
+          width: windowSize > 600 ? '' : '100%'
+        }"
+      >
+        {{ formatDate(this.timeServer) }}
+      </div>
     </div>
   </div>
 </template>
