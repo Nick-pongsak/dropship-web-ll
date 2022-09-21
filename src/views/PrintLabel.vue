@@ -72,7 +72,7 @@
         </div>
 
         <div
-        v-if="row.page_ == 1"
+          v-if="row.page_ == 1"
           style="
             font-family: 'Noto Sans Thai', sans-serif;
             color: #959595;
@@ -85,7 +85,7 @@
           พิมพ์ใบปะหน้าพัสดุนี้และติดลงบนกล่องพัสดุ
         </div>
         <div
-        v-if="row.page_ == 1"
+          v-if="row.page_ == 1"
           style="
             color: #959595;
             font-size: 12px;
@@ -117,7 +117,10 @@
           </div>
         </div>
 
-        <div v-if="row.page_ == 1" style="display: flex; margin: 20px 0 0 0; width: 100%">
+        <div
+          v-if="row.page_ == 1"
+          style="display: flex; margin: 20px 0 0 0; width: 100%"
+        >
           <div style="width: 50%; font-size: 18px">รายการสินค้า</div>
           <div style="width: 50%; font-size: 16px; text-align: right">
             จำนวนรวม
@@ -160,14 +163,19 @@
           </div>
         </div>
 
-        <div style="padding: 20px 0; text-align: right">เลขหน้า {{row.page_}} / {{row.page_count}}</div>
+        <div style="padding: 20px 0; text-align: right">
+          เลขหน้า {{ row.page_ }} / {{ row.page_count }}
+        </div>
 
-        <div  v-if="row.page_ == row.page_count " class="grid-footer" style="padding: 50px 0 30px 0">
+        <div
+          v-if="row.page_ == row.page_count"
+          class="grid-footer"
+          style="padding: 50px 0 30px 0"
+        >
           <div class="footer-box1">ลายเซ็นผู้ส่ง</div>
           <div class="footer-box2">
             .............................................................
           </div>
-          <!-- <div class="footer-box3"></div> -->
           <div class="footer-box4">ลายเซ็นผู้รับ</div>
           <div class="footer-box5">
             ...............................................................................
@@ -175,79 +183,80 @@
         </div>
 
         <div class="break-page"></div>
+        <!-- <div class="break-page" v-if="index < PoDetail.length - 1"></div> -->
       </div>
     </div>
   </div>
 </template>
-  <script>
-import Vue from "vue";
-import AppServices from "@/services/app";
+<script>
+import Vue from 'vue'
+import AppServices from '@/services/app'
 
 export default {
-  name: "print-label",
-  data() {
-    return { output: null };
+  name: 'print-label',
+  data () {
+    return { output: null }
   },
   computed: {
-    PoDetail() {
-      let printData = JSON.parse(Vue.localStorage.get("PRINT_LABEL"));
+    PoDetail () {
+      let printData = JSON.parse(Vue.localStorage.get('PRINT_LABEL'))
       // console.log("printData ==>", printData);
 
-      let dataItems = [];
-      let sumOrderItem = 0;
-      let checkHead = "";
-      let newArrData = JSON.parse(JSON.stringify(printData));
+      let dataItems = []
+      let sumOrderItem = 0
+      let checkHead = ''
+      let newArrData = JSON.parse(JSON.stringify(printData))
 
       for (let index_head = 0; index_head < printData.length; index_head++) {
         if (
-          checkHead != "" &&
-          checkHead != printData[index_head]["order_num"]
+          checkHead != '' &&
+          checkHead != printData[index_head]['order_num']
         ) {
-          sumOrderItem = 0;
+          sumOrderItem = 0
         }
 
-        dataItems = JSON.parse(JSON.stringify(printData[index_head]["items"]));
+        dataItems = JSON.parse(JSON.stringify(printData[index_head]['items']))
 
         for (let index_item = 0; index_item < dataItems.length; index_item++) {
-          sumOrderItem += parseFloat(dataItems[index_item]["order_qty"]);
+          sumOrderItem += parseFloat(dataItems[index_item]['order_qty'])
         }
 
-        checkHead = printData[index_head]["order_num"];
+        checkHead = printData[index_head]['order_num']
 
         // newArrData[0]["items"][0]["order_qty"] = 1000;
-        Object.assign(newArrData[index_head], { sum_order_item: sumOrderItem });
+        Object.assign(newArrData[index_head], { sum_order_item: sumOrderItem })
       }
 
       // console.log("newArrData ==>", newArrData);
-      return newArrData;
+      return newArrData
       // return JSON.parse(Vue.localStorage.get("PRINT_LABEL"));
     },
-    info_cus() {
-      return JSON.parse(Vue.localStorage.get("user_profile"));
-    },
+    info_cus () {
+      return JSON.parse(Vue.localStorage.get('user_profile'))
+    }
   },
   watch: {},
   methods: {
-    formatNumber(value, dicimal) {
-      return AppServices.formatNumber(value, dicimal);
+    formatNumber (value, dicimal) {
+      return AppServices.formatNumber(value, dicimal)
     },
-    datetoThaiDateString(value) {
-      return AppServices.datetoThaiDateString(new Date(value));
+    datetoThaiDateString (value) {
+      return AppServices.datetoThaiDateString(new Date(value))
     },
-    print() {
+    print () {
       if (this.$refs.printLable !== undefined) {
-        this.displayPrintLabel("none");
-        window.print();
+        this.displayPrintLabel('none')
+        window.print()
       }
     },
-    displayPrintLabel(display) {
-      return "display: " + display + ";";
-    },
+    displayPrintLabel (display) {
+      return 'display: ' + display + ';'
+    }
   },
   components: {},
-  created() {},
-  mounted() {},
-};
+  created () {},
+  mounted () {}
+}
 </script>
 
 <style type="text/css">
@@ -591,8 +600,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas:
-    "a a"
-    "a a";
+    'a a'
+    'a a';
 }
 .detail-box2 {
   grid-column-start: 2;
@@ -604,8 +613,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas:
-    "a a"
-    "a a";
+    'a a'
+    'a a';
 }
 .detail-box3 {
   grid-column-start: 4;
@@ -616,8 +625,8 @@ export default {
   padding-left: 30px;
   display: grid;
   grid-template-areas:
-    "a a"
-    "a a";
+    'a a'
+    'a a';
 }
 .detail-box4 {
   grid-column-start: 12;
@@ -629,8 +638,8 @@ export default {
   text-align: right;
   display: grid;
   grid-template-areas:
-    "a a"
-    "a a";
+    'a a'
+    'a a';
 }
 .detail-box5 {
   grid-column-start: 14;
@@ -642,8 +651,8 @@ export default {
   padding-left: 30px;
   display: grid;
   grid-template-areas:
-    "a a"
-    "a a";
+    'a a'
+    'a a';
 }
 /* -- END TABLE DETAIL -- */
 
@@ -760,4 +769,3 @@ export default {
   }
 }
 </style>
-  
