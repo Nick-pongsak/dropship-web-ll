@@ -367,10 +367,10 @@ export default {
           objHtml += '</head>'
           objHtml +=
             '<body style="font-family: Bai Jamjuree;display: flex;position: relative;">'
-          objHtml += '<div class="body-main">'
+          objHtml += '<div class="body-main" style="width: 100%;">'
 
           objHtml +=
-            ' <div style="height: 100%; overflow: scroll;width:100%;display: flex;" id="printLablePage">'
+            ' <div style="height: 100%; overflow-x: hidden;width:100%;display: flex;justify-content: center;" id="printLablePage">'
 
           // objHtml +=
           //   '<div ref="printLable"  style="display:flex;justify-content: flex-end; margin: 0 30px; padding-top: 30px">'
@@ -388,6 +388,13 @@ export default {
           // objHtml += ' </div>'
 
           objHtml += '<div id="print-label">'
+
+          objHtml +=
+            '<div style="width:100%;font-weight: bold; padding-right: 10px; cursor: pointer;display: flex;justify-content: end;"'
+          objHtml +=
+            ' onclick="window.print()">'
+          objHtml += 'PRINT LABEL'
+          objHtml += '</div>'
 
           for (let i = 0; i < this.mapObj.length; i++) {
             let row = this.mapObj[i]
