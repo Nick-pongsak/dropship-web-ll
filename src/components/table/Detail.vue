@@ -2,6 +2,7 @@
   <div class="detail-table" v-resize="onResize">
     <div class="action-bar" v-if="windowSize > 600">
       <v-checkbox
+       :disabled="detect_device == 'not_mobile' ? false : true "
         @click="check_all()"
         v-model="checkboxALL"
         hide-details
@@ -46,7 +47,7 @@
           <div style="display:flex;width:100%">
             <div style="padding-top: 0px;width:7%">
               <v-checkbox
-                :disabled="row.order_status != 'Delivery' ? true : false"
+                :disabled="row.order_status != 'Delivery' || detect_device == 'mobile' ? true : false"
                 v-model="row.checked"
                 @change="push(row.purchase_id)"
                 hide-details
