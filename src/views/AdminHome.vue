@@ -67,7 +67,7 @@ export default {
   watch: {},
   methods: {
     cleck_card (param) {
-      console.log(param)
+      // console.log(param)
 
       this.$router.push('/' + param)
     }
@@ -86,7 +86,7 @@ export default {
       if (data.user_role == 'supplier') {
         this.$router.push('/' + 'home')
       }else {
-        console.log('ADmin')
+        // console.log('ADmin')
       }
     }
   },

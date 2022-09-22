@@ -320,7 +320,7 @@ export default {
         .catch(error => {
           if (error.response.status == 401) {
             this.tokenExpired = true
-            console.log('Error 401')
+            // console.log('Error 401')
           }
         })
 
@@ -340,7 +340,7 @@ export default {
         .catch(error => {
           if (error.response.status == 401) {
             this.tokenExpired = true
-            console.log('Error 401')
+            // console.log('Error 401')
           }
         })
       this.$emit('view', row)
@@ -378,7 +378,7 @@ export default {
         .catch(error => {
           if (error.response.status == 401) {
             this.tokenExpired = true
-            console.log('Error 401')
+            // console.log('Error 401')
           }
         })
     },

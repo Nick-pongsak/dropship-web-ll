@@ -249,14 +249,14 @@ export default {
           this.validate = null
           this.errorClassUs = 'border-wrong'
           this.activeClassUs =''
-            console.log('No !!')
+            // console.log('No !!')
         }
 
         
       }
     },
     open_pdpa(){
-      console.log('open')
+      // console.log('open')
       this.$store.commit('ShowPolicy', true)
     },
     close_PDPA(){

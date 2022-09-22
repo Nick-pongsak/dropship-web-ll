@@ -774,13 +774,13 @@ export default {
               if (error.response.status == 400) {
                 this.Error.errorClassPwd = 'error-case'
                 this.Error.errorClassPwd_txt = this.$t('txt-wrong9')
-                console.log('Error 400')
+                // console.log('Error 400')
               }
             })
 
-          console.log('OK', res)
+          // console.log('OK', res)
         } else {
-          console.log('NOT OK !!')
+          // console.log('NOT OK !!')
         }
       }
       // let inp1 =  this.checkErrorCase( 'inp-password' ,this.profile.user_email)
@@ -794,7 +794,7 @@ export default {
       // console.log('save')
     },
     checkErrorCase (type, value) {
-      console.log(type, '==> ', value)
+      // console.log(type, '==> ', value)
 
       if (type == 'inp-password') {
         if (value == null || value == '') {

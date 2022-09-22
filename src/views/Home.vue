@@ -80,21 +80,21 @@ export default {
     ApplyFilter (val) {
       this.filterData = val
       this.fetch()
-      console.log('ApplyFilter ==> ', val)
+      // console.log('ApplyFilter ==> ', val)
     },
     viewDeatil (val) {
       this.selectedRow = val
       this.showDialog = true
-      console.log('viewDeatil ==> ', val)
+      // console.log('viewDeatil ==> ', val)
     },
     closeDialog (val) {
       this.showDialog = false
-      console.log('closeDialog ==> ', val)
+      // console.log('closeDialog ==> ', val)
     },
     printDialog (val) {
       // this.showDialog = false
       // Vue.localStorage.set('PRINT_LABEL', JSON.stringify(val))
-      console.log('printDialog ==> ', val)
+      // console.log('printDialog ==> ', val)
     },
     submitDialog (result) {
       // this.showDialog = false
@@ -111,14 +111,14 @@ export default {
       }
     },
     submitAction (val) {
-      console.log('submitAction ==> ', val)
+      // console.log('submitAction ==> ', val)
     },
     printDetail (val) {
-      console.log('printDetail ==> ', val)
+      // console.log('printDetail ==> ', val)
     },
     fetch () {
       this.loading_status = true
-      console.log(this.filterData)
+      // console.log(this.filterData)
       this.$store
         .dispatch('getOrderSupplier', this.filterData)
         .then(res => {
@@ -129,7 +129,7 @@ export default {
         .catch(error => {
           if (error.response.status == 401) {
             this.tokenExpired = true
-            console.log('Error 401')
+            // console.log('Error 401')
           }
         })
       this.status = this.statusList
