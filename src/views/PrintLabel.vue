@@ -243,11 +243,24 @@ export default {
     datetoThaiDateString (value) {
       return AppServices.datetoThaiDateString(new Date(value))
     },
-    print () {
+    print() {
       if (this.$refs.printLable !== undefined) {
-        this.displayPrintLabel('none')
-        window.print()
-      }
+         //  Local 
+            document.body.childNodes[3].childNodes[0].classList.value = ''
+            document.body.childNodes[3].classList.value = ''
+         //  SERVE
+            // document.body.childNodes[0].childNodes[0].classList.value = ''
+            // document.body.childNodes[0].classList.value = ''
+        this.displayPrintLabel("none");
+        window.print();
+          //  Local 
+            document.body.childNodes[3].childNodes[0].classList.value = 'v-application--wrap'
+            document.body.childNodes[3].classList.value = 'v-application v-application--is-ltr theme--light dark'
+        //  SERVE
+          // document.body.childNodes[0].childNodes[0].classList.value = 'v-application--wrap'
+         //  document.body.childNodes[0].classList.value = 'v-application v-application--is-ltr theme--light dark'
+    }
+      
     },
     displayPrintLabel (display) {
       // .v-application--wrap

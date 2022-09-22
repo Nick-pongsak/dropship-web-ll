@@ -351,10 +351,10 @@ export default {
       // TheArray.push(this.mapObj)
       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
       setTimeout(() => {
-        // window.open('/#/PrintLabel')
+        window.open('/#/PrintLabel')
         let check = 1
         if (check == 1) {
-          let myWindow = window.open('about:blank', '_blank')
+          // let myWindow = window.open('about:blank', '_blank')
           let objHtml =
             '<html style=" padding: 0 !important; overflow: hidden;">'
           objHtml += '<head>'
@@ -746,7 +746,7 @@ export default {
           objHtml += '</style>'
 
           objHtml += '</html>'
-          myWindow.document.write(objHtml)
+          // myWindow.document.write(objHtml)
         }
       }, 100)
       this.confirmDisable = false
