@@ -262,7 +262,7 @@ export default {
         const element = document.body.childNodes[index];
         if(element.classList){
           if(element.classList.value == 'edit-printlabel-1'){
-            element.classList.value = ' v-application v-application--is-ltr theme--light dark'
+            element.classList.value = 'v-application v-application--is-ltr theme--light dark'
           }
           if(element.classList.value == 'edit-printlabel-2'){
             element.classList.value = 'v-application--wrap'
