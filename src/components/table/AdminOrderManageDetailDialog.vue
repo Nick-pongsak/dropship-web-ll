@@ -873,7 +873,7 @@ export default {
       }
     },
     printIcon () {
-
+      this.mapObj = []
       this.fromData(this.data)
       this.confirmText_print = 'คุณต้องการปริ๊นใบปะหน้าใช่หรือไม่'
       this.confirmDialog_print = true
