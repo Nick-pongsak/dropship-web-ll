@@ -245,21 +245,31 @@ export default {
     },
     print() {
       if (this.$refs.printLable !== undefined) {
-         //  Local 
-            document.body.childNodes[3].childNodes[0].classList.value = ''
-            document.body.childNodes[3].classList.value = ''
-         //  SERVE
-            // document.body.childNodes[0].childNodes[0].classList.value = ''
-            // document.body.childNodes[0].classList.value = ''
-        this.displayPrintLabel("none");
+       for (let index = 0; index < document.body.childNodes.length; index++) {
+        const element = document.body.childNodes[index];
+        if(element.classList){
+          if(element.classList.value == 'v-application v-application--is-ltr theme--light dark'){
+            element.classList.value = 'edit-printlabel-1'
+          }
+          if(element.classList.value == 'v-application--wrap'){
+            element.classList.value = 'edit-printlabel-2'
+          }
+        }
+       }
+         this.displayPrintLabel("none");
         window.print();
-          //  Local 
-            document.body.childNodes[3].childNodes[0].classList.value = 'v-application--wrap'
-            document.body.childNodes[3].classList.value = 'v-application v-application--is-ltr theme--light dark'
-        //  SERVE
-          // document.body.childNodes[0].childNodes[0].classList.value = 'v-application--wrap'
-         //  document.body.childNodes[0].classList.value = 'v-application v-application--is-ltr theme--light dark'
-    }
+        for (let index = 0; index < document.body.childNodes.length; index++) {
+        const element = document.body.childNodes[index];
+        if(element.classList){
+          if(element.classList.value == 'edit-printlabel-1'){
+            element.classList.value = ' v-application v-application--is-ltr theme--light dark'
+          }
+          if(element.classList.value == 'edit-printlabel-2'){
+            element.classList.value = 'v-application--wrap'
+          }
+        }
+       }
+           }
       
     },
     displayPrintLabel (display) {
