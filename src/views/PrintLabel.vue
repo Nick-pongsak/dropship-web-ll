@@ -237,7 +237,7 @@ export default {
     print() {
       if (this.$refs.printLable !== undefined) {
        
-        if(window.location.href == 'http://dev-dropshipportal.dhas.com/#/PrintLabel'){
+        if(window.location.href == 'http://demo-dropshipportal.dhas.com/#/PrintLabel'){
           document.body.childNodes[0].childNodes[0].classList.value = ''
           document.body.childNodes[0].classList.value = ''
         }else {
@@ -248,7 +248,7 @@ export default {
         this.displayPrintLabel("none");
         window.print();
          
-        if(window.location.href == 'http://dev-dropshipportal.dhas.com/#/PrintLabel'){
+        if(window.location.href == 'http://demo-dropshipportal.dhas.com/#/PrintLabel'){
           document.body.childNodes[0].childNodes[0].classList.value = 'v-application--wrap'
           document.body.childNodes[0].classList.value = 'v-application v-application--is-ltr theme--light dark'
         }else {
