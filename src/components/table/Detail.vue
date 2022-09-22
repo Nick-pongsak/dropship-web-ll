@@ -748,7 +748,7 @@ export default {
           objHtml += '</html>'
           // myWindow.document.write(objHtml)
         }
-      }, 100)
+      }, 1000)
       this.confirmDisable = false
     },
     datetoThaiDateString (value) {
