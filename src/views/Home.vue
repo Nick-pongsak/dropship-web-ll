@@ -136,6 +136,7 @@ export default {
     }
   },
   created () {
+  
     if (
       this.$store.getters.user_profile === null &&
       sessionStorage.getItem('user_profile') === null
