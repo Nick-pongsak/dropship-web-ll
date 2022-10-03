@@ -89,12 +89,13 @@ export default {
     },
     closeDialog (val) {
       this.showDialog = false
+      this.fetch()
       console.log('closeDialog ==> ', val)
     },
     printDialog (val) {
       // this.showDialog = false
       // Vue.localStorage.set('PRINT_LABEL', JSON.stringify(val))
-      console.log('printDialog ==> ', val)
+      // console.log('printDialog ==> ', val)
     },
     submitDialog (result) {
       // this.showDialog = false

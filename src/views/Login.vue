@@ -12,33 +12,45 @@
               <!-- {{this.screenWidth}} -->
               <input
                 @keyup.enter="login"
-                 v-bind:class="[activeClassUs, errorClassUs]"
+                v-bind:class="[Error.errorClassEmail]"
                 class="inp-login-username font-Bai-Jamjuree"
                 type="text"
                 v-model="username"
                 name="username"
+                :style="{'border': this.Error.errorClassEmail == '' ?'1px solid #000000'  : ''}"
               />
-              <div v-if="validateUsername!=null" class="txt-wrong">
+              <div
+                      v-if="this.Error.errorClassEmail != '' && this.Error.errorClassEmail != 'error-case-red-border' "
+                      class="txt-wrong"
+                    >
+                      <span class="mdi mdi-alert-octagon"></span>
+                      {{ this.Error.errorClassEmail_txt }}
+              </div>
+              <!-- <div v-if="validateUsername!=null" class="txt-wrong">
               <span class="mdi mdi-alert-octagon"></span>
                 {{this.validateUsername}}
-            </div>
+            </div> -->
             </div>
             <div class="f-w400 txt-detail pt-5 font-Bai-Jamjuree">รหัสผ่าน :</div>
             <div class="pt-1">
               <input
                 @keyup.enter="login"
-                v-bind:class="[activeClassPwd, errorClassPwd]"
-                :style="{ border: wrong ? '2px solid red' : '' }"
+                v-bind:class="[Error.errorClassPwd]"
                 class="inp-login-password font-Bai-Jamjuree"
                 type="password"
                 v-model="password"
                 name="password"
+                :style="{'border': this.Error.errorClassPwd == '' ?'1px solid #000000'  : ''}"
+
               />
             </div>
-            <div v-if="validate != null" class="txt-wrong">
-              <span class="mdi mdi-alert-octagon"></span>
-                {{this.validate}}
-            </div>
+            <div
+                 v-if="this.Error.errorClassPwd != ''"
+                      class="txt-wrong"
+                    >
+                      <span class="mdi mdi-alert-octagon"></span>
+                 {{ this.Error.errorClassPwd_txt }}
+                    </div>
             <div class="pt-5">
               <input
                 @click.prevent="login()"
@@ -188,32 +200,26 @@ export default {
       tranformScale: '',
       screenWidth: '',
       screenHeight: '',
-      screenDevice: ''
+      screenDevice: '',
+
+      Error: {
+        errorClassEmail: '',
+        errorClassEmail_txt: '',
+        errorClassPwd: '',
+        errorClassPwd_txt: ''
     }
+  }
   },
   methods: {
     login () {
+     
 
-      if (this.username.length == 0) {
-          this.validateUsername = null
-          this.validate = this.$t('txt-wrong1')
-          this.errorClassUs = 'border-wrong'
-          this.activeClassUs =''
-       
-      } else if(this.password.length == 0){
-        this.validate = this.$t('txt-wrong1')
-        this.errorClassUs = false
-        this.errorClassPwd = 'border-wrong'
-        this.activeClassPwd =''
-      } else {
-        this.errorClassPwd = false
+      let inp1 = this.checkErrorCase('inp-email', this.username)
+      let inp2 = this.checkErrorCase('inp-password', this.password)
+    
+      if(inp1 && inp2) {
 
-        if(this.forMatEmail(this.username)){
-            this.errorClassUs = false
-            this.validateUsername  = null
-            this.validate  = null
-
-            var pwd = this.password
+        var pwd = this.password
             let keyapp = 'DropShipSecretKey'
             var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
 
@@ -221,7 +227,8 @@ export default {
               username: this.username,
               password: encodeURI(encrypted)
             }
-            this.$store
+
+        this.$store
               .dispatch('Login', result)
               .then(res => {
                 let data = res.success.data
@@ -237,23 +244,118 @@ export default {
               .catch(error => {
                 if (error && error.response && error.response.status === 400) {
 
-                  this.errorClassUs = 'border-wrong'
-                  this.errorClassPwd = 'border-wrong'
-                  this.validate  = this.$t('txt-wrong3')
+                  // this.errorClassUs = 'border-wrong'
+                  // this.errorClassPwd = 'border-wrong'
+                  // this.validate  = this.$t('txt-wrong3')
+                  this.Error.errorClassEmail = 'error-case-red-border'
+                  this.Error.errorClassPwd = 'error-case'
+                  this.Error.errorClassPwd_txt = this.$t('txt-wrong3')
 
                   // this.error = true
                 }
               })
-        }else {
-          this.validateUsername = this.$t('txt-wrong2')
-          this.validate = null
-          this.errorClassUs = 'border-wrong'
-          this.activeClassUs =''
-            console.log('No !!')
-        }
+      }
+      
+      // if(this.username.length == 0 && this.password.length == 0){
+      //   this.validate = this.$t('txt-wrong1')
+      //   this.errorClassUs = false
+      //   this.errorClassPwd = 'border-wrong'
+      //   this.activeClassPwd =''
+      // }else
+
+      // if (this.username.length == 0) {
+      
+      //     this.validateUsername = null
+      //     this.validate = this.$t('txt-wrong1')
+      //     this.errorClassUs = 'border-wrong'
+      //     this.activeClassUs =''
+       
+      // } else  if(this.password.length == 0){
+      //   this.validate = this.$t('txt-wrong1')
+      //   this.errorClassUs = false
+      //   this.errorClassPwd = 'border-wrong'
+      //   this.activeClassPwd =''
+      // } else {
+      //   this.errorClassPwd = false
+
+      //   if(this.forMatEmail(this.username)){
+      //       this.errorClassUs = false
+      //       this.validateUsername  = null
+      //       this.validate  = null
+
+      //       var pwd = this.password
+      //       let keyapp = 'DropShipSecretKey'
+      //       var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
+
+      //       let result = {
+      //         username: this.username,
+      //         password: encodeURI(encrypted)
+      //       }
+      //       this.$store
+      //         .dispatch('Login', result)
+      //         .then(res => {
+      //           let data = res.success.data
+      //           if (data.user_role == 'user') {
+      //             this.$router.push('/' + 'home')
+      //           } else if (data.user_role == 'admin') {
+      //             this.$router.push('/' + 'adminHome')
+      //           } else {
+      //             this.$router.push('/' + 'home')
+      //             // this.wrong = true
+      //           }
+      //         })
+      //         .catch(error => {
+      //           if (error && error.response && error.response.status === 400) {
+
+      //             this.errorClassUs = 'border-wrong'
+      //             this.errorClassPwd = 'border-wrong'
+      //             this.validate  = this.$t('txt-wrong3')
+
+      //             // this.error = true
+      //           }
+      //         })
+      //   }else {
+      //     this.validateUsername = this.$t('txt-wrong2')
+      //     this.validate = null
+      //     this.errorClassUs = 'border-wrong'
+      //     this.activeClassUs =''
+      //       console.log('No !!')
+      //   }
 
         
+      // }
+    },
+    checkErrorCase (type, value) {
+      // console.log(type , '==> ',value)
+      if (type == 'inp-email') {
+        if (value == null || value == '') {
+          ;(this.Error.errorClassEmail = 'error-case'),
+            (this.Error.errorClassEmail_txt = this.$t('txt-wrong11'))
+          return false
+        } else if (!this.syntaxEmail(value)) {
+            (this.Error.errorClassEmail = 'error-case'),
+            (this.Error.errorClassEmail_txt = this.$t('txt-wrong5'))
+          return false
+        } else {
+          this.Error.errorClassEmail = ''
+          this.Error.errorClassEmail_txt = ''
+          return true
+        }
       }
+
+      if (type == 'inp-password') {
+        if (value == null || value == '') {
+          this.Error.errorClassPwd = 'error-case'
+          this.Error.errorClassPwd_txt = this.$t('txt-wrong11')
+          return false
+        } else {
+          this.Error.errorClassPwd = ''
+          this.Error.errorClassPwd_txt = ''
+          return true
+        }
+      }
+
+
     },
     open_pdpa(){
       console.log('open')
@@ -272,6 +374,13 @@ export default {
           } else {
             return false
           }
+    },
+    syntaxEmail (email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return true
+      } else {
+        return false
+      }
     },
     onResize () {
       let x = window.innerWidth
@@ -312,5 +421,16 @@ export default {
 </script>
 
 <style>
+  
+.error-case {
+  border: 1px solid red;
+  font-size: 12px;
+  font-family: 'Bai Jamjuree', sans-serif;
+}
 
+.error-case-red-border{
+  border: 1px solid red;
+  font-size: 12px;
+  font-family: 'Bai Jamjuree', sans-serif;
+}
 </style>

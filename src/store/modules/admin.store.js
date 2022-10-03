@@ -235,6 +235,8 @@ const store = {
           dispatch('newToken',response.data.success.data.token)
           resolve(response.data);
         }).catch(error => {
+          dispatch('newToken',error.response.data.error.data.token)
+          // console.log(error.response)
           reject(error)
         })
       })

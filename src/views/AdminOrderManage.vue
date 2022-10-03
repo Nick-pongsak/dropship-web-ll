@@ -105,6 +105,7 @@ export default {
     },
     closeDialog (val) {
       this.showDialog = false
+      this.fetch()
       // console.log('closeDialog ==> ', val)
     },
     printDialog (val) {

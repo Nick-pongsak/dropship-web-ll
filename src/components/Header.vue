@@ -76,11 +76,11 @@
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >ข้อมูลส่วนตัว
           </md-menu-item>
-          <md-menu-item
+          <!-- <md-menu-item
             @click="action('Policy')"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
             >นโยบายความเป็นส่วนตัว</md-menu-item
-          >
+          > -->
           <md-menu-item
             @click="logout"
             style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"

@@ -169,14 +169,14 @@
                         type="password"
                         v-model="edit_val.val_pass"
                       ></md-input>
-                      <div v-if="isDisabled">
+                      <!-- <div v-if="isDisabled">
                         <span
                           style="cursor: pointer;padding:0 10px 0 0;"
                           class="md-suffix mdi mdi-eye-off"
                         ></span>
-                      </div>
+                      </div> -->
 
-                      <div style="display: flex;" v-else>
+                      <div v-if="!isDisabled" style="display: flex;" >
                         <span
                           @click="cheang_password"
                           style="display: flex;padding:0 10px 0 0;font-size:12px;align-items: center;cursor: pointer;"
