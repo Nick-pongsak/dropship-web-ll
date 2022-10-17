@@ -113,7 +113,8 @@
                           v-if="!editPassword"
                           :md-toggle-password="false"
                           :style="{
-                            'background-color': editUser ? '#DADADA' : '#fff'
+                            'background-color': editUser ? '#fff':'#DADADA' ,
+                            'border': editUser ? '1px solid rgba(0, 0, 0, 0.12)':''
                           }"
                           class="input-style"
                           style="width: 100%;margin:0;min-height:0px;padding:0"
@@ -123,6 +124,7 @@
                             :disabled="true"
                             type="password"
                             class="input-style"
+                            :style="{'background-color': editUser ? '#fff' : '#DADADA'}"
                           >
                           </md-input>
                           <div style="display: flex;" v-if="editUser">
