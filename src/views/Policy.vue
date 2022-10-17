@@ -2,6 +2,7 @@
   <div id="policy-page">
     <div class="body">
       <div
+        class="sticky-top"
         :style="{
           'text-align': 'end',
           width: '100%',
@@ -68,4 +69,13 @@ export default {
   mounted () {}
 }
 </script>
-<style></style>
+<style>
+  .sticky-top {
+    position: sticky;
+    background-color:#fff;
+    top:-10px;
+    z-index: 5 !important;
+  
+}
+
+</style>

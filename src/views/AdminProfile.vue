@@ -972,8 +972,7 @@ export default {
       }
 
       if (type == 'inp-phone') {
-        // console.log(value)
-
+        // console.log(value
         if (value == null || value == '' || value == '-') {
           ;(this.Error.errorClassTel = 'error-case'),
             (this.Error.errorClassTel_txt = this.$t('txt-wrong11'))
@@ -1144,6 +1143,14 @@ export default {
       } else {
         return false
       }
+    },
+    syntaxPhoneNumber (phone) {
+      var regex = /[0-9]/
+      if (regex.test(phone)) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   components: {},
@@ -1158,7 +1165,7 @@ export default {
     } else if (sessionStorage.getItem('user_profile') !== null) {
       let data = JSON.parse(sessionStorage.getItem('user_profile'))
       if (data.user_role != 'admin') {
-        this.$router.push('/' + 'adminHome')
+        this.$rouv-dialogter.push('/' + 'adminHome')
       } else {
         this.profile = JSON.parse(Vue.localStorage.get('user_profile'))
       }

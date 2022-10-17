@@ -86,6 +86,7 @@
     <v-card style="padding: 0;">
       <div class="body">
       <div
+      class="sticky-top"
         :style="{
           'text-align': 'end',
           width: '100%',
@@ -432,5 +433,10 @@ export default {
   border: 1px solid red;
   font-size: 12px;
   font-family: 'Bai Jamjuree', sans-serif;
+}
+
+.sticky-top {
+    position: sticky;
+    top: 0;
 }
 </style>
