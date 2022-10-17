@@ -383,6 +383,7 @@
                   </div>
                   <div class="detail" style="">
                     <input
+                    type="password"
                       v-bind:class="[Error.errorClassPwd]"
                       v-model="supplier.PASS"
                       :style="{
