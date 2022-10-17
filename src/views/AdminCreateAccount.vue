@@ -256,14 +256,14 @@
               </b-col>
               <b-col>
                 <div class="md-layout">
-                  <div class="head">รหัสไปรณีย์</div>
+                  <div class="head">รหัสไปรษณีย์</div>
                   <div class="detail" style="">
                     <v-select
                       v-on:change="select_('zip')"
                       style="max-height:34px ;box-shadow: none;width:100%"
                       v-model="admin.ZIP_CODE"
                       :items="select_province.zip"
-                      label="-กรุณาเลือกรหัสไปรณีย์-"
+                      label="-กรุณาเลือกรหัสไปรษณีย์-"
                       :item-text="item => item.id"
                       :item-value="item => item"
                       :disabled="select_province.zip == '' ? true : false"
@@ -530,7 +530,7 @@
               </b-col>
               <b-col>
                 <div class="md-layout">
-                  <div class="head">รหัสไปรณีย์</div>
+                  <div class="head">รหัสไปรษณีย์</div>
                   <div class="detail" style="">
                     <input
                       v-model="supplier.ZIP_CODE"

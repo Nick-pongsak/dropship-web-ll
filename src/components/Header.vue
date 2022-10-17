@@ -72,18 +72,19 @@
         ></md-button>
         <md-menu-content class="option-detail">
           <md-menu-item
+          class="hover-userprofile"
+          :style="{
+              'background-color': active_menu('userprofile') ? '#2372E7' : '',
+              color: active_menu('userprofile') ? '#fff' : ''
+            }"
             @click="user_profile"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
             >ข้อมูลส่วนตัว
           </md-menu-item>
-          <!-- <md-menu-item
-            @click="action('Policy')"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
-            >นโยบายความเป็นส่วนตัว</md-menu-item
-          > -->
           <md-menu-item
+            class="hover-out"
             @click="logout"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
             >ออกจากระบบ</md-menu-item
           >
         </md-menu-content>
@@ -154,6 +155,7 @@
         <!-- <md-button class="box-profile" style="text-transform:none" md-menu-trigger>{{info.frist_name}}{{' '}}{{info.last_name}}<span class="mdi mdi-menu-down"></span></md-button> -->
         <md-menu-content class="option-detail">
           <md-menu-item
+          class="hover-adminHome"
             @click="action('adminHome')"
             :style="{
               'background-color': active_menu('adminHome') ? '#2372E7' : '',
@@ -165,17 +167,19 @@
           </md-menu-item>
 
           <md-menu-item
+            class="hover-adminProfile"
             @click="action('adminProfile')"
             :style="{
               'background-color': active_menu('adminProfile') ? '#2372E7' : '',
               color: active_menu('adminProfile') ? '#fff' : ''
             }"
-            style="font-family: 'Bai Jamjuree', sans-serif;color:#fff;background-color: #2372E7;cursor: pointer;border-radius:5px;"
+            style="font-family: 'Bai Jamjuree', sans-serif;color:#fff;cursor: pointer;border-radius:5px;"
           >
             จัดการบัญชี
           </md-menu-item>
 
           <md-menu-item
+          class="hover-adminManageOrder"
             @click="action('adminManageOrder')"
             :style="{
               'background-color': active_menu('adminManageOrder')
@@ -189,6 +193,7 @@
           </md-menu-item>
 
           <md-menu-item
+          class="hover-AdminUserManage"
             @click="action('AdminUserManage')"
             :style="{
               'background-color': active_menu('AdminUserManage')
@@ -202,13 +207,15 @@
           </md-menu-item>
 
           <md-menu-item
+          class="hover-Policy"
             @click="action('Policy')"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
             >นโยบายความเป็นส่วนตัว</md-menu-item
           >
           <md-menu-item
+          class="hover-out"
             @click="logout"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
             >ออกจากระบบ</md-menu-item
           >
         </md-menu-content>
@@ -433,4 +440,43 @@ export default {
   border-radius: 64px;
   align-items: center;
 }
+
+.hover-adminHome:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+
+.hover-adminProfile:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+.hover-adminManageOrder:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+.hover-AdminUserManage:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+.hover-Policy:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+.hover-out:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+.hover-userprofile:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+
+
 </style>

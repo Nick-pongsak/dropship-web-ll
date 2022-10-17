@@ -52,10 +52,10 @@
               <div class="pt-10 font-Bai-Jamjuree"><input @click="btn_back"    class="btn-send_email" type="button" value="กลับหน้าเข้าสู่ระบบ"></div>
              
               <div style="font-size:15px" class="pt-10 font-Bai-Jamjuree">
-                กรุณาคลิกลิงค์ที่อีเมลภายในระยะเวลา   15   นาที 
+                กรุณาคลิกลิงก์ที่อีเมลภายในระยะเวลา   15   นาที 
               </div>
               <div style="font-size:15px" class="font-Bai-Jamjuree">
-                หากเลยกำหนดเวลาไปแล้ว ลิงค์ดังกล่าวจะไม่สามารถใช้ได้ 
+                หากเลยกำหนดเวลาไปแล้ว ลิงก์ดังกล่าวจะไม่สามารถใช้ได้ 
               </div>
               <div style="font-size:15px" class="font-Bai-Jamjuree">
                 กรุณาดำเนินการกรอกอีเมลใหม่อีกครั้งเพื่อทำการขอยืนยันใหม่
