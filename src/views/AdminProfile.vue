@@ -116,7 +116,7 @@
               <div :style="{ width: '100%', padding: '12px 15px 12px 15px' }">
                 <div class="md-layout">
                   <div class="head-40">
-                    เบอร์โทรศัพท์<span style="color:red">*</span>
+                    เบอร์โทรศัพท์<span style="color:red">*</span>หห
                   </div>
                   <div class="detail-40">
                     <input

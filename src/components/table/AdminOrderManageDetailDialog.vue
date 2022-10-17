@@ -323,7 +323,7 @@
                   'padding-bottom': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                เบอร์โทรศัพท์
+                เบอร์โทรศัพท์หห
               </div>
               <div
                 class="d-dialog-title"

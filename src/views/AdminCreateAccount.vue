@@ -440,7 +440,7 @@
               <b-col xl>
                 <div class="md-layout">
                   <div class="head">
-                    เบอร์โทรศัพท์ <span style="color:red">*</span>
+                    เบอร์โทรศัพท์ <span style="color:red">*</span>หห
                   </div>
                   <div class="detail" style="">
                     <input

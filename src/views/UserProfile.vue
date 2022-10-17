@@ -111,6 +111,21 @@
                   </div>
                 </div>
               </div>
+              <div :style="{ width: '100%', padding: '12px 15px 12px 15px' }">
+                <div class="md-layout">
+                  <div class="head-40">
+                    เบอร์โทรศัพท์สำรอง
+                  </div>
+                  <div class="detail-40">
+                    <input
+                      :style="{ 'background-color': '#DADADA' }"
+                      :disabled="true"
+                      v-model="this.profile.user_phone_secendary"
+                      class="input-style"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
             <div :style="{ width: windowSize <= 600 ? '100%' : '50%' }">
               <div
