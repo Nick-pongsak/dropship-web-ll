@@ -442,14 +442,13 @@ export default {
     }
   },
   created () {
-    if (sessionStorage.getItem('token_seesion') !== null) {
-      this.$store.dispatch('LogOut')
+ 
+
+    if (Vue.localStorage.get('login') != null) {
+      this.$router.push('/home')
+    } else {
+      // Vue.localStorage.remove('ACTION_FORGOT_STEP')
     }
-    // if (Vue.localStorage.get('login') != null) {
-    //   this.$router.push('/home')
-    // } else {
-    //   Vue.localStorage.remove('ACTION_FORGOT_STEP')
-    // }
   },
   mounted () {},
   computed: {}
