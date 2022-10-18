@@ -1008,6 +1008,10 @@ export default {
           this.Error.errorClassNewPwd = 'error-case'
           this.Error.errorClassNewPwd_txt = this.$t('txt-wrong10')
           return false
+        } if( this.edit_val.val_pass ==  value){
+          this.Error.errorClassNewPwd = 'error-case'
+          this.Error.errorClassNewPwd_txt = this.$t('txt-wrong16')
+          return false
         } else {
           this.Error.errorClassNewPwd = ''
           this.Error.errorClassNewPwd_txt = ''

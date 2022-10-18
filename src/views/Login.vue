@@ -238,28 +238,35 @@ export default {
   },
   methods: {
     login () {
-      let inp1 = this.checkErrorCase('inp-email', this.username)
-      let inp2 = this.checkErrorCase('inp-password', this.password)
 
-      if (inp1 && inp2) {
-        var pwd = this.password
-        let keyapp = 'DropShipSecretKey'
-        var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
+      if(this.username == '' &&  this.password == ''){
+         this.Error.errorClassEmail = 'error-case-red-border'
+         this.Error.errorClassPwd = 'error-case'
+         this.Error.errorClassPwd_txt = this.$t('txt-wrong1')
+      }else {
 
-        let result = {
-          username: this.username,
-          password: encodeURI(encrypted)
-        }
+        let inp1 = this.checkErrorCase('inp-email', this.username)
+        let inp2 = this.checkErrorCase('inp-password', this.password)
 
-        this.$store
-          .dispatch('Login', result)
-          .then(res => {
-            let data = res.success.data
-            if (data.user_role == 'user') {
-              this.$router.push('/' + 'home')
-            } else if (data.user_role == 'admin') {
-              this.$router.push('/' + 'adminHome')
-            } else {
+        if (inp1 && inp2) {
+          var pwd = this.password
+          let keyapp = 'DropShipSecretKey'
+          var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
+
+          let result = {
+            username: this.username,
+            password: encodeURI(encrypted)
+          }
+
+          this.$store
+            .dispatch('Login', result)
+            .then(res => {
+              let data = res.success.data
+              if (data.user_role == 'user') {
+                this.$router.push('/' + 'home')
+              } else if (data.user_role == 'admin') {
+                this.$router.push('/' + 'adminHome')
+              } else {
               this.$router.push('/' + 'home')
               // this.wrong = true
             }
@@ -277,6 +284,9 @@ export default {
             }
           })
       }
+      }
+
+
 
       // if(this.username.length == 0 && this.password.length == 0){
       //   this.validate = this.$t('txt-wrong1')

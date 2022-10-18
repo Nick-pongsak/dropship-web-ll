@@ -269,6 +269,30 @@ const store = {
       })
 
     },
+    registerSendEmail({ state, commit, dispatch }, data) {
+      // console.log('Pro')
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/auth/register-send-email`, {
+          user_email: data.user_email,
+          user_password: data.user_password,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
+            // console.log(response)
+          resolve(response.data);
+        }).catch(error => {
+          dispatch('newToken',error.response.data.error.data.token)
+          reject(error)
+        })
+      })
+
+    },
+   
 
     newToken({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))

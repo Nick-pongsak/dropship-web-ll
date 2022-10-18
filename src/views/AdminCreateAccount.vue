@@ -137,7 +137,7 @@
                   </div>
                   <div class="detail" style="">
                     <input
-                      type="text"
+                      type="number"
                       v-bind:class="[Error.errorClassTel]"
                       v-model="admin.TEL"
                       style="background: #fff;"
@@ -730,13 +730,13 @@ export default {
       info_sup: '',
       admin: {
         ID: '-',
-        PASS: '1234hhh5a',
+        PASS: '-',
         NAME: '-',
         SERNAME: '-',
-        TEL: '0982713122',
+        TEL: '-',
         TEL2: '-',
         COMPANY: '-',
-        EMAIL: 'piyathat_j@dhas.com',
+        EMAIL: '-',
         ADDRESS: '-',
         PROVINCE: null,
         ZIP_CODE: null,
@@ -855,6 +855,7 @@ export default {
             this.$store.dispatch('Register', res).then(res => { 
               this.dialog_success = true
               this.statusInput = null
+
           })
             .catch(error => { 
               // console.log(error.response.status)
@@ -899,6 +900,18 @@ export default {
             this.$store.dispatch('Register', res).then(res => {})
             this.dialog_success = true
             this.statusInput = null
+
+            setTimeout(() => {
+              let res2 = {
+                user_email :t.EMAIL,
+                user_password: encodeURI(encrypted)
+              }
+              this.$store.dispatch('registerSendEmail', res2).then(res => {
+                console.log(res)
+                })
+
+            }, 1000)
+
             // console.log('Save sup => ', res)
           } else {
             // console.log('Not Save')
@@ -1145,7 +1158,7 @@ export default {
       this.admin.PASS = ''
       this.admin.NAME = '-'
       this.admin.SERNAME = '-'
-      this.admin.TEL = ''
+      this.admin.TEL = '-'
       this.admin.TEL2 = '-'
       this.admin.COMPANY = '-'
       this.admin.EMAIL = '-'
@@ -1175,6 +1188,21 @@ export default {
       
       
       
+    },
+    test(){
+        var pwd = '123456a'
+            let keyapp = 'DropShipSecretKey'
+            var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)
+      
+
+      let res = {
+        user_email : 'piyathatjrs@gmail.com',
+        user_password: encodeURI(encrypted)
+      }
+      this.$store.dispatch('registerSendEmail', res).then(res => {
+         console.log(res)
+        })
+      console.log('A')
     }
   },
   components: {},

@@ -740,6 +740,10 @@ export default {
     },
     save () {
       // console.log(this.edit_val)
+
+      if(!this.input_cheang_password){
+        this.isDisabled = true
+      }else {
       let inp1 = this.checkErrorCase('inp-password', this.edit_val.val_pass)
       let inp2 = this.checkErrorCase(
         'inp-new-password',
@@ -791,6 +795,10 @@ export default {
           console.log('NOT OK !!')
         }
       }
+      }
+
+
+     
       // let inp1 =  this.checkErrorCase( 'inp-password' ,this.profile.user_email)
       // if(this.FormatEmail()){
       //     this.dialog_save = true
@@ -829,6 +837,10 @@ export default {
           this.Error.errorClassNewPwd = 'error-case'
           this.Error.errorClassNewPwd_txt = this.$t('txt-wrong10')
           return false
+        } if( this.edit_val.val_pass ==  value){
+          this.Error.errorClassNewPwd = 'error-case'
+          this.Error.errorClassNewPwd_txt = this.$t('txt-wrong16')
+          return false
         } else {
           this.Error.errorClassNewPwd = ''
           this.Error.errorClassNewPwd_txt = ''
@@ -845,7 +857,7 @@ export default {
           this.Error.errorClassConfNewPwd = 'error-case'
           this.Error.errorClassConfNewPwd_txt = this.$t('txt-wrong10')
           return false
-        } else {
+        }  else {
           this.Error.errorClassConfNewPwd = ''
           this.Error.errorClassConfNewPwd_txt = ''
           return true
@@ -933,6 +945,7 @@ export default {
       }
     },
     confrim_dialog (param) {
+      this.edit_val.val_pass = ''
       this.dialog = false
       if (param == 'OK') {
         this.input_cheang_password = true
