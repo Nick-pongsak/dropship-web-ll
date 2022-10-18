@@ -7,7 +7,7 @@
           'text-align': 'end',
           width: '100%',
           'padding-right': '30px',
-          'padding-top': '20px'
+          'padding-top': '30px'
         }"
         @click="close()"
       >

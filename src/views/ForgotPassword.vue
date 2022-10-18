@@ -332,7 +332,7 @@ export default {
       if(type == 'inp-email'){
         if(value == null || value == ''){
           this.Error.errorClassEmail = 'error-case',
-          this.Error.errorClassEmail_txt = this.$t('txt-wrong11')
+          this.Error.errorClassEmail_txt = this.$t('txt-wrong4')
           return false
         }else if(!this.syntaxEmail(value)) {
           this.Error.errorClassEmail = 'error-case',
