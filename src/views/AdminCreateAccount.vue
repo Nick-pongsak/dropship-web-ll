@@ -352,7 +352,7 @@
               <b-col xl>
                 <div class="md-layout">
                   <div class="head">
-                    Suppile ID <span style="color:red">*</span>
+                    Supplier ID <span style="color:red">*</span>
                   </div>
                   <div class="detail" style="">
                     <v-select
@@ -440,7 +440,7 @@
               <b-col xl>
                 <div class="md-layout">
                   <div class="head">
-                    เบอร์โทรศัพท์ <span style="color:red">*</span>หห
+                    เบอร์โทรศัพท์ <span style="color:red">*</span>
                   </div>
                   <div class="detail" style="">
                     <input

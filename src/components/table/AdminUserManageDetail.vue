@@ -5,8 +5,8 @@
         พบ {{ data.length }} รายการ
       </div>
       <div style="width:60%;text-align:end;">
-        <v-btn rounded @click="submit()" class="ok" style="width:unset"
-          >+ Add Suppiler
+        <v-btn rounded @click="submit()" class="ok" style="padding:20px 10px 20px 10px;width:unset"
+          >+ Add account
         </v-btn>
       </div>
     </div>

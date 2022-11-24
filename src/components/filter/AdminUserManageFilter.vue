@@ -94,7 +94,7 @@
               }"
             >
               <div class="subtitle">
-                ชื่อบริษัท
+                ชื่อบริษัทผู้ขาย
               </div>
               <v-text-field solo dense v-model="companyInput">
                 <v-icon

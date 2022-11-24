@@ -81,7 +81,7 @@
           >
             <div :style="{ width: windowSize <= 600 ? '100%' : '50%' }">
               <div class="subtitle">
-                ชื่อบริษัท
+                ชื่อบริษัทผู้ขาย
               </div>
               <v-text-field solo dense v-model="companyInput">
                 <v-icon

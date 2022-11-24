@@ -199,7 +199,7 @@
                 <b-row v-if="!editPassword">
                   <b-col style="padding:10px 0 0 10px" xl>
                     <div class="md-layout">
-                      <div class="head">ชื่อบริษัท</div>
+                      <div class="head">ชื่อบริษัทผู้ขาย</div>
                       <div class="detail" style="">
                         <md-field
                           style="width: 100%;margin:0;min-height:0px;padding:0"
@@ -296,7 +296,7 @@
                 <b-row v-if="editPassword">
                   <b-col style="padding:10px 0 0 10px" xl>
                     <div class="md-layout">
-                      <div class="head">ชื่อบริษัท</div>
+                      <div class="head">ชื่อบริษัทผู้ขาย</div>
                       <div class="detail" style="">
                         <md-field
                           style="width: 100%;margin:0;min-height:0px;padding:0"
