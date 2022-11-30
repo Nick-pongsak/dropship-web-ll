@@ -15,6 +15,7 @@
       ></detail-table>
     </div>
     <detail-dialog
+      :dataShipping="listShipping"
       :data="selectedRow"
       v-show="showDialog"
       @close="closeDialog"
@@ -58,6 +59,7 @@ export default {
         startSuccessDelivery: '',
         status: 'new'
       },
+      listShipping:[],
       showDialog: false,
       statusList: [
         { code: 'all', title: 'All' },
@@ -80,17 +82,17 @@ export default {
     ApplyFilter (val) {
       this.filterData = val
       this.fetch()
-      console.log('ApplyFilter ==> ', val)
+      // console.log('ApplyFilter ==> ', val)
     },
     viewDeatil (val) {
       this.selectedRow = val
       this.showDialog = true
-      console.log('viewDeatil ==> ', val)
+      // console.log('viewDeatil ==> ', val)
     },
     closeDialog (val) {
       this.showDialog = false
       this.fetch()
-      console.log('closeDialog ==> ', val)
+      // console.log('closeDialog ==> ', val)
     },
     printDialog (val) {
       // this.showDialog = false
@@ -112,14 +114,14 @@ export default {
       }
     },
     submitAction (val) {
-      console.log('submitAction ==> ', val)
+      // console.log('submitAction ==> ', val)
     },
     printDetail (val) {
-      console.log('printDetail ==> ', val)
+      // console.log('printDetail ==> ', val)
     },
     fetch () {
       this.loading_status = true
-      console.log(this.filterData)
+      // console.log(this.filterData)
       this.$store
         .dispatch('getOrderSupplier', this.filterData)
         .then(res => {
@@ -151,6 +153,27 @@ export default {
         this.$router.push('/' + 'adminHome')
       } else {
         this.fetch()
+        setTimeout(() => {
+          let data = 
+            {event:'dropdown',
+            shipping_id:'',
+            shipping_code:'',
+            shipping_name:'',
+            shipping_track_link:'',
+            is_active:''}
+      this.$store
+        .dispatch('shippingMaster', data)
+        .then(res => {
+          this.listShipping = res
+    
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      }, 1000);
       }
     }
   },

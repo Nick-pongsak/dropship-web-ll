@@ -608,7 +608,7 @@ export default {
                 // console.log(res)
               })
               .catch(error => {
-                console.log(error.response)
+         
                 if (error.response.status == 400) {
                 }
               })
@@ -632,7 +632,7 @@ export default {
               this.dialog_success = true
             })
             .catch(error => {
-              console.log(error.response)
+         
               if (error.response.status == 400) {
               }
             })

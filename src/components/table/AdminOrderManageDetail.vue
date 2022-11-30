@@ -162,6 +162,7 @@
         </div>
       </v-card>
     </v-dialog>
+
   </div>
 </template>
 
@@ -170,6 +171,7 @@ export default {
   name: 'detail-table',
   props: {
     data: Array,
+    dataShipping:Array,
     loading_status: Boolean
   },
   data () {
@@ -209,7 +211,7 @@ export default {
         'ต.ค.',
         'พ.ย.',
         'ธ.ค.'
-      ]
+      ],
     }
   },
   computed: {},

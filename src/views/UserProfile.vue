@@ -740,7 +740,6 @@ export default {
     },
     save () {
       // console.log(this.edit_val)
-
       if(!this.input_cheang_password){
         this.isDisabled = true
       }else {
@@ -790,14 +789,12 @@ export default {
               }
             })
 
-          console.log('OK', res)
+          
         } else {
-          console.log('NOT OK !!')
+        
         }
       }
       }
-
-
      
       // let inp1 =  this.checkErrorCase( 'inp-password' ,this.profile.user_email)
       // if(this.FormatEmail()){
@@ -810,8 +807,6 @@ export default {
       // console.log('save')
     },
     checkErrorCase (type, value) {
-      console.log(type, '==> ', value)
-
       if (type == 'inp-password') {
         if (value == null || value == '') {
           this.Error.errorClassPwd = 'error-case'

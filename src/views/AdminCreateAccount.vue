@@ -1200,9 +1200,9 @@ export default {
         user_password: encodeURI(encrypted)
       }
       this.$store.dispatch('registerSendEmail', res).then(res => {
-         console.log(res)
+      
         })
-      console.log('A')
+     
     }
   },
   components: {},
@@ -1235,7 +1235,7 @@ export default {
   > .v-input__slot {
   box-shadow: none;
   font-size: 16px;
-  border: 2px solid rgba(0, 0, 0, 0.12);
+  
 }
 
 .v-select:not(.v-select--is-multi).v-text-field--single-line

@@ -1,54 +1,32 @@
 <template>
   <div style="height:100%" id="page-admin">
-    <div style="height: 100%;background-color:#EFF6FF">
+    <div style="overflow-x: scroll;height: 95%;background-color:#EFF6FF">
       <b-row>
-        <b-col style="padding:50px 0 50px 8%" xl>
+        <b-col style="padding:50px 0 50px 7%" xl>
           <div class="head-title">Management</div>
         </b-col>
       </b-row>
-
-      <b-container class="admin-card bv-example-row">
-        <b-row>
-          <b-col @click="cleck_card('adminProfile')" class="card">
-            <b-col
-              style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000"
-            >
-              <img style="" src="@/assets/images/accout.png" alt="" />
-            </b-col>
-            <b-col>
-              <span class="txt-title">จัดการบัญชี</span>
-            </b-col>
-          </b-col>
-
-          <b-col @click="cleck_card('adminManageOrder')" class="card">
-            <b-col
-              style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000"
-            >
-              <img style="" src="@/assets/images/shopping.png" alt="" />
-            </b-col>
-            <b-col>
-              <span class="txt-title">จัดการ การสั่งซื้อสินค้า</span>
-            </b-col>
-          </b-col>
-
-          <b-col @click="cleck_card('AdminUserManage')" class="card">
-            <b-col
-              style="border-radius:16px 16px 0 0;display: flex;justify-content: center;padding:10px 0 0 0;background-color:#000"
-            >
-              <img style="" src="@/assets/images/Users-Settings.png" alt="" />
-            </b-col>
-            <b-col>
-              <span class="txt-title">การจัดการผู้ใช้งาน</span>
-            </b-col>
-          </b-col>
-
-          <!-- 
-            <b-col class="card">จัดการ การสั่งซื้อสินค้า</b-col>
-            <b-col class="card">การจัดการผู้ใช้งาน</b-col> -->
-        </b-row>
-      </b-container>
+  
+      <div style="padding:0 0 2% 1%">
+          <div
+                style="margin:0 0 2% 1%;width:30%;"
+                  class="cell-s"
+                  @click="cleck_card(row.path)" 
+                  v-for="(row, index) in menu_admin"
+                  :key="'card-' + index">
+                  <div 
+                  class="box-menu-admin-home">
+                  <div class="top-box-menu">
+                    <!-- <img src="./accout.png" /> -->
+                    <img style="height:100px;" :src="require(`@/assets/images/${row.icon}.png`)"   />
+                  </div> 
+                  <div class="bottom-box-menu">{{row.txt}}</div>
+                  <!-- {{row}}  -->
+                  </div>
+          </div>
+      </div>
     </div>
-    <div class="footer">
+        <div  class="footer">
       <footers
         text="Copyright © 2019 DHA Siamwalla Ltd. All Rights Reserved."
       />
@@ -61,14 +39,42 @@ import Footers from '@/components/Footer'
 export default {
   name: 'admin-home',
   data () {
-    return {}
+    return {
+      menu_admin:[
+      {
+        id:1,
+        icon:'accout',
+        txt:'จัดการบัญชี',
+        path:'adminProfile'
+      },
+      {
+        id:2,
+        icon:'shopping',
+        txt:'จัดการ การสั่งซื้อสินค้า',
+        path:'adminManageOrder'
+      },
+      {
+        id:3,
+        icon:'Users-Settings',
+        txt:'จัดการผู้ใช้งาน',
+        path:'AdminUserManage'
+      },
+      {
+        id:4,
+        icon:'setting',
+        txt:'การตั้งค่า',
+        path:'AdminShipping'
+      },
+    ]
+    }
   },
   computed: {},
   watch: {},
   methods: {
+    image_(param){
+      return 'src="@/assets/images/Users-Settings.png"'
+    },
     cleck_card (param) {
-      console.log(param)
-
       this.$router.push('/' + param)
     }
   },
@@ -86,7 +92,7 @@ export default {
       if (data.user_role == 'supplier') {
         this.$router.push('/' + 'home')
       }else {
-        console.log('ADmin')
+      
       }
     }
   },
@@ -102,5 +108,10 @@ export default {
   color: white;
   text-align: center;
   padding: 0 20px 20px 0;
+}
+
+.cell-s {
+  height: 250px;
+  display: inline-block;
 }
 </style>

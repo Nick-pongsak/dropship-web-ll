@@ -524,6 +524,84 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="DialogShipping"
+      max-width="500"
+      :width="data.order_status == 'Delivering' ? 600 : 500"
+    >
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="padding:20px 0 0 0;font-size:20px;font-family: 'Bai Jamjuree', sans-serif;text-align:center">
+              รายละเอียดพัสดุสินค้า 
+            </div>
+            <div style="width:100%">
+            <div class="" style="font-family: 'Bai Jamjuree', sans-serif;width:67%;padding:20px 0 10px 0">บริษัทขนส่ง <span style="color:red">*</span></div>
+            <div  style="display: flex;justify-content: center;">
+             
+              <v-select
+                v-on:change="select_shipping()"
+                v-bind:class="[Error.errorShipping]"
+                label="- กรุณาเลือกบริษัทขนส่ง  -"
+                style="font-family: 'Bai Jamjuree', sans-serif;max-width: 50%;"
+                solo
+                dense
+                v-model="shipping_select"
+                :items="dataShipping"
+                :item-text="item => item.shipping_name"
+                :item-value="item => item"
+              >
+              </v-select>
+             
+            </div>
+            <div
+              style="color:#DA0707; font-family: 'Bai Jamjuree', sans-serif;font-size:14px; width: 77%"
+                v-if="this.Error.errorShipping != ''"
+                class="txt-wrong"
+              >
+                
+                {{ this.Error.errorShipping_txt }}
+              </div>
+            <div style="font-family: 'Bai Jamjuree', sans-serif;width: 62%;padding:20px 0 10px 0">
+             เลขพัสดุ 
+            </div>
+            <div  style=" display: flex;justify-content: center;">
+              
+              <v-text-field v-model="shipping_number" style="font-family: 'Bai Jamjuree', sans-serif;max-width: 50%;" solo dense >
+                <v-icon
+                v-if="shipping_number.length != 0"
+                  slot="append"
+                  size="18"
+                >
+                  mdi-close
+                </v-icon>
+              </v-text-field>
+            </div>
+          
+            </div>
+
+            
+          
+          </div>
+          <div style="padding:20px 0 20px 0" class="bg-confirm-action">
+            <div>
+              <div style="font-family: 'Bai Jamjuree', sans-serif;font-size:16px;padding:0 0 20px 0">คุณต้องการยืนยันรายการเป็นสถานะ <span style="font-weight: bold;">Delivering</span> ใช่หรือไม่ ? </div>
+              <v-btn
+              @click="shipping_btn('save')" 
+                rounded
+                class="ok"
+                style="margin-right:45px"
+                >ใช่</v-btn
+              >
+              <v-btn rounded @click="shipping_btn('close')" class="clear">ไม่</v-btn>
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
+
   </div>
 </template>
 
@@ -533,6 +611,7 @@ export default {
   name: 'detail-dialog',
   props: {
     data: Object,
+    dataShipping:Array,
     show: {
       type: Boolean,
       default: false
@@ -540,10 +619,13 @@ export default {
   },
   data () {
     return {
+      shipping_select:'',
+      shipping_number:'',
       windowSize: 1366,
       confirmText: '',
       confirmDialog_print: false,
       confirmText_print: '',
+      DialogShipping:false,
       confirmBtn: '',
       confirmDialog: false,
       confirmPrint: false,
@@ -552,6 +634,11 @@ export default {
       page_first:12,
       page_ohter:19,
       mapObj : [],
+   
+      Error:{
+        errorShipping: '',
+        errorShipping_txt: ''
+      },
 
       monthsShort: [
         'ม.ค.',
@@ -597,6 +684,28 @@ export default {
   },
   watch: {},
   methods: {
+    select_shipping(){
+      this.Error.errorShipping = ''
+      this.Error.errorShipping_txt = ''
+    },
+    shipping_btn(param){
+      if(param == 'save'){
+        if(this.shipping_select != ''){
+           this.submit()
+           this.DialogShipping = false
+           this.shipping_select= ''
+           this.shipping_number= ''
+        }else {
+          this.Error.errorShipping = 'error-case'
+          this.Error.errorShipping_txt = this.$t('txt-wrong19')
+        }
+     
+      }else {
+       this.shipping_select= ''
+       this.shipping_number= ''
+       this.DialogShipping = false
+      }
+    },
     currency (qty) {
       return window.currency(qty)
     },
@@ -670,7 +779,13 @@ export default {
       }
 
       this.confirmBtn = 'ใช่'
-      this.confirmDialog = true
+      if(this.data.order_status != 'Delivery'){
+        this.confirmDialog = true
+      }else {
+        this.DialogShipping = true
+      }
+   
+      
     },
     submit () {
       let process = ''
@@ -703,13 +818,18 @@ export default {
         } else if (this.radio == 'supply') {
           detail_remark = 'พัสดุส่งกลับผู้ขาย'
         }
-        // console.log(detail_remark)
+
+        // console.log(this.shipping_select.shipping_code)
         let obj = {
           purchase_id: this.data.purchase_id,
           order_remarks: detail_remark,
           order_status: process,
           order_delivery_date: this.data.order_delivery_date,
-          order_success_date:this.data.order_success_date
+          order_success_date:this.data.order_success_date,
+          shipping_code :this.shipping_select.shipping_code == undefined ? '' : this.shipping_select.shipping_code,
+          tracking_code :this.shipping_number,
+          shipping_track_link:this.shipping_select.shipping_track_link == undefined ? '' : this.shipping_select.shipping_track_link
+
         }
         // console.log(obj)
         this.$emit('submit', obj)
@@ -820,4 +940,11 @@ export default {
   }
 }
 </script>
-<style></style>
+<style>
+.error-case {
+  border: 1px solid red;
+  font-size: 12px;
+  height: 36px;
+  font-family: 'Bai Jamjuree', sans-serif;
+}
+</style>

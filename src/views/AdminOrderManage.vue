@@ -20,6 +20,7 @@
     </div>
     <!-- :show="showDialog" -->
     <admin-order-manage-detail-dialog
+      :dataShipping="listShipping"
       :data="selectedRow"
       v-show="showDialog"
       @close="closeDialog"
@@ -53,6 +54,7 @@ export default {
       data: [],
       tokenExpired: false,
       status: [],
+      listShipping:[],
       selectedRow: {},
       showDialog: false,
       loading_status:false,
@@ -114,6 +116,7 @@ export default {
     },
     submitDialog (result) {
       // this.showDialog = false
+      console.log(result)
       let val = result.event
       if (val == 'print') {
       } else {
@@ -136,7 +139,11 @@ export default {
           order_remarks: order_remarks,
           order_status: this.selectedRow.order_status,
           order_delivery_date:this.selectedRow.order_delivery_date,
-          order_success_date:this.selectedRow.order_success_date 
+          order_success_date:this.selectedRow.order_success_date ,
+          shipping_code :result.shipping_code == undefined ? '' : result.shipping_code,
+          tracking_code :result.tracking_code,
+          shipping_track_link:result.shipping_track_link == undefined ? '' : result.shipping_track_link
+
         }
         this.$store
           .dispatch('sendOrderStatus', obj)
@@ -214,6 +221,26 @@ export default {
         this.$router.push('/' + 'home')
       } else {
         this.fetch()
+        setTimeout(() => {
+          let data = 
+            {event:'dropdown',
+            shipping_id:'',
+            shipping_code:'',
+            shipping_name:'',
+            shipping_track_link:'',
+            is_active:''}
+        this.$store
+          .dispatch('shippingMaster', data)
+          .then(res => {
+            this.listShipping = res
+          })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      }, 1000);
       }
     }
   },

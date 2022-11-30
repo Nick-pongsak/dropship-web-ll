@@ -395,7 +395,7 @@ export default {
       }
     },
     open_pdpa () {
-      console.log('open')
+     
       this.$store.commit('ShowPolicy', true)
     },
     close_PDPA () {

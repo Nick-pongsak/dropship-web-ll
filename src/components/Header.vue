@@ -206,6 +206,22 @@
             จัดการผู้ใช้งาน
           </md-menu-item>
 
+          
+          <md-menu-item
+          class="hover-AdminShipping"
+            @click="action('AdminShipping')"
+            :style="{
+              'background-color': active_menu('AdminShipping')
+                ? '#2372E7'
+                : '',
+              color: active_menu('AdminShipping') ? '#fff' : ''
+            }"
+            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
+          >
+          จัดการ บริษัทขนส่ง
+          </md-menu-item>
+
+
           <md-menu-item
           class="hover-Policy"
             @click="action('Policy')"
@@ -421,7 +437,7 @@ export default {
 .md-menu-content {
   height: auto;
   /* height: 270px !important; */
-  max-height: 350px !important;
+  max-height: 360px !important;
 }
 .md-menu-content-container {
   display: flex;
@@ -458,6 +474,11 @@ export default {
 }
 
 .hover-AdminUserManage:hover{
+  background-color: #2371e781;
+  color:#fff
+}
+
+.hover-AdminShipping:hover{
   background-color: #2371e781;
   color:#fff
 }

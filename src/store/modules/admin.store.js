@@ -252,7 +252,10 @@ const store = {
           order_remark: data.order_remarks,
           order_status: data.order_status,
           order_delivery_date:data.order_delivery_date,
-          order_success_date:data.order_success_date
+          order_success_date:data.order_success_date,
+          shipping_code :data.shipping_code,
+          tracking_code :data.tracking_code,
+          shipping_track_link:data.shipping_track_link
         }, {
           headers: {
             'Content-Type': 'application/json',
@@ -292,6 +295,38 @@ const store = {
       })
 
     },
+    shippingMaster({ state, commit, dispatch }, data) {
+      // console.log('Pro')
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/shipping-master`, {
+          event:data.event,
+          shipping_id:data.shipping_id,
+          shipping_code:data.shipping_code,
+          shipping_name:data.shipping_name,
+          shipping_track_link:data.shipping_track_link,
+          is_active:data.is_active,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          dispatch('newToken',response.data.success.token)
+            // console.log(response.data.success.data)
+          resolve(response.data.success.data);
+        }).catch(error => {
+         
+          dispatch('newToken',error.response.data.error.data.token)
+          reject(error)
+        })
+      })
+
+    },
+
+    // http://10.7.200.176/apiweb/api/shipping-master
+    
+
    
 
     newToken({ state, commit, dispatch }, data) {
