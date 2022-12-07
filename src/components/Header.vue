@@ -5,7 +5,7 @@
     class="header-main"
     v-resize="onResize"
   >
-    <div style="cursor: pointer;width:50%;display:flex;">
+    <div style="cursor: pointer; width: 50%; display: flex">
       <div :style="{ 'padding-top': windowSize > 600 ? '0px' : '15px' }">
         <img
           src="@/assets/icons/logo.png"
@@ -18,7 +18,7 @@
         class="sys-name"
         :style="{
           'font-size': windowSize > 600 ? '20px' : '18px',
-          'padding-top': windowSize > 600 ? '0px' : '10px'
+          'padding-top': windowSize > 600 ? '0px' : '10px',
         }"
       >
         Dropship portal
@@ -29,7 +29,7 @@
         class="sys-name"
         :style="{
           'font-size': windowSize > 600 ? '20px' : '18px',
-          'padding-top': windowSize > 600 ? '0px' : '10px'
+          'padding-top': windowSize > 600 ? '0px' : '10px',
         }"
       >
         Dropship portal
@@ -40,7 +40,7 @@
       :style="{
         color: '#fff',
         width: '50%',
-        display: windowSize > 600 ? 'flex' : ''
+        display: windowSize > 600 ? 'flex' : '',
       }"
       class="right-header justify-end"
     >
@@ -53,7 +53,7 @@
           display: 'flex',
           'align-items': 'center',
           'font-family': 'Bai Jamjuree, sans-serif',
-          width: windowSize > 600 ? '' : '100%'
+          width: windowSize > 600 ? '' : '100%',
         }"
       >
         {{ formatDate(this.timeServer) }}
@@ -61,32 +61,31 @@
       <md-menu
         :style="{
           width: windowSize > 600 ? '' : '100%',
-          height: windowSize > 600 ? '' : '30px'
+          height: windowSize > 600 ? '' : '30px',
         }"
         md-size="medium"
         md-align-trigger
       >
-        <md-button style="text-transform:none" md-menu-trigger
-          >{{ info.user_name }}{{ ' ' }}{{ info.user_surname
+        <md-button style="text-transform: none" md-menu-trigger
+          >{{ info.user_name }}{{ " " }}{{ info.user_surname
           }}<span class="mdi mdi-menu-down"></span
         ></md-button>
         <md-menu-content class="option-detail">
           <md-menu-item
-          class="hover-userprofile"
-          :style="{
-              'background-color': active_menu('userprofile') ? '#2372E7' : '',
-              color: active_menu('userprofile') ? '#fff' : ''
-            }"
-            @click="user_profile"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-            >ข้อมูลส่วนตัว
+            v-for="(row, index) in menu_list_sup"
+            :key="'card-' + index"
+            :class="'hover-' + row.path"
+            class="sub-option-detail"
+            @click="action(row.path)"
+            :style="{
+              'background-color': active_menu(row.path) ? '#2372E7' : '',
+              color: active_menu(row.path) ? '#fff' : '',
+            }">
+            {{ row.txt }}
           </md-menu-item>
           <md-menu-item
-            class="hover-out"
-            @click="logout"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-            >ออกจากระบบ</md-menu-item
-          >
+            class="hover-out sub-option-detail"
+            @click="logout">ออกจากระบบ</md-menu-item>
         </md-menu-content>
       </md-menu>
       <div
@@ -98,7 +97,7 @@
           display: 'flex',
           'align-items': 'center',
           'font-family': 'Bai Jamjuree, sans-serif',
-          width: windowSize > 600 ? '' : '100%'
+          width: windowSize > 600 ? '' : '100%',
         }"
       >
         {{ formatDate(this.timeServer) }}
@@ -110,7 +109,7 @@
       :style="{
         color: '#fff',
         width: '50%',
-        display: windowSize > 600 ? 'flex' : ''
+        display: windowSize > 600 ? 'flex' : '',
       }"
       class="right-header justify-end"
     >
@@ -123,7 +122,7 @@
           display: 'flex',
           'align-items': 'center',
           'font-family': 'Bai Jamjuree, sans-serif',
-          width: windowSize > 600 ? '' : '100%'
+          width: windowSize > 600 ? '' : '100%',
         }"
       >
         {{ formatDate(this.timeServer) }}
@@ -134,106 +133,50 @@
         :style="{ width: windowSize > 600 ? '' : '100%' }"
       >
         <md-button
-          style="border: 1px solid #000000; border-radius: 64px;background-color:#fff;"
+          style="
+            border: 1px solid #000000;
+            border-radius: 64px;
+            background-color: #fff;
+          "
           md-menu-trigger
           class="box-profile"
         >
           <div class="md-layout">
             <div
-              style="width:55%;color:#000; display: flex;align-items: center;"
+              style="
+                width: 55%;
+                color: #000;
+                display: flex;
+                align-items: center;
+              "
             >
               {{ info.user_name }}
             </div>
-            <div style="width:25%;color:#000">
+            <div style="width: 25%; color: #000">
               <span class="mdi mdi-account-circle mdi-24px"></span>
             </div>
-            <div style="text-align: center;width:20%;color:#000">
+            <div style="text-align: center; width: 20%; color: #000">
               <span class="mdi mdi-menu-down mdi-24px"></span>
             </div>
           </div>
         </md-button>
-        <!-- <md-button class="box-profile" style="text-transform:none" md-menu-trigger>{{info.frist_name}}{{' '}}{{info.last_name}}<span class="mdi mdi-menu-down"></span></md-button> -->
         <md-menu-content class="option-detail">
           <md-menu-item
-          class="hover-adminHome"
-            @click="action('adminHome')"
+            v-for="(row, index) in menu_list_admin"
+            :key="'card-' + index"
+            :class="'hover-' + row.path"
+            class="sub-option-detail"
+            @click="action(row.path)"
             :style="{
-              'background-color': active_menu('adminHome') ? '#2372E7' : '',
-              color: active_menu('adminHome') ? '#fff' : ''
-            }"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-          >
-            หน้าหลัก
+              'background-color': active_menu(row.path) ? '#2372E7' : '',
+              color: active_menu(row.path) ? '#fff' : '',
+            }">
+            {{ row.txt }}
           </md-menu-item>
-
           <md-menu-item
-            class="hover-adminProfile"
-            @click="action('adminProfile')"
-            :style="{
-              'background-color': active_menu('adminProfile') ? '#2372E7' : '',
-              color: active_menu('adminProfile') ? '#fff' : ''
-            }"
-            style="font-family: 'Bai Jamjuree', sans-serif;color:#fff;cursor: pointer;border-radius:5px;"
-          >
-            จัดการบัญชี
+            class="hover-out sub-option-detail"
+            @click="logout">ออกจากระบบ
           </md-menu-item>
-
-          <md-menu-item
-          class="hover-adminManageOrder"
-            @click="action('adminManageOrder')"
-            :style="{
-              'background-color': active_menu('adminManageOrder')
-                ? '#2372E7'
-                : '',
-              color: active_menu('adminManageOrder') ? '#fff' : ''
-            }"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-          >
-            จัดการ การสั่งซื้อสินค้า
-          </md-menu-item>
-
-          <md-menu-item
-          class="hover-AdminUserManage"
-            @click="action('AdminUserManage')"
-            :style="{
-              'background-color': active_menu('AdminUserManage')
-                ? '#2372E7'
-                : '',
-              color: active_menu('AdminUserManage') ? '#fff' : ''
-            }"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-          >
-            จัดการผู้ใช้งาน
-          </md-menu-item>
-
-          
-          <md-menu-item
-          class="hover-AdminShipping"
-            @click="action('AdminShipping')"
-            :style="{
-              'background-color': active_menu('AdminShipping')
-                ? '#2372E7'
-                : '',
-              color: active_menu('AdminShipping') ? '#fff' : ''
-            }"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-          >
-          จัดการ บริษัทขนส่ง
-          </md-menu-item>
-
-
-          <md-menu-item
-          class="hover-Policy"
-            @click="action('Policy')"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-            >นโยบายความเป็นส่วนตัว</md-menu-item
-          >
-          <md-menu-item
-          class="hover-out"
-            @click="logout"
-            style="font-family: 'Bai Jamjuree', sans-serif;cursor: pointer;border-radius:5px;"
-            >ออกจากระบบ</md-menu-item
-          >
         </md-menu-content>
       </md-menu>
       <div
@@ -245,7 +188,7 @@
           display: 'flex',
           'align-items': 'center',
           'font-family': 'Bai Jamjuree, sans-serif',
-          width: windowSize > 600 ? '' : '100%'
+          width: windowSize > 600 ? '' : '100%',
         }"
       >
         {{ formatDate(this.timeServer) }}
@@ -255,17 +198,56 @@
 </template>
 
 <script>
-import { equal } from 'assert'
-import Vue from 'vue'
+import { equal } from "assert";
+import Vue from "vue";
 export default {
-  name: 'headers',
+  name: "headers",
   props: {},
-  data () {
+  data() {
     return {
+      menu_list_admin: [
+        {
+          id: 1,
+          txt: "หน้าหลัก",
+          path: "adminHome",
+        },
+        {
+          id: 2,
+          txt: "จัดการบัญชี",
+          path: "adminProfile",
+        },
+        {
+          id: 3,
+          txt: "จัดการ การสั่งซื้อสินค้า",
+          path: "adminManageOrder",
+        },
+        {
+          id: 4,
+          txt: "จัดการผู้ใช้งาน",
+          path: "AdminUserManage",
+        },
+        {
+          id: 5,
+          txt: "จัดการ บริษัทขนส่ง",
+          path: "AdminShipping",
+        },
+        {
+          id: 6,
+          txt: "นโยบายความเป็นส่วนตัว",
+          path: "Policy",
+        },
+      ],
+      menu_list_sup: [
+        {
+          id: 1,
+          txt: "ช้อมูลส่วนตัว",
+          path: "userprofile",
+        },
+      ],
       windowSize: 1366,
-      sysName: '20px',
-      logo: '30px',
-      width: '30px',
+      sysName: "20px",
+      logo: "30px",
+      width: "30px",
       resizeHeader: true,
       active: false,
       value: null,
@@ -282,117 +264,116 @@ export default {
         // 'OCT',
         // 'NOV',
         // 'DEC'
-        'ม.ค.',
-        'ก.พ.',
-        'มี.ค.',
-        'เม.ย.',
-        'พ.ค.',
-        'มิ.ย.',
-        'ก.ค.',
-        'ส.ค.',
-        'ก.ย.',
-        'ต.ค.',
-        'พ.ย.',
-        'ธ.ค.'
-      ]
-    }
+        "ม.ค.",
+        "ก.พ.",
+        "มี.ค.",
+        "เม.ย.",
+        "พ.ค.",
+        "มิ.ย.",
+        "ก.ค.",
+        "ส.ค.",
+        "ก.ย.",
+        "ต.ค.",
+        "พ.ย.",
+        "ธ.ค.",
+      ],
+    };
   },
   watch: {},
   computed: {
-    timeServer () {
-      return this.$store.getters.timeServer
+    timeServer() {
+      return this.$store.getters.timeServer;
     },
-    info () {
-      var user_info = Vue.localStorage.get('user_profile')
-      var TheArray = JSON.parse(user_info)
-      return TheArray
-    }
+    info() {
+      var user_info = Vue.localStorage.get("user_profile");
+      var TheArray = JSON.parse(user_info);
+      return TheArray;
+    },
   },
   methods: {
-    formatDate (val) {
+    formatDate(val) {
       if (val !== null) {
-        let hours = ''
-        let min = ''
-        let today = new Date()
-        const year = today.getFullYear()
-        const fullYear = year
+        let hours = "";
+        let min = "";
+        let today = new Date();
+        const year = today.getFullYear();
+        const fullYear = year;
         // const fullYear = year + 543
-        const days = today.getDate()
-        const h = today.getHours()
-        const m = today.getMinutes()
-        const monthName = this.monthsShort[today.getMonth()]
+        const days = today.getDate();
+        const h = today.getHours();
+        const m = today.getMinutes();
+        const monthName = this.monthsShort[today.getMonth()];
 
         if (h < 10) {
-          hours = '0' + h
+          hours = "0" + h;
         } else {
-          hours = h
+          hours = h;
         }
 
         if (m < 10) {
-          min = '0' + m
+          min = "0" + m;
         } else {
-          min = m
+          min = m;
         }
 
-        return days + ' ' + monthName + ' ' + fullYear
+        return days + " " + monthName + " " + fullYear;
       } else {
-        return val
+        return val;
       }
     },
-
-    onConfirm () {
-      this.value = 'Yes'
-      let reMove = ['login', 'SIZE_SCREEN', 'user_profile']
+    onConfirm() {
+      this.value = "Yes";
+      let reMove = ["login", "SIZE_SCREEN", "user_profile"];
       reMove.forEach(function (element) {
-        Vue.localStorage.remove(element)
-      })
-      this.$router.push('/')
+        Vue.localStorage.remove(element);
+      });
+      this.$router.push("/");
     },
-    onCancel () {
-      this.value = 'Cancel'
+    onCancel() {
+      this.value = "Cancel";
     },
-    onResize () {},
-    changeTheme (val) {
-      this.$store.commit('SetTheme', val)
+    onResize() {},
+    changeTheme(val) {
+      this.$store.commit("SetTheme", val);
     },
-    action (param) {
-      if (param == 'Policy') {
-        this.$store.commit('ShowPolicy', true)
+    action(param) {
+      if (param == "Policy") {
+        this.$store.commit("ShowPolicy", true);
       } else {
-        this.$store.commit('ShowPolicy', false)
-        let path = '/' + param
+        this.$store.commit("ShowPolicy", false);
+        let path = "/" + param;
         if (path !== this.$route.path) {
-          this.$router.push('/' + param)
+          this.$router.push("/" + param);
         }
       }
     },
-    active_menu (param) {
-      let path = this.$router.app._route.path
-      const sliceWay = path.slice(1)
+    active_menu(param) {
+      let path = this.$router.app._route.path;
+      const sliceWay = path.slice(1);
       if (sliceWay === param) {
-        return true
+        return true;
       } else {
-        false
+        false;
       }
     },
-    logout () {
-      this.$store.dispatch('LogOut').then(() => {
-        this.value = 'Yes'
-        this.$router.push('/')
-      })
+    logout() {
+      this.$store.dispatch("LogOut").then(() => {
+        this.value = "Yes";
+        this.$router.push("/");
+      });
     },
-    user_profile () {
-      this.$router.push('/userprofile')
+    user_profile() {
+      this.$router.push("/userprofile");
     },
-    onResize () {
-      this.windowSize = window.innerWidth
-    }
+    onResize() {
+      this.windowSize = window.innerWidth;
+    },
   },
-  created () {
-    this.$store.dispatch('getTimeServer')
+  created() {
+    this.$store.dispatch("getTimeServer");
   },
-  components: {}
-}
+  components: {},
+};
 </script>
 <style>
 .header-main {
@@ -409,7 +390,7 @@ export default {
 .sys-name {
   color: #fff;
   height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 800;
   font-size: 24px;
@@ -430,6 +411,13 @@ export default {
   /* width: 139px;
   height: 74px;  */
 }
+
+.sub-option-detail{
+  font-family: 'Bai Jamjuree', sans-serif;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 
 .md-list-item-button.md-list-item-content {
   min-height: 10px;
@@ -457,47 +445,43 @@ export default {
   align-items: center;
 }
 
-.hover-adminHome:hover{
+.hover-adminHome:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-
-.hover-adminProfile:hover{
+.hover-adminProfile:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-.hover-adminManageOrder:hover{
+.hover-adminManageOrder:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-.hover-AdminUserManage:hover{
+.hover-AdminUserManage:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-.hover-AdminShipping:hover{
+.hover-AdminShipping:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-.hover-Policy:hover{
+.hover-Policy:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-.hover-out:hover{
+.hover-out:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
 
-.hover-userprofile:hover{
+.hover-userprofile:hover {
   background-color: #2371e781;
-  color:#fff
+  color: #fff;
 }
-
-
-
 </style>
