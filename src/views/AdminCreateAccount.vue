@@ -488,13 +488,23 @@
                   <div class="head">อีเมล <span style="color:red">*</span></div>
                   <div class="detail" style="">
                     <input
+                    v-bind:class="[Error.errorClassEmail]"
                       v-model="supplier.EMAIL"
                       style="background: rgba(0, 0, 0, 0.12);"
                       disabled="true"
                       class="input-style"
                     />
+                    <div
+                      v-if="this.Error.errorClassEmail != ''"
+                      class="txt-wrong"
+                    >
+                      <span class="mdi mdi-alert-octagon"></span>
+                      {{ this.Error.errorClassEmail_txt }}
+                    </div>
                   </div>
+                  
                 </div>
+               
               </b-col>
             </b-row>
 
@@ -875,8 +885,9 @@ export default {
           this.dialog_save = false
         } else {
           let in1 = this.checkErrorCase('inp-password', this.supplier.PASS)
+          let in2 = this.checkErrorCase('inp-email', this.supplier.EMAIL)
 
-          if (in1) {
+          if (in1 && in2) {
             var pwd = this.supplier.PASS
             let keyapp = 'DropShipSecretKey'
             var encrypted = CryptoJS.AES.encrypt(pwd, keyapp)

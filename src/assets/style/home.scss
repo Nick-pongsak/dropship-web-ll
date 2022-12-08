@@ -1,4 +1,19 @@
 .v-application {
+  .v-menu__content  {
+    max-height: 180px !important;
+    color: rgba(0, 0, 0, 0.1215686275);
+    font-family: Bai Jamjuree;
+    font-size: 14px;
+    border-radius: 8px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-width: 0.5px;
+    font-weight: 400;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+
   #home-page {
     padding: 23px 31px 0px 31px;
     .v-btn {
@@ -17,7 +32,6 @@
         background: #ffffff;
       }
     }
-
    
     .btn-filter-title {
       height: 50px;
@@ -269,6 +283,9 @@
     }
   }
   #detail-dialog {
+
+    
+
     background: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 40px;
@@ -714,4 +731,6 @@
       background: #ffffff;
     }
   }
+  
 }
+

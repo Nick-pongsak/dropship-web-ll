@@ -541,6 +541,7 @@
             <div  style="display: flex;justify-content: center;">
              
               <v-select
+                class="select_"
                 v-on:change="select_shipping()"
                 v-bind:class="[Error.errorShipping]"
                 label="- กรุณาเลือกบริษัทขนส่ง  -"
@@ -553,7 +554,6 @@
                 :item-value="item => item"
               >
               </v-select>
-             
             </div>
             <div
               style="color:#DA0707; font-family: 'Bai Jamjuree', sans-serif;font-size:14px; width: 77%"
@@ -580,8 +580,6 @@
             </div>
           
             </div>
-
-            
           
           </div>
           <div style="padding:20px 0 20px 0" class="bg-confirm-action">
@@ -701,6 +699,9 @@ export default {
         }
      
       }else {
+        this.Error.errorShipping = ''
+        this.Error.errorShipping_txt = ''
+
        this.shipping_select= ''
        this.shipping_number= ''
        this.DialogShipping = false
@@ -782,6 +783,30 @@ export default {
       if(this.data.order_status != 'Delivery'){
         this.confirmDialog = true
       }else {
+
+        setTimeout(() => {
+          let data = 
+            {event:'dropdown',
+            shipping_id:'',
+            shipping_code:'',
+            shipping_name:'',
+            shipping_track_link:'',
+            is_active:''}
+      this.$store
+        .dispatch('shippingMaster', data)
+        .then(res => {
+          this.dataShipping = res
+    
+        })
+        .catch(error => {
+          if (error.response.status == 401) {
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      }, 1000);
+
+
         this.DialogShipping = true
       }
    
@@ -946,5 +971,6 @@ export default {
   font-size: 12px;
   height: 36px;
   font-family: 'Bai Jamjuree', sans-serif;
-}
+}        
+
 </style>

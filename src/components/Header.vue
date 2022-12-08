@@ -240,7 +240,7 @@ export default {
       menu_list_sup: [
         {
           id: 1,
-          txt: "ช้อมูลส่วนตัว",
+          txt: "ข้อมูลส่วนตัว",
           path: "userprofile",
         },
       ],
