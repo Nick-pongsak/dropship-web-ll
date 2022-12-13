@@ -323,7 +323,25 @@ const store = {
       })
 
     },
-
+    Up({ state, commit, dispatch }, data) {
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      let formData = new FormData()
+      formData.append('image', data)
+      axios.post(`${url}/apiweb/api/upload-image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',
+          "Authorization": `Bearer ${Profile.access_token}`
+        }
+          }).then(res => {
+            console.log(red)
+          
+          }).catch(error => {
+                  console.log(error)
+                  // dispatch('newToken',error.response.data.error.data.token)
+                  reject(error)
+          })
+        },
     // http://10.7.200.176/apiweb/api/shipping-master
     
 

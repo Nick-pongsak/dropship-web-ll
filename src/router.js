@@ -97,11 +97,14 @@ const routes = new Router({
           component: AdminShipping,
 
         },
-        
         {
           path: "/logout",
           component: Logout,
+        },
 
+        {
+          path: "/test",
+          component: test,
         },
 
 
