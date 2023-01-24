@@ -112,6 +112,28 @@ const store = {
       })
 
     },
+    resendMail({ state, commit, dispatch }, data) {
+      return new Promise((resolve, reject) => {
+        let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+        axios.post(`${url}/apiweb/api/resend-mail`, {
+          purchase_id: JSON.stringify(data)
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
+          resolve(response);
+        }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
+
+
+  
    
     changePwdStatus({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
@@ -158,6 +180,7 @@ const store = {
 
     },
     getOrderAdmin({ state, commit, dispatch }, data) {
+      console.log(data)
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       return new Promise((resolve, reject) => {
         axios.post(`${url}/apiweb/api/get-order-admin`, {
@@ -177,7 +200,9 @@ const store = {
           start_success_date:data.startSuccessDelivery,
           end_success_date:data.endSuccessDelivery,
 
-          order_status:data.status == 'all'? '' : data.status
+          order_status:data.status == 'all'? '' : data.status,
+
+          status_send_mail:data.status_send_mail
         }, {
           headers: {
             'Content-Type': 'application/json',
@@ -188,6 +213,32 @@ const store = {
           // console.log(response)
           resolve(response.data);
         }).catch(error => {
+          reject(error)
+        })
+      })
+
+    },
+    getAccountEmail({ state, commit, dispatch }, data) {
+      console.log(data)
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      return new Promise((resolve, reject) => {
+        axios.post(`${url}/apiweb/api/accounting-mail`, {
+          event :data.event ,
+          id:data.id,
+          acc_email :data.acc_email ,
+          acc_name :data.acc_name ,
+          is_active :data.is_active ,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`,
+          }
+        }).then(response => {
+          dispatch('newToken',response.data.success.token)
+          // console.log(response.data.success.token)
+          resolve(response.data.success.data);
+        }).catch(error => {
+          dispatch('newToken',error.response.data.error.data.token)
           reject(error)
         })
       })
@@ -246,24 +297,27 @@ const store = {
     sendOrderStatus({ state, commit, dispatch }, data) {
       // console.log('Pro')
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      let formData = new FormData()
+      formData.append('purchase_id', data.purchase_id)
+      formData.append('order_remark', data.order_remarks)
+      formData.append('order_status', data.order_status)
+      formData.append('order_delivery_date', data.order_delivery_date)
+      formData.append('order_success_date', data.order_success_date)
+      formData.append('shipping_code', data.shipping_code)
+      formData.append('tracking_code', data.tracking_code)
+      formData.append('shipping_track_link', data.shipping_track_link)
+      formData.append('image', data.image)
       return new Promise((resolve, reject) => {
-        axios.post(`${url}/apiweb/api/send-order-status`, {
-          purchase_id: data.purchase_id,
-          order_remark: data.order_remarks,
-          order_status: data.order_status,
-          order_delivery_date:data.order_delivery_date,
-          order_success_date:data.order_success_date,
-          shipping_code :data.shipping_code,
-          tracking_code :data.tracking_code,
-          shipping_track_link:data.shipping_track_link
-        }, {
+
+        axios.post(`${url}/apiweb/api/send-order-status`, formData, {
           headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ${Profile.access_token}`,
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`
           }
         }).then(response => {
           dispatch('newToken',response.data.success.data.token)
-            // console.log(response)
+            console.log(response.data.success.data.token)
           resolve(response.data);
         }).catch(error => {
           dispatch('newToken',error.response.data.error.data.token)
@@ -326,7 +380,10 @@ const store = {
     Up({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       let formData = new FormData()
-      formData.append('image', data)
+      console.log(data)
+      formData.append('image', data.image)
+      // formData.append('file_type', data.image.type)
+      formData.append('purchase_id', data.detail)
       axios.post(`${url}/apiweb/api/upload-image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -334,11 +391,13 @@ const store = {
           "Authorization": `Bearer ${Profile.access_token}`
         }
           }).then(res => {
-            console.log(red)
+            dispatch('newToken',res.data.success.data.token)
+            console.log(res)
+            console.log(res.data.success.data.token)
           
           }).catch(error => {
-                  console.log(error)
-                  // dispatch('newToken',error.response.data.error.data.token)
+                  console.log(error.response.data.error.data.token)
+                  dispatch('newToken',error.response.data.error.data.token)
                   reject(error)
           })
         },

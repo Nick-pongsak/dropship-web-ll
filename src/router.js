@@ -15,6 +15,7 @@ import AdminUserManage from '@/views/AdminUserManage.vue'
 import AdminProfile from '@/views/AdminProfile.vue'
 import AdminCreateAccount from '@/views/AdminCreateAccount.vue'
 import AdminShipping from '@/views/AdminShipping.vue'
+import AdminAccountEmail from '@/views/AdminAccountEmail.vue'
 
 
 // PRINT
@@ -97,6 +98,11 @@ const routes = new Router({
           component: AdminShipping,
 
         },
+        {
+          path: "/AdminAccountEmail",
+          component: AdminAccountEmail,
+        },
+        
         {
           path: "/logout",
           component: Logout,

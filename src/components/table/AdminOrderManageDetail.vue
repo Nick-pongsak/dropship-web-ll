@@ -8,11 +8,22 @@
       ></v-checkbox>
       <!-- value="red" -->
       <div class="subtitle">Action</div>
-      <div class="btn-filter">Disable</div>
+      <div style="border:0" class="btn-filter">
+        <v-select
+                v-on:change="OnAction()"
+                label="- เลือก -"
+                v-model="actionOrder"
+                :items="action_list"
+                item-text="txt"
+                item-value="code"
+                solo
+                dense
+        ></v-select>
+      </div>
       <v-btn
         :disabled="this.select_order.length == 0 ? true : false"
         rounded
-        @click="confirmDisable = true"
+        @click="confirmAction"
         class="ok"
         >Submit</v-btn
       >
@@ -39,9 +50,9 @@
       <div
         id="test"
         :class="[
-          row.disable != 1 &&
+         ( row.disable != 1 &&
           find(row.purchase_id) &&
-          row.order_status == 'Complete'
+          row.order_status == 'Complete')
             ? 'card selected'
             : 'card',
           row.disable == 1 ? 'card disable' : ''
@@ -52,20 +63,41 @@
         <div class="row-card" style=";padding-left: 10px;">
           <div style="display:flex;width:100%">
             <div style="padding-top: 0px;width:7%">
+
+            <div v-if="checkBox(row.disable , row.order_status , actionOrder)" >
               <v-checkbox
-                v-if="row.disable == 0 && row.order_status != 'Complete'"
-                :disabled="true"
-                v-model="checkbox_true"
-                hide-details
-              ></v-checkbox>
-              <!-- :v-model="select_(row.purchase_id)" -->
-              <!-- @change="push(row.purchase_id)" -->
-              <v-checkbox
-                v-else-if="row.disable == 0"
                 v-model="select_order"
                 :value="row.purchase_id"
                 hide-details
               ></v-checkbox>
+            </div>
+            <div v-else>
+              <v-checkbox
+                :disabled="true"
+                v-model="checkbox_true"
+                hide-details
+              ></v-checkbox>
+            </div>
+<!-- 
+              <v-checkbox
+                v-if="row.disable == 0 && row.order_status != 'Complete'  "
+                :disabled="true"
+                v-model="checkbox_true"
+                hide-details
+              ></v-checkbox>
+              <v-checkbox
+                v-else-if="row.disable == 0  && actionOrder == 'Disable' "
+                v-model="select_order"
+                :value="row.purchase_id"
+                hide-details
+              ></v-checkbox>
+              
+              <v-checkbox
+                v-else-if="actionOrder == 'Resend' && ( row.order_status == 'Complete' || row.order_status == 'Deliverling' )  "
+                v-model="select_order"
+                :value="row.purchase_id"
+                hide-details
+              ></v-checkbox> -->
             </div>
             <div class="title-card" style="padding-top: 5px;">
               หมายเลขคำสั่งซื้อ
@@ -111,6 +143,21 @@
             <div :class="'btn-filter ' + row.order_status.toLowerCase()">
               {{ row.order_status }}
             </div>
+
+            <v-tooltip  top>
+              <template  v-slot:activator="{ on, attrs }">
+                <!-- {{ row.status_send_mail }} -->
+             
+                    <img v-if="row.status_send_mail == 'Success' " v-bind="attrs" v-on="on" style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_success.png" />
+                    <img v-else-if="row.status_send_mail == 'Fail'" v-bind="attrs" v-on="on" style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_fail.png" />
+
+              </template>
+              <span style=" font-size:14px">{{ row.status_send_mail }}</span>
+            </v-tooltip>
+
+<!--     
+            <div style="padding:0 0 0 10px" v-if=" row.order_status  == 'Delivering' ||  row.order_status  == 'Complete' "> 
+              <img style="width: 25px; height: 25px;" class="img" src="@/assets/images/send_success.png" /> </div> -->
           </div>
           <div style="width:33%;display:flex">
             <div
@@ -132,7 +179,7 @@
       </div>
     </div>
 
-    <v-dialog v-model="confirmDisable" max-width="454" width="454">
+    <v-dialog persistent v-model="confirmDisable" max-width="454" width="454">
       <v-card>
         <div class="d-dialog">
           <div class="bg-confirm">
@@ -163,10 +210,43 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog persistent v-model="confirmResend" max-width="454" width="454">
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:center">
+              <img class="img" src="@/assets/images/mail_resend.png" />
+            </div>
+            <div style="font-family: 'Bai Jamjuree', sans-serif; padding:0px 10px">
+              คุณต้องการ 
+              <span style="font-weight: bold;">ส่งอีเมลอีกครั้ง</span
+              >ใช่หรือไม่ 
+            </div>
+          </div>
+          <div class="bg-confirm-action">
+            <div>
+              <v-btn
+                rounded
+                @click="submit()"
+                class="ok"
+                style="margin-right:45px"
+                >ใช่</v-btn
+              >
+              <v-btn rounded @click="closeDialog" class="clear"
+                >ไม่</v-btn
+              >
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
 <script>
+// import { runInThisContext } from 'vm'
+
 export default {
   name: 'detail-table',
   props: {
@@ -176,6 +256,7 @@ export default {
   },
   data () {
     return {
+      confirmResend:false,
       confirmDisable: false,
       select_order: [],
       windowSize: 1366,
@@ -212,6 +293,17 @@ export default {
         'พ.ย.',
         'ธ.ค.'
       ],
+      actionOrder:0,
+      action_list:[
+        {
+          id : '1',
+          txt:'Disable'
+        },
+        {
+          id : '2',
+          txt:'Resend'
+        },
+      ]
     }
   },
   computed: {},
@@ -230,6 +322,30 @@ export default {
     }
   },
   methods: {
+    checkBox(param1, param2, param3){
+      // console.log(param1 + ' ' + param2 + ' '+ param3)
+      if((param1 == 0 && param2 == 'Complete' && param3 == 'Disable') 
+          || (param2 === 'Complete' && param3 == 'Resend') 
+          || (param2 === 'Delivering' && param3 == 'Resend')
+        ){
+          // console.log('OK')
+          return true
+      }else {
+        return false
+      }
+    
+    },
+    confirmAction(){
+      if(this.actionOrder == 'Disable'){
+          this.confirmDisable = true
+      }else {
+          this.confirmResend = true
+      }
+    },
+    closeDialog(){
+      this.confirmDisable = false
+      this.confirmResend = false
+    },
     push (param) {
       if (this.select_order.length == 0) {
         // console.log('push')
@@ -270,18 +386,34 @@ export default {
         return val
       }
     },
-    push_all () {
-      /*
-      for (let index = 0; index < this.data.length; index++) {
-        const element = this.data[index];
-        if(element.order_status == 'Complete' && element.disable == 0){
-          this.push(element.purchase_id)
-        }
-      }
-      */
+    OnAction(){
       let result = this.data.filter(
-        x => x.order_status == 'Complete' && x.disable == 0
+        x => x.order_status == 'Complete' && x.disable == 0 && this.actionOrder == 'Disable'
       )
+      let select_order = JSON.parse(JSON.stringify(this.select_order))
+
+     
+        this.select_order = select_order.filter(function (n) {
+          return result.indexOf(n) !== -1
+        })
+      
+    },
+    push_all () {
+      let result = ''
+      if(this.actionOrder != 0){
+        if(this.actionOrder == 'Disable'){
+                result = this.data.filter(
+                  x => x.order_status == 'Complete' && x.disable == 0 
+                )
+            }else if(this.actionOrder == 'Resend') {
+              // console.log('RE')
+                result = this.data.filter(
+                  x => ( x.order_status == 'Complete' || x.order_status == 'Delivering' ) 
+                )
+            }
+    
+    
+     
       let select_order = JSON.parse(JSON.stringify(this.select_order))
       let purchase = result.map(e => e.purchase_id)
       if (this.checkbox_all) {
@@ -291,10 +423,18 @@ export default {
           return result.indexOf(n) !== -1
         })
       }
+    }
     },
     submit () {
+      this.confirmResend = false
       this.confirmDisable = false
       this.checkbox_all = false
+      if(this.actionOrder == 'Resend'){
+          this.select_order.event = 'sendmail'
+      }else {
+        this.select_order.event = 'disable'
+      }
+      
       this.$emit('submit', this.select_order)
       this.select_order = []
     },
@@ -324,6 +464,8 @@ export default {
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile');
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }
@@ -345,4 +487,5 @@ export default {
   }
 }
 </script>
-<style></style>
+<style>
+</style>

@@ -13,7 +13,7 @@
       <router-view />
     </div>
     <footers v-if="status_login" />
-    <v-dialog v-model="dialog_expire" max-width="350">
+    <v-dialog persistent v-model="dialog_expire" max-width="350">
       <v-card class="confirm-dialog">
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -21,7 +21,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="dialog_error" max-width="350">
+    <v-dialog persistent v-model="dialog_error" max-width="350">
       <v-card class="confirm-dialog">
         <v-card-actions>
           <v-spacer></v-spacer>

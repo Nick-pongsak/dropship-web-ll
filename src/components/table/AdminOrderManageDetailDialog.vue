@@ -551,6 +551,18 @@
             size="20"
           ></v-icon>
         </div>
+
+
+        <div
+         @click="ResendEmail"
+          style="padding-right:10px;"
+          v-if="data.order_status == 'Delivering' || data.order_status == 'Complete'"
+        >
+          <v-btn style="box-shadow: none; background-color: #fff; border: 1px solid #000000;width: 135px;"> Resend Email </v-btn>
+  
+        </div>
+
+
         <v-btn rounded @click="accept()" class="ok" v-if="renderBtn() !== ''">{{
           renderBtn()
         }}</v-btn>
@@ -558,6 +570,7 @@
     </div>
 
     <v-dialog
+      persistent
       v-model="confirmDialog"
       max-width="500"
       :width="data.status_order_code == 'delivering' ? 600 : 500"
@@ -573,7 +586,7 @@
               />
               <img v-else class="img" src="@/assets/images/confrim.png" />
             </div>
-            <div style="padding:0px 20px">{{ confirmText }}</div>
+            <div style="font-family: 'Bai Jamjuree', sans-serif; padding:0px 20px">{{ confirmText  }}</div>
           </div>
           <div class="bg-confirm-action">
             <div
@@ -615,6 +628,7 @@
     </v-dialog>
 
     <v-dialog
+    persistent
       v-model="confirmDialog_print"
       max-width="500"
       :width="data.order_status == 'Delivering' ? 600 : 500"
@@ -644,9 +658,42 @@
           </div>
         </div>
       </v-card>
+    </v-dialog> 
+
+    
+    <v-dialog persistent v-model="confirmResend" max-width="454" width="454">
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:center">
+              <img class="img" src="@/assets/images/mail_resend.png" />
+            </div>
+            <div style="font-family: 'Bai Jamjuree', sans-serif; padding:0px 10px">
+              คุณต้องการ
+              <span style="font-weight: bold;">ส่งอีเมลอีกครั้ง</span
+              >ใช่หรือไม่ 
+            </div>
+          </div>
+          <div class="bg-confirm-action">
+            <div>
+              <v-btn
+                rounded
+                @click="submitSendmail()"
+                class="ok"
+                style="margin-right:45px"
+                >ใช่</v-btn
+              >
+              <v-btn rounded @click="closeDialog" class="clear"
+                >ไม่</v-btn
+              >
+            </div>
+          </div>
+        </div>
+      </v-card>
     </v-dialog>
 
     <v-dialog
+      persistent
       v-model="DialogShipping"
       max-width="500"
       :width="data.order_status == 'Delivering' ? 600 : 500"
@@ -687,6 +734,16 @@
             <div style="font-family: 'Bai Jamjuree', sans-serif;width: 62%;padding:20px 0 10px 0">
              เลขพัสดุ 
             </div>
+
+                 
+        <div v-if="loadding_shipping"  style="padding:0 0 0 40%; z-index:1;position: absolute;">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+
             <div  style=" display: flex;justify-content: center;">
               
               <v-text-field v-model="shipping_number" style="font-family: 'Bai Jamjuree', sans-serif;max-width: 50%;" solo dense >
@@ -699,10 +756,49 @@
                 </v-icon>
               </v-text-field>
             </div>
+
+            <div style="font-family: 'Bai Jamjuree', sans-serif;width: 80%;padding:20px 0 10px 0">
+            เอกสารใบ invoice
+            <span style="color:red">*</span>
+            </div>
+            <div   style="height: 30px; display: flex;justify-content: center;">
+              <div  
+              :style="{'border': file_error ? '1px solid red' : '1px solid #D9D9D9'}"  
+               style=" font-family: 'Bai Jamjuree', sans-serif;align-items: center;display: flex;justify-content: center;border-radius: 8px;background-color: #ffff;width: 50%;"> 
+             
+              <div  style="width: 85%;"> 
+                <div clas="file_input_wrap">
+                  <input type="file" accept=".zip,.pdf, .jpg, .jpeg, .png, .rar, .7z" @change="previewImage" name="imageUpload" id="imageUpload" class="hide" />
+                  <label style="white-space: nowrap; width: 100%; overflow: hidden;text-overflow: ellipsis; font-size:14px" for="imageUpload" class="btn btn-large"> 
+                    <span v-if=" image == null" class="mdi-rotate-315 mdi mdi-attachment"></span>{{ image == null ? 'เพิ่มไฟล์' : image.name   }} 
+                  </label>
+                </div>
+              </div>
+                <v-icon
+                @click="clear_image"
+                v-if=" image != null"
+                style="cursor: pointer;"
+                  slot="append"
+                  size="18"
+                >
+                  mdi-close
+                </v-icon>
+              </div>
+            </div>
+
+            <div  style=" display: flex;justify-content: center;">
+              <div
+                v-if="file_error"
+                style="text-align: start;color:#DA0707; font-family: 'Bai Jamjuree', sans-serif;font-size:10px; width: 50%"
+                class="txt-wrong">
+
+                {{ this.Error.errorImg_txt }} 
+                <!-- {{ this.$t('txt-wrong21') }} -->
+              </div>
+            </div>
           
             </div>
 
-            
           
           </div>
           <div style="padding:20px 0 20px 0" class="bg-confirm-action">
@@ -721,6 +817,79 @@
         </div>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+        v-model="dialog_success"
+        persistent
+        max-width="350"
+        id="dialogCinfrim"
+      >
+        <v-card style="border-radius:14px">
+          <v-card-title style="background-color:#ECF1FF;" class="text-h5 ">
+            <div style="width: 100%;">
+               <div style="text-align: center;margin-bottom:20px">
+                <img
+                  class="img"
+                  src="@/assets/images/success.png"
+                  style="height:120px"
+                />
+              </div>
+              <div
+                style="font-family: 'Bai Jamjuree';text-align: center;font-size:16px"
+              >
+              บันทึกสำเร็จ
+              </div>
+            </div>
+          </v-card-title>
+          <div style="padding:15px 0px;text-align:center">
+            <v-btn
+              rounded
+              @click="close_s()"
+              class="ok"
+              :style="{ 'margin-left': '20px' }"
+              >ตกลง</v-btn
+            >
+            <!-- @click="close_success" -->
+          </div>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog
+        v-model="dialog_send_mail"
+        persistent
+        max-width="350"
+        id="dialogCinfrim"
+      >
+        <v-card style="border-radius:14px">
+          <v-card-title style="background-color:#ECF1FF;" class="text-h5 ">
+            <div style="width: 100%;">
+               <div style="text-align: center;margin-bottom:20px">
+                <img
+                  class="img"
+                  src="@/assets/images/success.png"
+                  style="height:120px"
+                />
+              </div>
+              <div
+                style="font-family: 'Bai Jamjuree';text-align: center;font-size:16px" 
+              >
+              ส่งอีเมลสำเร็จ
+              </div>
+            </div>
+          </v-card-title>
+          <div style="padding:15px 0px;text-align:center">
+            <v-btn
+              rounded
+              @click="dialog_send_mail = false"
+              class="ok"
+              :style="{ 'margin-left': '20px' }"
+              >ตกลง</v-btn
+            >
+            <!-- @click="close_success" -->
+          </div>
+        </v-card>
+      </v-dialog>
+
   </div>
 </template>
 
@@ -729,6 +898,7 @@ import Vue from 'vue'
 export default {
   name: 'admin-order-manage-detail-dialog',
   props: {
+    dialog_success:Boolean,
     data: Object,
     dataShipping:Array,
     show: {
@@ -741,10 +911,13 @@ export default {
       shipping_select:'',
       DialogShipping:false,
       shipping_number:'',
+      confirmResend:false,
        
       Error:{
         errorShipping: '',
-        errorShipping_txt: ''
+        errorShipping_txt: '',
+        errorImg_txt:'',
+        errorImg:''
       },
 
 
@@ -787,7 +960,12 @@ export default {
         'พ.ย.',
         'ธ.ค.'
       ],
-      headColum: ['#', 'SKU', 'รายการสินค้า', 'จำนวน', 'หมายเหตุ']
+      headColum: ['#', 'SKU', 'รายการสินค้า', 'จำนวน', 'หมายเหตุ'],
+      preview: null,
+			image: null,
+      file_error:false,
+      loadding_shipping:false,
+      dialog_send_mail:false
     }
   },
   computed: {
@@ -802,6 +980,37 @@ export default {
   },
   watch: {},
   methods: {
+
+    previewImage: function(event) {
+      		var input = event.target;
+          console.log(input)
+      		if (input.files) {
+      		  var reader = new FileReader();
+      		  reader.onload = (e) => {
+      		    this.preview = e.target.result;
+				      console.log(e)
+      		  }
+      		  this.image=input.files[0];
+      		  reader.readAsDataURL(input.files[0]);
+            // this.typeFile = input.files[0].type
+      		}
+          // console.log(input.files[0].type)
+    	},
+
+      reset: function() {
+        let id = document.getElementById('imageUpload')
+        // console.log(id)
+          if (id !== null) {
+            document.getElementById('imageUpload').value  = ''
+          }
+        this.file_error = false
+    	  this.image = null;
+    	  this.preview = null;
+    	},
+      clear_image(){
+      this.reset()
+    },
+
     select_shipping(){
       this.Error.errorShipping = ''
       this.Error.errorShipping_txt = ''
@@ -809,14 +1018,38 @@ export default {
 
     shipping_btn(param){
       if(param == 'save'){
+          var check1 = false
+          var check2 = false
+
+        if(this.image){
+          // console.log(this.image.size/1024)
+          if(this.image.size/1024 > 2000){
+            check1 = false
+            this.Error.errorImg = 'error-case'
+            this.Error.errorImg_txt = this.$t('txt-wrong21')
+            this.file_error = true
+          }else {
+            check1 = true
+            this.file_error = false
+            
+          }
+          }else {
+            this.Error.errorImg = 'error-case'
+            this.Error.errorImg_txt = this.$t('txt-wrong21')
+            check1 = false
+            this.file_error = true
+          }
         if(this.shipping_select != ''){
-           this.submit()
-           this.DialogShipping = false
-           this.shipping_select= ''
-           this.shipping_number= ''
+          check2 = true
+         
         }else {
+          check2 = false
           this.Error.errorShipping = 'error-case'
           this.Error.errorShipping_txt = this.$t('txt-wrong19')
+        }
+
+        if(check1 && check2){
+        this.submit()
         }
      
       }else {
@@ -869,6 +1102,9 @@ export default {
     close () {
       this.$emit('close', {})
     },
+    close_s(){
+       this.$emit('close_s', {})
+    },
 
     maps(po , param , head){ 
       const clone = structuredClone(head);
@@ -920,15 +1156,11 @@ export default {
 
 
     submit_print (param) {
-      // console.log(this.mapObj)
-      // let TheArray = []
-      // TheArray.push(param)
       Vue.localStorage.set('PRINT_LABEL', JSON.stringify(this.mapObj))
       setTimeout(() => {
         window.open('/#/PrintLabel')
       }, 1000)
       this.confirmDialog_print = false
-      // console.log(param)
     },
     accept () {
       this.confirmPrint = false
@@ -953,6 +1185,24 @@ export default {
         this.DialogShipping = true
       }
     },
+    submitSendmail(){
+      this.confirmResend = false
+      let arr = []
+      arr.push(this.data.purchase_id)
+      
+
+      this.$store
+                .dispatch('resendMail', arr)
+                .then(res => {
+                  this.dialog_s = true
+                  this.dialog_send_mail = true
+                  // this.fetch()
+                })
+                .catch(error => {})
+
+
+    },
+   
     submit () {
       let process = ''
       if (this.data.order_status.toLowerCase() == 'new') {
@@ -972,23 +1222,118 @@ export default {
       } else if (
         this.data.order_status.toLowerCase() == 'delivering' &&
         this.radio !== null
+        
       ) {
         process = 'Complete'
       } else {
         process = ''
       }
-      if (process != '') {
-        let obj = {
+      if (process != '') { 
+       
+      
+
+        if(process == 'Delivering'){
+          this.loadding_shipping = true
+          // console.log(this.data)
+          let detail_remark = ''
+        if (this.data.radio == 'customer') {
+          detail_remark = 'พัสดุการนำจ่ายถึงลูกค้า'
+        } else if (this.data.radio == 'supply') {
+          detail_remark = 'พัสดุส่งกลับผู้ขาย'
+        }
+          
+          let obj = {
+          // event: process,
+          order_delivery_date: this.data.order_delivery_date,
+          order_success_date:this.data.order_success_date,
+          purchase_id: this.data.purchase_id,
+          order_status: process,
+          order_remarks: detail_remark,
+          shipping_code :this.shipping_select.shipping_code == undefined ? '' : this.shipping_select.shipping_code,
+          tracking_code :this.shipping_number,
+          shipping_track_link:this.shipping_select.shipping_track_link == undefined ? '' : this.shipping_select.shipping_track_link,
+          image:this.image
+        }
+
+
+          this.$store
+          .dispatch('sendOrderStatus', obj)
+          .then(res => {
+            this.confirmDialog = false
+            this.data.order_status = process
+            let perc_id = []
+            perc_id.push(obj.purchase_id)
+            this.$store
+              .dispatch('getOrderDetail', JSON.stringify(perc_id))
+              .then(res => {
+                this.data.order_delivery_date = res.success.data[0].order_delivery_date
+                this.data.order_success_date = res.success.data[0].order_success_date
+                this.data.order_remarks = res.success.data[0].order_remarks
+
+              if(this.image != null){
+                 setTimeout(() => {
+                   var res = {
+                         image:this.image,
+                         detail:obj.purchase_id
+                       }
+                         this.$store
+                           .dispatch('Up', res)
+                           .then(res => {
+                            this.loadding_shipping = false
+                             this.DialogShipping = false
+                             this.shipping_select= ''
+                             this.shipping_number= ''
+                             this.reset()
+                             //
+                           })
+                           .catch(error => {
+                           })
+                     }, 2000);
+                 }
+                  })
+              .catch(error => {
+                if (error.response.status == 401) {
+                  sessionStorage.removeItem('user_profile'); 
+                  sessionStorage.removeItem('token_seesion');
+                  this.tokenExpired = true
+                  console.log('Error 401')
+                }
+              })
+
+          })
+          .catch(error => {
+            if (error.response.status == 401) {
+              sessionStorage.removeItem('user_profile'); 
+              sessionStorage.removeItem('token_seesion');
+              this.tokenExpired = true
+              console.log('Error 401')
+            }
+
+            if (error.response.status == 400) {
+              this.file_error = true
+              this.loadding_shipping = false
+              this.Error.errorImg = 'error-case'
+              this.Error.errorImg_txt = this.$t('txt-wrong24')
+                   
+            }
+          })
+            console.log('Deli ... ' , obj)
+        }else {
+          let obj = {
           event: process,
           detail: this.radio,
           shipping_code :this.shipping_select.shipping_code == undefined ? '' : this.shipping_select.shipping_code,
           tracking_code :this.shipping_number,
-          shipping_track_link:this.shipping_select.shipping_track_link == undefined ? '' : this.shipping_select.shipping_track_link
-
-
+          shipping_track_link:this.shipping_select.shipping_track_link == undefined ? '' : this.shipping_select.shipping_track_link,
+          image:this.image
         }
-        this.confirmDialog = false
-        this.$emit('submit', obj)
+          this.DialogShipping = false
+           this.shipping_select= ''
+           this.shipping_number= ''
+
+          this.$emit('submit', obj) 
+          this.confirmDialog = false
+        }
       }
     },
     printIcon () {
@@ -997,10 +1342,17 @@ export default {
       this.confirmText_print = 'คุณต้องการพิมพ์ใบปะหน้าใช่หรือไม่'
       this.confirmDialog_print = true
     },
+    closeDialog(){
+      this.confirmResend = false
+    },
     print () {
       this.confirmPrint = false
       this.confirmDialog = false
       this.$emit('print', {})
+    },
+    ResendEmail(){
+      this.confirmResend = true
+      console.log(this.data)
     },
     cancel () {
       this.confirmText = ''

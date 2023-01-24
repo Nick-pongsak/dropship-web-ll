@@ -1,5 +1,6 @@
 <template>
   <div v-resize="onResize" id="detail-dialog">
+    
     <div
       class="d-dialog"
       :style="{
@@ -437,6 +438,7 @@
     </div>
 
     <v-dialog
+    persistent
       v-model="confirmDialog"
       max-width="500"
       :width="data.order_status == 'Delivering' ? 600 : 500"
@@ -452,7 +454,7 @@
               />
               <img v-else class="img" src="@/assets/images/confrim.png" />
             </div>
-            <div style="padding:0px 20px">{{ confirmText }}</div>
+            <div style="font-family: 'Bai Jamjuree', sans-serif; padding:0px 20px">{{ confirmText }}</div>
           </div>
           <div class="bg-confirm-action">
             <div
@@ -494,6 +496,7 @@
     </v-dialog>
 
     <v-dialog
+    persistent
       v-model="confirmDialog_print"
       max-width="500"
       :width="data.order_status == 'Delivering' ? 600 : 500"
@@ -526,16 +529,22 @@
     </v-dialog>
 
     <v-dialog
+      persistent
       v-model="DialogShipping"
       max-width="500"
       :width="data.order_status == 'Delivering' ? 600 : 500"
     >
       <v-card>
+
+
+
         <div class="d-dialog">
           <div class="bg-confirm">
             <div style="padding:20px 0 0 0;font-size:20px;font-family: 'Bai Jamjuree', sans-serif;text-align:center">
               รายละเอียดพัสดุสินค้า 
             </div>
+
+            
             <div style="width:100%">
             <div class="" style="font-family: 'Bai Jamjuree', sans-serif;width:67%;padding:20px 0 10px 0">บริษัทขนส่ง <span style="color:red">*</span></div>
             <div  style="display: flex;justify-content: center;">
@@ -549,7 +558,7 @@
                 solo
                 dense
                 v-model="shipping_select"
-                :items="dataShipping"
+                :items="dup_dataShipping"
                 :item-text="item => item.shipping_name"
                 :item-value="item => item"
               >
@@ -566,10 +575,19 @@
             <div style="font-family: 'Bai Jamjuree', sans-serif;width: 62%;padding:20px 0 10px 0">
              เลขพัสดุ 
             </div>
+            
+        <div v-if="loadding_shipping"  style="padding:0 0 0 40%; z-index:1;position: absolute;">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
             <div  style=" display: flex;justify-content: center;">
               
               <v-text-field v-model="shipping_number" style="font-family: 'Bai Jamjuree', sans-serif;max-width: 50%;" solo dense >
                 <v-icon
+                @click='clear_shipping_number'
                 v-if="shipping_number.length != 0"
                   slot="append"
                   size="18"
@@ -577,8 +595,48 @@
                   mdi-close
                 </v-icon>
               </v-text-field>
+            </div> 
+
+            <div style="font-family: 'Bai Jamjuree', sans-serif;width: 80%;padding:20px 0 10px 0">
+            เอกสารใบ invoice
+            <span style="color:red">*</span>
             </div>
-          
+            <div   style="height: 30px; display: flex;justify-content: center;">
+              <div  
+              :style="{'border': file_error ? '1px solid red' : '1px solid #D9D9D9'}"  
+               style=" font-family: 'Bai Jamjuree', sans-serif;align-items: center;display: flex;justify-content: center;border-radius: 8px;background-color: #ffff;width: 50%;"> 
+             
+              <div  style="width: 85%;"> 
+                <div clas="file_input_wrap">
+                  <input type="file" accept=".zip,.pdf, .jpg, .jpeg, .png, .rar, .7z" @change="previewImage" name="imageUpload" id="imageUpload" class="hide" />
+                  <label style="white-space: nowrap; width: 100%; overflow: hidden;text-overflow: ellipsis; font-size:14px" for="imageUpload" class="btn btn-large"> 
+                    <span v-if=" image == null" class="mdi-rotate-315 mdi mdi-attachment"></span>{{ image == null ? 'เพิ่มไฟล์' : image.name   }} 
+                  </label>
+                </div>
+              </div>
+                <v-icon
+                @click="clear_image"
+                v-if=" image != null"
+                style="cursor: pointer;"
+                  slot="append"
+                  size="18"
+                >
+                  mdi-close
+                </v-icon>
+              </div>
+            </div>
+
+            <div  style=" display: flex;justify-content: center;">
+              <div
+                v-if="file_error"
+                style="text-align: start;color:#DA0707; font-family: 'Bai Jamjuree', sans-serif;font-size:10px; width: 50%"
+                class="txt-wrong">
+
+                {{ this.Error.errorImg_txt }} 
+                <!-- {{ this.$t('txt-wrong21') }} -->
+              </div>
+            </div>
+            <!-- <p class="mb-0">size: {{ image == null ? '' : image.size/1024 }}KB</p> -->
             </div>
           
           </div>
@@ -617,6 +675,7 @@ export default {
   },
   data () {
     return {
+      dup_dataShipping : this.dataShipping,
       shipping_select:'',
       shipping_number:'',
       windowSize: 1366,
@@ -635,7 +694,9 @@ export default {
    
       Error:{
         errorShipping: '',
-        errorShipping_txt: ''
+        errorShipping_txt: '',
+        errorImg_txt:'',
+        errorImg:''
       },
 
       monthsShort: [
@@ -651,20 +712,13 @@ export default {
         'ต.ค.',
         'พ.ย.',
         'ธ.ค.'
-        // 'JAN',
-        // 'FEB',
-        // 'MAR',
-        // 'APR',
-        // 'MAY',
-        // 'JUN',
-        // 'JUL',
-        // 'AUG',
-        // 'SEP',
-        // 'OCT',
-        // 'NOV',
-        // 'DEC'
       ],
-      headColum: ['#', 'SKU', 'รายการสินค้า', 'จำนวน', 'หมายเหตุ']
+      headColum: ['#', 'SKU', 'รายการสินค้า', 'จำนวน', 'หมายเหตุ'],
+      preview: null,
+			image: null,
+		
+      file_error:false,
+      loadding_shipping: false
     }
   },
   computed: {
@@ -682,20 +736,91 @@ export default {
   },
   watch: {},
   methods: {
+
+    previewImage: function(event) {
+      		var input = event.target;
+          console.log(input)
+      		if (input.files) {
+      		  var reader = new FileReader();
+      		  reader.onload = (e) => {
+      		    this.preview = e.target.result;
+				      console.log(e)
+      		  }
+      		  this.image=input.files[0];
+      		  reader.readAsDataURL(input.files[0]);
+            // this.typeFile = input.files[0].type
+      		}
+          // console.log(input.files[0].type)
+    	},
+
+      reset: function() {
+        let id = document.getElementById('imageUpload')
+        // console.log(id)
+          if (id !== null) {
+            document.getElementById('imageUpload').value  = ''
+          }
+        this.file_error = false
+    	  this.image = null;
+    	  this.preview = null;
+    	},
+
+
+      up(){
+       console.log(this.image)
+			this.$store
+              .dispatch('Up', this.image)
+              .then(res => {
+
+                //
+              })
+              .catch(error => {
+              })
+		},
+
+    
+    clear_shipping_number(){
+      this.shipping_number = ''
+    },
+    clear_image(){
+      this.reset()
+    },
     select_shipping(){
       this.Error.errorShipping = ''
       this.Error.errorShipping_txt = ''
     },
     shipping_btn(param){
       if(param == 'save'){
+        var check1 = false
+        var check2 = false
+        if(this.image){
+          // console.log(this.image.size/1024)
+          if(this.image.size/1024 > 2000){
+            check1 = false
+            this.Error.errorImg = 'error-case'
+            this.Error.errorImg_txt = this.$t('txt-wrong21')
+            this.file_error = true
+          }else {
+            check1 = true
+            this.file_error = false
+            
+          }
+          }else {
+            this.Error.errorImg = 'error-case'
+            this.Error.errorImg_txt = this.$t('txt-wrong21')
+            check1 = false
+            this.file_error = true
+          }
+          
         if(this.shipping_select != ''){
-           this.submit()
-           this.DialogShipping = false
-           this.shipping_select= ''
-           this.shipping_number= ''
+          check2 = true
+          
         }else {
+          check2 = false
           this.Error.errorShipping = 'error-case'
           this.Error.errorShipping_txt = this.$t('txt-wrong19')
+        }
+        if(check1 && check2){
+        this.submit()
         }
      
       }else {
@@ -705,6 +830,8 @@ export default {
        this.shipping_select= ''
        this.shipping_number= ''
        this.DialogShipping = false
+
+       this.reset()
       }
     },
     currency (qty) {
@@ -795,22 +922,20 @@ export default {
       this.$store
         .dispatch('shippingMaster', data)
         .then(res => {
-          this.dataShipping = res
+          this.dup_dataShipping = res
     
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }
         })
       }, 1000);
-
-
         this.DialogShipping = true
       }
-   
-      
     },
     submit () {
       let process = ''
@@ -823,6 +948,7 @@ export default {
       } else if (this.data.order_status == 'Delivery' && !this.confirmPrint) {
         this.radio = ''
         process = 'Delivering'
+        this.loadding_shipping = true
       } else if (
         this.data.order_status == 'Delivering'
       ) {
@@ -845,6 +971,8 @@ export default {
         }
 
         // console.log(this.shipping_select.shipping_code)
+
+        // console.log(this.image)
         let obj = {
           purchase_id: this.data.purchase_id,
           order_remarks: detail_remark,
@@ -853,16 +981,15 @@ export default {
           order_success_date:this.data.order_success_date,
           shipping_code :this.shipping_select.shipping_code == undefined ? '' : this.shipping_select.shipping_code,
           tracking_code :this.shipping_number,
-          shipping_track_link:this.shipping_select.shipping_track_link == undefined ? '' : this.shipping_select.shipping_track_link
-
+          shipping_track_link:this.shipping_select.shipping_track_link == undefined ? '' : this.shipping_select.shipping_track_link,
+          image:this.image
         }
         // console.log(obj)
-        this.$emit('submit', obj)
+        // this.$emit('submit', obj)
         this.$store
           .dispatch('sendOrderStatus', obj)
           .then(res => {
             this.confirmDialog = false
-            // console.log(res.success.data)
             this.data.order_status = process
             let perc_id = []
             perc_id.push(obj.purchase_id)
@@ -872,9 +999,32 @@ export default {
                 this.data.order_delivery_date = res.success.data[0].order_delivery_date
                 this.data.order_success_date = res.success.data[0].order_success_date
                 this.data.order_remarks = res.success.data[0].order_remarks
+
+              if(this.image != null){
+                 setTimeout(() => {
+                   var res = {
+                         image:this.image,
+                         detail:obj.purchase_id
+                       }
+                         this.$store
+                           .dispatch('Up', res)
+                           .then(res => {
+                            this.loadding_shipping = false
+                             this.DialogShipping = false
+                             this.shipping_select= ''
+                             this.shipping_number= ''
+                             this.reset()
+                             //
+                           })
+                           .catch(error => {
+                           })
+                     }, 2000);
+                 }
                   })
               .catch(error => {
                 if (error.response.status == 401) {
+                  sessionStorage.removeItem('user_profile'); 
+                  sessionStorage.removeItem('token_seesion');
                   this.tokenExpired = true
                   console.log('Error 401')
                 }
@@ -883,8 +1033,18 @@ export default {
           })
           .catch(error => {
             if (error.response.status == 401) {
+              sessionStorage.removeItem('user_profile'); 
+              sessionStorage.removeItem('token_seesion');
               this.tokenExpired = true
               console.log('Error 401')
+            }
+
+            if (error.response.status == 400) {
+              this.file_error = true
+              this.loadding_shipping = false
+              this.Error.errorImg = 'error-case'
+              this.Error.errorImg_txt = this.$t('txt-wrong24')
+                   
             }
           })
       }
@@ -971,6 +1131,33 @@ export default {
   font-size: 12px;
   height: 36px;
   font-family: 'Bai Jamjuree', sans-serif;
-}        
+}     
+
+.hide {
+  display: none;
+}
+
+.btn {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-large {
+  padding: 11px 19px;
+  font-size: 17.5px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+   
 
 </style>

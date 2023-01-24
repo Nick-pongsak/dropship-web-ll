@@ -233,6 +233,11 @@ export default {
         },
         {
           id: 6,
+          txt: "จัดการ อีเมลฝ่ายบัญชี",
+          path: "AdminAccountEmail",
+        },
+        {
+          id: 7,
           txt: "นโยบายความเป็นส่วนตัว",
           path: "Policy",
         },
@@ -425,7 +430,7 @@ export default {
 .md-menu-content {
   height: auto;
   /* height: 270px !important; */
-  max-height: 360px !important;
+  max-height: 410px !important;
 }
 .md-menu-content-container {
   display: flex;
@@ -466,6 +471,11 @@ export default {
 }
 
 .hover-AdminShipping:hover {
+  background-color: #2371e781;
+  color: #fff;
+}
+
+.hover-AdminAccountEmail:hover {
   background-color: #2371e781;
   color: #fff;
 }

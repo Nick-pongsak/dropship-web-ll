@@ -69,7 +69,10 @@
               </v-text-field>
             </div>
           </div>
+
+          
         </div>
+       
         <div
           :style="{
             width: '100%',
@@ -113,19 +116,15 @@
                   mdi-close
                 </v-icon>
               </v-text-field>
+              
+            
             </div>
           </div>
+
           <div
-            :style="{
-              width: '100%'
-            }"
+            :style="{ display: windowSize <= 600 ? '' : 'flex', width: '100%' }"
           >
-            <div
-              :style="{
-                width: windowSize <= 600 ? '100%' : '50%',
-                'margin-top': '5px'
-              }"
-            >
+            <div :style="{ width: windowSize <= 600 ? '100%' : '50%' }">
               <div class="subtitle">
                 สถานะ
               </div>
@@ -138,6 +137,26 @@
                 solo
                 dense
               ></v-select>
+            </div>
+            <div
+              :style="{
+                width: windowSize <= 600 ? '100%' : '50%',
+                'margin-left': windowSize <= 600 ? '' : '8px'
+              }"
+            >
+              <div class="subtitle">
+                สถานะส่งอีเมล
+              </div>
+              <v-select
+                v-model="statusInputEmail"
+                :items="statusListEmail"
+                label=""
+                item-text="title"
+                item-value="code"
+                solo
+                dense
+              ></v-select>
+              
             </div>
           </div>
         </div>
@@ -349,6 +368,7 @@ export default {
   name: 'order-filter',
   props: {
     status: Array,
+    status_mail: Array,
     loading_status: Boolean
   },
   data () {
@@ -367,7 +387,9 @@ export default {
       startSuccessDelivery: null,
       endSuccessDelivery: null,
       statusInput: 'new',
+      statusInputEmail:'',
       statusList: this.status,
+      statusListEmail: this.status_mail,
       lang: {
         formatLocale: {
           firstDayOfWeek: 1,
@@ -611,7 +633,8 @@ export default {
         endDliveryDate: this.endDliveryDate,
         startSuccessDelivery: this.startSuccessDelivery,
         endSuccessDelivery: this.endSuccessDelivery,
-        status: this.statusInput
+        status: this.statusInput,
+        status_send_mail: this.statusInputEmail
       }
       this.$emit('apply', result)
     },
@@ -627,6 +650,7 @@ export default {
       this.startSuccessDelivery = null
       this.endSuccessDelivery = null
       this.statusInput = 'new'
+      this.statusInputEmail = ''
     },
     disabledSuccessDelivery (date) {
       const today = new Date(this.startSuccessDelivery)

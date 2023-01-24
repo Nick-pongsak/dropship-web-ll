@@ -2,12 +2,26 @@
   <div style="height:100%" id="page-admin">
     <div style="overflow-x: scroll;height: 95%;background-color:#EFF6FF">
       <b-row>
-        <b-col style="padding:50px 0 50px 7%" xl>
+        <b-col style="padding:50px 0 50px 10%" xl>
           <div class="head-title">Management</div>
         </b-col>
       </b-row>
-  
-      <div style="padding:0 0 2% 1%">
+ 
+
+      <div class="grid">
+        <div
+        style="cursor: pointer;"
+          v-for="(row, index) in menu_admin"
+                        :key="'card-' + index"
+                        @click="cleck_card(row.path)" 
+          >
+          <div class="top-box-menu">
+            <img style="" :src="require(`@/assets/images/${row.icon}.png`)"   />
+          </div> 
+          <div class="bottom-box-menu">{{row.txt}}</div>
+        </div>
+      </div>
+      <!-- <div style="padding:0 0 2% 1%">
           <div
                 style="margin:0 0 2% 1%;width:30%;"
                   class="cell-s"
@@ -17,14 +31,12 @@
                   <div 
                   class="box-menu-admin-home">
                   <div class="top-box-menu">
-                    <!-- <img src="./accout.png" /> -->
                     <img style="height:100px;" :src="require(`@/assets/images/${row.icon}.png`)"   />
                   </div> 
                   <div class="bottom-box-menu">{{row.txt}}</div>
-                  <!-- {{row}}  -->
                   </div>
           </div>
-      </div>
+      </div> -->
     </div>
         <div  class="footer">
       <footers
@@ -61,9 +73,15 @@ export default {
       },
       {
         id:4,
-        icon:'setting',
-        txt:'การตั้งค่า',
+        icon:'settings',
+        txt:'จัดการ บริษัทขนส่ง',
         path:'AdminShipping'
+      },
+      {
+        id:5,
+        icon:'wallet',
+        txt:'จัดการ อีเมลฝ่ายบัญชี',
+        path:'AdminAccountEmail'
       },
     ]
     }
@@ -71,15 +89,16 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    image_(param){
-      return 'src="@/assets/images/Users-Settings.png"'
-    },
     cleck_card (param) {
       this.$router.push('/' + param)
     }
   },
   components: { Footers },
   created () {
+    const items = { ...localStorage };
+
+    console.log(items)
+
     if (
       this.$store.getters.user_profile === null &&
       sessionStorage.getItem('user_profile') === null
@@ -114,4 +133,24 @@ export default {
   height: 250px;
   display: inline-block;
 }
+
+
+
+.grid {
+  padding:0 10% 0 10%;
+  /* height:250px; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 0.5fr;
+  grid-gap: 70px;
+}
+
+.grid div {
+  width: 100%;
+  height: 220px;
+  /* background: green; */
+  padding: .1em;
+}
+
+
 </style>

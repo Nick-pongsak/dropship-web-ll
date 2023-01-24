@@ -131,6 +131,8 @@ export default {
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }
@@ -152,6 +154,7 @@ export default {
       if (data.user_role == 'admin') {
         this.$router.push('/' + 'adminHome')
       } else {
+        
         this.fetch()
         setTimeout(() => {
           let data = 
@@ -169,6 +172,8 @@ export default {
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile');
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }

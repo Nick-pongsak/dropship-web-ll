@@ -7,6 +7,7 @@
       <admin-order-manage-filter
         :loading_status="loading_status"
         :status="statusList"
+        :status_mail="status_send_mail"
         @apply="ApplyFilter"
       ></admin-order-manage-filter>
      
@@ -20,10 +21,12 @@
     </div>
     <!-- :show="showDialog" -->
     <admin-order-manage-detail-dialog
+      :dialog_success="dialog_s"
       :dataShipping="listShipping"
       :data="selectedRow"
       v-show="showDialog"
       @close="closeDialog"
+      @close_s="closeDialog2"
       @submit="submitDialog"
       @print="printDialog"
     ></admin-order-manage-detail-dialog>
@@ -51,6 +54,7 @@ export default {
   name: 'admin-order-manage',
   data () {
     return {
+      dialog_s:false,
       data: [],
       tokenExpired: false,
       status: [],
@@ -70,7 +74,9 @@ export default {
         startDliveryDate: '',
         startOrderDate: new Date(startDay).toISOString().slice(0, 10),
         startSuccessDelivery: '',
-        status: 'new'
+        status: 'new',
+        status_send_mail:''
+        // statusSendMail : statusSendMail
       },
       statusList: [
         { code: 'all', title: 'All' },
@@ -80,6 +86,12 @@ export default {
         { code: 'delivering', title: 'Delivering' },
         { code: 'complete', title: 'Complete' },
         { code: 'cancel', title: 'Cancel' }
+      ],
+      status_send_mail:[
+        { code: '', title: 'All' },
+        { code: 'success', title: 'Success' },
+        { code: 'fail', title: 'Fail' },
+       
       ]
     }
   },
@@ -110,13 +122,16 @@ export default {
       this.fetch()
       // console.log('closeDialog ==> ', val)
     },
+    closeDialog2(){
+       this.dialog_s = false
+    },
     printDialog (val) {
       // this.showDialog = false
       // console.log('printDialog ==> ', val)
     },
     submitDialog (result) {
       // this.showDialog = false
-      console.log(result)
+      // console.log(result)
       let val = result.event
       if (val == 'print') {
       } else {
@@ -134,6 +149,8 @@ export default {
         } else if (this.selectedRow.order_remarks == 'supply') {
           order_remarks = 'พัสดุส่งกลับผู้ขาย'
         }
+
+
         let obj = {
           purchase_id: this.selectedRow.purchase_id,
           order_remarks: order_remarks,
@@ -142,8 +159,8 @@ export default {
           order_success_date:this.selectedRow.order_success_date ,
           shipping_code :result.shipping_code == undefined ? '' : result.shipping_code,
           tracking_code :result.tracking_code,
-          shipping_track_link:result.shipping_track_link == undefined ? '' : result.shipping_track_link
-
+          shipping_track_link:result.shipping_track_link == undefined ? '' : result.shipping_track_link,
+          image:result.image
         }
         this.$store
           .dispatch('sendOrderStatus', obj)
@@ -160,6 +177,8 @@ export default {
                   })
               .catch(error => {
                 if (error.response.status == 401) {
+                  sessionStorage.removeItem('user_profile'); 
+                  sessionStorage.removeItem('token_seesion');
                   this.tokenExpired = true
                   console.log('Error 401')
                 }
@@ -168,20 +187,38 @@ export default {
           })
           .catch(error => {
             if (error.response.status == 401) {
+              sessionStorage.removeItem('user_profile'); 
+              sessionStorage.removeItem('token_seesion');
               console.log('Error 401')
             }
           })
       }
     },
     submitAction (val) {
-      // console.log('submitAction ==> ', val)
+        if(val.event == 'disable'){
+        this.$store
+                .dispatch('disableOrderAdmin', val)
+                .then(res => {
+                  this.fetch()
+                })
+                .catch(error => {})
+        }else {
+           let array = []
+          for (let index = 0; index < val.length; index++) {
+            const element = val[index];
+            array.push(element)
+            // console.log('resend', element)
+          }
 
-      this.$store
-        .dispatch('disableOrderAdmin', val)
-        .then(res => {
-          this.fetch()
-        })
-        .catch(error => {})
+          this.$store
+                .dispatch('resendMail', array)
+                .then(res => {
+                  this.dialog_s = true
+                  this.fetch()
+                })
+                .catch(error => {})
+          // console.log(array)
+        }
     },
     printDetail (val) {
       // console.log('printDetail ==> ', val)
@@ -191,18 +228,42 @@ export default {
       this.$store
         .dispatch('getOrderAdmin', this.filterData)
         .then(res => {
-          // console.log(res.success.data)
-
           this.data = res.success.data
           this.status = this.statusList
           this.loading_status = false
+          // console.log(res.success.data)
           // this.data = res.data
           // this.status = this.statusList
+
+           setTimeout(() => {
+          let data = 
+            {event:'dropdown',
+            shipping_id:'',
+            shipping_code:'',
+            shipping_name:'',
+            shipping_track_link:'',
+            is_active:''}
+        this.$store
+          .dispatch('shippingMaster', data)
+          .then(res => {
+            this.listShipping = res
+          })
+        .catch(error => {
+          if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
+            this.tokenExpired = true
+            console.log('Error 401')
+          }
+        })
+      }, 1000);
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
-            console.log('Error 401')
+            // console.log('Error 401')
           }
         })
     }
@@ -221,26 +282,6 @@ export default {
         this.$router.push('/' + 'home')
       } else {
         this.fetch()
-        setTimeout(() => {
-          let data = 
-            {event:'dropdown',
-            shipping_id:'',
-            shipping_code:'',
-            shipping_name:'',
-            shipping_track_link:'',
-            is_active:''}
-        this.$store
-          .dispatch('shippingMaster', data)
-          .then(res => {
-            this.listShipping = res
-          })
-        .catch(error => {
-          if (error.response.status == 401) {
-            this.tokenExpired = true
-            console.log('Error 401')
-          }
-        })
-      }, 1000);
       }
     }
   },

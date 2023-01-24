@@ -26,7 +26,7 @@
                   width: '70%'
                 }"
               >
-                <div class="btn-filter-head">Edit Shipping</div>
+                <div class="btn-filter-head">Edit Email</div>
               </div>
               <div
                 :style="{
@@ -52,24 +52,24 @@
                   <b-row>
                     <b-col style="padding:10px 0 0 10px" xl>
                       <div class="md-layout">
-                        <div class="head">รหัสบริษัทขนส่ง <span style="color:red">*</span></div>
+                        <div class="head">อีเมล <span style="color:red">*</span></div>
                         <div class="detail" style="">
                           <md-field
-                            v-bind:class="[Error.errorClassCompanyCode]"
+                            v-bind:class="[Error.errorClassEmail]"
                             style="height:34px;width: 100%;margin:0;min-height:0px;padding:0"
                           >
                             <md-input
-                              v-model="data.shipping_code"
+                              v-model="data.acc_email"
                               class="input-style2"
                             >
                             </md-input>
                           </md-field>
                           <div
-                          v-if="this.Error.errorClassCompanyCode != ''"
+                          v-if="this.Error.errorClassEmail != ''"
                           class="txt-wrong"
                         >
                           <span class="mdi mdi-alert-octagon"></span>
-                          {{ this.Error.errorClassCompanyCode_txt }}
+                          {{ this.Error.errorClassEmail_txt }}
                         </div>
                         </div>
                       </div>
@@ -78,49 +78,30 @@
                   <b-row>
                     <b-col style="padding:10px 0 0 10px" xl>
                       <div class="md-layout">
-                        <div class="head">ชื่อบริษัทขนส่ง <span style="color:red">*</span></div>
+                        <div class="head">ชื่อ <span style="color:red">*</span></div>
                         <div class="detail" style="">
                           <md-field
-                          v-bind:class="[Error.errorClassCompanyName]"
+                          v-bind:class="[Error.errorClassName]"
                             style="height:34px;width: 100%;margin:0;min-height:0px;padding:0"
                           >
                             <md-input
-                              v-model="data.shipping_name"
+                              v-model="data.acc_name"
                               class="input-style2"
                             >
                         </md-input>
                           </md-field>
                           <div
-                          v-if="this.Error.errorClassCompanyName != ''"
+                          v-if="this.Error.errorClassName != ''"
                           class="txt-wrong"
                         >
                           <span class="mdi mdi-alert-octagon"></span>
-                          {{ this.Error.errorClassCompanyName_txt }}
+                          {{ this.Error.errorClassName_txt }}
                         </div>
                         </div>
                       </div>
                     </b-col>
                   </b-row>
-                  <b-row>
-                    <b-col style="padding:10px 0 0 10px" xl>
-                      <div class="md-layout">
-                        <div class="head">ลิงก์ติดตามพัสดุ</div>
-                        <div class="detail" style="">
-                          <md-field
-                            style="width: 100%;margin:0;min-height:0px;padding:0"
-                          >
-                            <md-input
-                            
-                              v-model="data.shipping_track_link"
-                              class="input-style2"
-                            >
-                            </md-input>
-                          </md-field>
-                        </div>
-                      </div>
-                    </b-col>
-                  </b-row>
-
+              
                   <b-row>
                   <b-col style="padding:10px 0 0 10px" xl>
                     <div class="md-layout">
@@ -163,13 +144,12 @@
                 </b-container>
               </div>
 
-            <div class="box-footer">
+            <div style="padding:0" class="box-footer">
               <span
                 @click="edit('cancel')"
                 style="cursor: pointer;"
                 >ยกเลิก</span
               >
-          
               <v-btn
                 rounded
                 @click="edit('save')"
@@ -192,7 +172,7 @@
                 background-color: rgb(236, 241, 255);
                 justify-content: center;
                 font-family: 'Bai Jamjuree', sans-serif 
-                "
+                " 
           >
             <div class="my-layout">
               <div><img class="img" src="@/assets/images/lock.png" /></div>
@@ -216,7 +196,7 @@
             ใช่
           </button>
           <button
-            @click="confrim_dialog('cancel')"
+            @click="confrim_dialog('cancel')" 
             style="
                     margin:0 0 0 20px;
                     width: 84px;
@@ -290,15 +270,14 @@ export default {
   data () {
     return {
       FileEdit:{
-             company_code:'',
-             company_name:'',
-             link:''   
+          email:'',
+          name:''
         },
         Error: {
-          errorClassCompanyCode: '',
-          errorClassCompanyCode_txt:'',
-          errorClassCompanyName: '',
-          errorClassCompanyName_txt:''
+          errorClassEmail:'',
+          errorClassEmail_txt:'',
+          errorClassName: '',
+          errorClassName_txt:''
         },
 
       multiLine: true,
@@ -336,81 +315,102 @@ export default {
     edit (param) {
 
       if(param == 'save'){
-        let in1 =  this.checkErrorCase('cpy_code' , this.data.shipping_code)
-        let in2 =  this.checkErrorCase('cpy_name' , this.data.shipping_name)
-   
-          if(in1 && in2){
-          
+        let in1 =  this.checkErrorCase('email' , this.data.acc_email)
+        let in2 =  this.checkErrorCase('name' ,  this.data.acc_name)
 
-              let data = 
-             {  event:'update',
-                shipping_id:this.data.shipping_id,
-                shipping_code:this.data.shipping_code,
-                shipping_name: this.data.shipping_name,
-                shipping_track_link:this.data.shipping_track_link,
-                is_active:this.data.is_active
-              }
-            this.$store
-              .dispatch('shippingMaster', data)
-              .then(res => {
-                this.dialogDetail = false
-                this.dialog_success = true
-                this.dialogConfrimEdit = false
-                //
-              })
-              .catch(error => {
-                if (error.response.status == 401) {
-                  sessionStorage.removeItem('user_profile');
-                  sessionStorage.removeItem('token_seesion');
-                  this.tokenExpired = true
-                  console.log('Error 401')
-                }
-                if (error.response.status == 400) {
-                  let er = error.response.data.error.data
-                    if(!er.shipping_code){
-                      this.Error.errorClassCompanyCode = 'error-case'
-                      this.Error.errorClassCompanyCode_txt = this.$t('txt-wrong20')
-                    }
-                    if(!er.shipping_name){
-                      this.Error.errorClassCompanyName = 'error-case'
-                      this.Error.errorClassCompanyName_txt = this.$t('txt-wrong20')
-                    }
-                }
-              })
+          if(in1 && in2){
+            this.checkErrorCase('check_dup_email' ,  this.data.acc_email)
           }
-     
       }else {
           this.close()
       }
 
     },
     checkErrorCase (type, value) {
-      if (type == 'cpy_code') {
+      if (type == 'email') {
+
         if (value == null || value == '') {
-          this.Error.errorClassCompanyCode = 'error-case'
-          this.Error.errorClassCompanyCode_txt = this.$t('txt-wrong17')
+          this.Error.errorClassEmail = 'error-case'
+          this.Error.errorClassEmail_txt = this.$t('txt-wrong23')
           return false
-        } else {
-          this.Error.errorClassCompanyCode = ''
-          this.Error.errorClassCompanyCode_txt = ''
-          return true
+        } else if (!this.syntaxEmail(value)) {
+            this.Error.errorClassEmail = 'error-case'
+            this.Error.errorClassEmail_txt = this.$t('txt-wrong5')
+          return false
+        }else if(!this.checkMail_DHAS(value)){
+            this.Error.errorClassEmail = 'error-case'
+            this.Error.errorClassEmail_txt = this.$t('txt-wrong22')
         }
         
-      }
-      if (type == 'cpy_name') {
-        if (value == null || value == '') {
-          this.Error.errorClassCompanyName = 'error-case'
-          this.Error.errorClassCompanyName_txt = this.$t('txt-wrong18')
-          return false
-        } else {
-          this.Error.errorClassCompanyName = ''
-          this.Error.errorClassCompanyName_txt = ''
+        else {
+          this.Error.errorClassEmail = ''
+          this.Error.errorClassEmail_txt = ''
           return true
         }
       }
-        
+
+      if (type == 'name') {
+        if (value == null || value == '') {
+          this.Error.errorClassName = 'error-case'
+          this.Error.errorClassName_txt = this.$t('txt-wrong11')
+          return false
+        } else {
+          this.Error.errorClassName = ''
+          this.Error.errorClassName_txt = ''
+          return true
+        }
+      }
+
+      if (type == 'check_dup_email') {
+        if (value != null && value != '') {
+          let res =  {
+                    id:this.data.id,
+                    event:'update',
+                    acc_email: this.data.acc_email,
+                    acc_name:  this.data.acc_name,
+                    is_active:this.switch1 == false ? 0 : 1
+                  }
+
+              this.$store
+                .dispatch('getAccountEmail', res)
+                .then(res => {
+                  this.dialogDetail = false
+                  this.dialog_success = true
+                })
+                .catch(error => {
+                  if (error.response.status == 401) {
+                    sessionStorage.removeItem('user_profile'); 
+                    sessionStorage.removeItem('token_seesion');
+                    this.tokenExpired = true
+                    console.log('Error 401')
+                  }
+
+                  if (error.response.status == 400) {
+                      this.Error.errorClassEmail = 'error-case'
+                      this.Error.errorClassEmail_txt = this.$t('txt-wrong14')
+                      // console.log('Error 400')
+                    }else{
+                      this.Error.errorClassEmail = ''
+                      this.Error.errorClassEmail_txt = ''
+                    }
+                })}   
+      }
+      },
+      syntaxEmail (email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return true
+      } else {
+        return false
+      }
     },
-   
+    checkMail_DHAS( param ){
+      let result = param.indexOf("@dhas.com");
+      if(result!= -1){
+          return true
+      }else {
+        return false
+      }
+    },
     confrim_dialog (param) {
       this.dialogConfrimEdit = false
       if (param == 'OK') {

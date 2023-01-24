@@ -127,7 +127,7 @@
       </div>
     </div>
 
-    <v-dialog v-model="confirmDisable" max-width="400" width="400">
+    <v-dialog persistent v-model="confirmDisable" max-width="400" width="400">
       <v-card>
         <div style="font-family:'Bai Jamjuree', sans-serif" class="d-dialog">
           <div class="bg-confirm">
@@ -319,6 +319,8 @@ export default {
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }
@@ -339,6 +341,8 @@ export default {
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }
@@ -377,6 +381,8 @@ export default {
         })
         .catch(error => {
           if (error.response.status == 401) {
+            sessionStorage.removeItem('user_profile'); 
+            sessionStorage.removeItem('token_seesion');
             this.tokenExpired = true
             console.log('Error 401')
           }

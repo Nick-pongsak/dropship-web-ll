@@ -98,12 +98,12 @@
 </template>
   
   <script>
-  import detailTable from '@/components/table/AdminShippingDetail'
-  import DetailDialog_edit from '@/components/table/AdminShippingEditDialog'
-  import DetailDialog_add from '@/components/table/AdminShippingAddDialog'
+  import detailTable from '@/components/table/AdminAccountEmailDetail'
+  import DetailDialog_edit from '@/components/table/AdminAccountEmailEditDialog'
+  import DetailDialog_add from '@/components/table/AdminAccountEmailAddDialog'
   import TokenDetailDialog from '@/components/dialog/TokenDialog'
   export default {
-    name: 'admin-user-manage',
+    name: 'admin-user-accounr-email',
     data () {
       return {
         tokenExpired: false,
@@ -173,17 +173,18 @@
       fetch () {
         let arr = []
         this.loading_status = true
-
-        let data = 
-            {event:'get',
-            shipping_id:'',
-            shipping_code:'',
-            shipping_name:'',
-            shipping_track_link:'',
+        let res = 
+            {
+            id:'',
+            event:'get',
+            acc_email:'',
+            acc_name:'',
             is_active:''}
+
       this.$store
-        .dispatch('shippingMaster', data)
+        .dispatch('getAccountEmail', res)
         .then(res => {
+            console.log(res)
           this.data = res
           this.loading_status = false
         })
