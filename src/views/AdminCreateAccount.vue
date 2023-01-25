@@ -356,6 +356,7 @@
                   </div>
                   <div class="detail" style="">
                     <v-select
+                      no-data-text="ไม่พบข้อมูลผู้ใช้งาน"
                       style="max-height:34px ;box-shadow: none;width:100%"
                       v-on:change="selectSup_()"
                       v-model="info_sup"

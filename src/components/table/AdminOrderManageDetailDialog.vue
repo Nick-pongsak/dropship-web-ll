@@ -707,8 +707,9 @@
             <div style="width:100%">
             <div class="" style="font-family: 'Bai Jamjuree', sans-serif;width:67%;padding:20px 0 10px 0">บริษัทขนส่ง <span style="color:red">*</span></div>
             <div  style="display: flex;justify-content: center;">
-             
+              <!-- <v-data-table no-data-text="My no data message"></v-data-table> -->
               <v-select
+                no-data-text="ไม่พบข้อมูลบริษัทขนส่ง"
                 v-on:change="select_shipping()"
                 v-bind:class="[Error.errorShipping]"
                 label="- กรุณาเลือกบริษัทขนส่ง  -"
@@ -837,7 +838,7 @@
               <div
                 style="font-family: 'Bai Jamjuree';text-align: center;font-size:16px"
               >
-              บันทึกสำเร็จ
+              ส่งอีเมลสำเร็จ
               </div>
             </div>
           </v-card-title>
@@ -1010,7 +1011,7 @@ export default {
       clear_image(){
       this.reset()
     },
-
+    // v-list-item__title
     select_shipping(){
       this.Error.errorShipping = ''
       this.Error.errorShipping_txt = ''
