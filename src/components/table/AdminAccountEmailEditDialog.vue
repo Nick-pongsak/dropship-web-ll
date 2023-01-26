@@ -404,10 +404,14 @@ export default {
       }
     },
     checkMail_DHAS( param ){
-      let result = param.indexOf("@dhas.com");
+      let row_case = param.toLowerCase();
+      console.log(row_case)
+      let result = row_case.indexOf("@dhas.com");
       if(result!= -1){
+        this.data.acc_email = row_case
           return true
       }else {
+        
         return false
       }
     },

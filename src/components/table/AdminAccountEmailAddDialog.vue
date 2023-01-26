@@ -293,11 +293,14 @@
       }
     },
     checkMail_DHAS( param ){
-      let result = param.indexOf("@dhas.com");
+      let row_case = param.toLowerCase();
+      console.log(row_case)
+      let result = row_case.indexOf("@dhas.com");
       if(result!= -1){
+        this.FileEdit.email = row_case
           return true
       }else {
-        return false
+          return false
       }
     },
       close () {

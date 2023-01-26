@@ -134,7 +134,7 @@
                   'padding-bottom': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                ชื่อบริษัท
+                ชื่อบริษัทผู้ขาย
               </div>
               <div
                 class="d-dialog-title"
@@ -749,6 +749,7 @@
               
               <v-text-field v-model="shipping_number" style="font-family: 'Bai Jamjuree', sans-serif;max-width: 50%;" solo dense >
                 <v-icon
+                @click="clear_shipping_number" 
                 v-if="shipping_number.length != 0"
                   slot="append"
                   size="18"
@@ -981,6 +982,9 @@ export default {
   },
   watch: {},
   methods: {
+    clear_shipping_number(){
+      this.shipping_number = ''
+    },
 
     previewImage: function(event) {
       		var input = event.target;
