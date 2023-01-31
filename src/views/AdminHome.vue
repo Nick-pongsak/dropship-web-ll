@@ -95,10 +95,7 @@ export default {
   },
   components: { Footers },
   created () {
-    const items = { ...localStorage };
-
-    console.log(items)
-
+   
     if (
       this.$store.getters.user_profile === null &&
       sessionStorage.getItem('user_profile') === null

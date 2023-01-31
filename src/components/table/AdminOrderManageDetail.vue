@@ -319,6 +319,10 @@ export default {
           this.checkbox_all = true
         }
       }
+    },
+    data (newValue) {
+      this.select_order = []
+      this.checkbox_all = false
     }
   },
   methods: {
@@ -387,16 +391,14 @@ export default {
       }
     },
     OnAction(){
+      this.checkbox_all = false
       let result = this.data.filter(
         x => x.order_status == 'Complete' && x.disable == 0 && this.actionOrder == 'Disable'
       )
       let select_order = JSON.parse(JSON.stringify(this.select_order))
-
-     
         this.select_order = select_order.filter(function (n) {
           return result.indexOf(n) !== -1
         })
-      
     },
     push_all () {
       let result = ''
@@ -410,10 +412,8 @@ export default {
                 result = this.data.filter(
                   x => ( x.order_status == 'Complete' || x.order_status == 'Delivering' ) 
                 )
-            }
+            } 
     
-    
-     
       let select_order = JSON.parse(JSON.stringify(this.select_order))
       let purchase = result.map(e => e.purchase_id)
       if (this.checkbox_all) {
@@ -484,7 +484,8 @@ export default {
       this.windowSize = x
       this.deviceType = window.deviceType()
     }
-  }
+  } 
+ 
 }
 </script>
 <style>
