@@ -60,9 +60,7 @@
           <div class="head-box16">{{ row.cus_phone }}</div>
           <div class="head-box17">ที่อยู่ :</div>
           <div class="head-box18">
-            {{ row.cus_address }} {{ row.cus_district }}
-            {{ row.cus_subdistrict }} {{ row.cus_province }}
-            {{ row.cus_postal }}
+            {{ row.change_address == 0 ? row.cus_address : row.seller_address }} 
           </div>
           <div class="head-box19">
             หมายเหตุ (วันที่สั่งซื้อ) :

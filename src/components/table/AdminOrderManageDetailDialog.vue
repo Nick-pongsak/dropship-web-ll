@@ -264,8 +264,20 @@
                   width: windowSize < 600 ? '60%' : '70%',
                   'padding-bottom': windowSize < 600 ? '5px' : '0px'
                 }"
-              >
-                {{ data.cus_address }}
+              > 
+              {{ data.change_address == 0 ? data.cus_address  : data.seller_address}}  
+                <v-icon
+                @click="confirmChangeAddress = true"
+                 v-if="data.change_address == 0 && 
+                  ( data.order_status == 'New' || 
+                    data.order_status == 'Accept' || 
+                    data.order_status == 'Delivery'  )"
+                 style="color:#000; cursor: pointer;"
+                  slot="append"
+                  size="18"
+                >
+                  mdi mdi-pencil
+                </v-icon>
               </div>
             </div>
             <div
@@ -323,7 +335,7 @@
                   'padding-bottom': windowSize < 600 ? '10px' : '0px'
                 }"
               >
-                เบอร์โทรศัพท์หห
+                เบอร์โทรศัพท์
               </div>
               <div
                 class="d-dialog-title"
@@ -678,7 +690,7 @@
             <div>
               <v-btn
                 rounded
-                @click="submitSendmail()"
+                @click="submitSendmail()" 
                 class="ok"
                 style="margin-right:45px"
                 >ใช่</v-btn
@@ -892,6 +904,37 @@
         </v-card>
       </v-dialog>
 
+      <v-dialog persistent v-model="confirmChangeAddress" max-width="454" width="454">
+      <v-card>
+        <div class="d-dialog">
+          <div class="bg-confirm">
+            <div style="text-align:center">
+              <img style="padding:20px 0 20px 0" class="img" src="@/assets/images/cardboard-boxes.png" />
+            </div>
+            <div style="font-family: 'Bai Jamjuree', sans-serif; padding:0px 10px"> 
+                คุณต้องการแก้ไขที่อยู่การจัดส่งเป็นของ
+              <span style="font-weight: bold;">  ผู้ขาย </span
+              >ใช่หรือไม่ 
+            </div>
+          </div>
+          <div class="bg-confirm-action">
+            <div>
+              <v-btn
+                rounded
+                @click="dialog_cheang_address(data)" 
+                class="ok"
+                style="margin-right:45px"
+                >ใช่</v-btn
+              >
+              <v-btn rounded @click="closeDialog" class="clear"
+                >ไม่</v-btn
+              >
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -914,7 +957,7 @@ export default {
       DialogShipping:false,
       shipping_number:'',
       confirmResend:false,
-       
+      confirmChangeAddress :false,
       Error:{
         errorShipping: '',
         errorShipping_txt: '',
@@ -1065,6 +1108,27 @@ export default {
     },
     currency (qty) {
       return window.currency(qty)
+    },
+    dialog_cheang_address(  ){
+      // this.confirmChangeAddress = true
+      console.log(this.data)
+            this.$store
+              .dispatch('changeAddress', this.data.purchase_id)
+              .then(res => {
+                  console.log(res)
+                  this.data.change_address = 1
+                  this.confirmChangeAddress = false
+                })
+              .catch(error => {
+                if (error.response.status == 401) {
+                  sessionStorage.removeItem('user_profile'); 
+                  sessionStorage.removeItem('token_seesion');
+                  this.tokenExpired = true
+                  console.log('Error 401')
+                }
+              })
+          
+      // console.log( param)
     },
     ratio (val) {
       this.radio = val
@@ -1349,6 +1413,7 @@ export default {
     },
     closeDialog(){
       this.confirmResend = false
+      this.confirmChangeAddress = false
     },
     print () {
       this.confirmPrint = false

@@ -143,19 +143,23 @@
             <div :class="'btn-filter ' + row.order_status.toLowerCase()">
               {{ row.order_status }}
             </div>
-
-            <v-tooltip  top>
-              <template  v-slot:activator="{ on, attrs }">
                 <!-- {{ row.status_send_mail }} -->
-             
-                    <img v-if="row.status_send_mail == 'Success' " v-bind="attrs" v-on="on" style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_success.png" />
-                    <img v-else-if="row.status_send_mail == 'Fail'" v-bind="attrs" v-on="on" style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_fail.png" />
+             <div v-if="row.status_send_mail != null">
 
-              </template>
-              <span style=" font-size:14px">{{ row.status_send_mail }}</span>
-            </v-tooltip>
-
-<!--     
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  
+                    <img v-bind="attrs" v-on="on" v-if="row.status_send_mail == 'Success' "  style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_success.png" />
+                    <img v-bind="attrs" v-on="on" v-else-if="row.status_send_mail == 'Fail'"  style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_fail.png" />
+                    
+                </template>
+                <span>{{ row.status_send_mail  }}</span>
+              </v-tooltip>
+                    <!-- <img v-if="row.status_send_mail == 'Success' "  style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_success.png" />
+                    <img v-else-if="row.status_send_mail == 'Fail'"  style="margin:0 0 0 10px;width: 25px; height: 25px;" class="img" src="@/assets/images/send_fail.png" /> -->
+             </div>  
+        <!--     
+             </div>
             <div style="padding:0 0 0 10px" v-if=" row.order_status  == 'Delivering' ||  row.order_status  == 'Complete' "> 
               <img style="width: 25px; height: 25px;" class="img" src="@/assets/images/send_success.png" /> </div> -->
           </div>
@@ -176,6 +180,7 @@
         v-if="data.length == 0"
       >
         ไม่พบข้อมูลที่ค้นหา กรุณากรอกข้อมูลใหม่
+      
       </div>
     </div>
 

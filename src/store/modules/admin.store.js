@@ -326,6 +326,33 @@ const store = {
       })
 
     },
+    changeAddress({ state, commit, dispatch }, data) {
+      // console.log('Pro')
+      let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
+      let formData = new FormData()
+      formData.append('purchase_id', data)
+      return new Promise((resolve, reject) => {
+
+        axios.post(`${url}/apiweb/api/change-address`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            "Authorization": `Bearer ${Profile.access_token}`
+          }
+        }).then(response => {
+          dispatch('newToken',response.data.success.data.token)
+            console.log(response.data.success.data.token)
+          resolve(response.data);
+        }).catch(error => {
+          dispatch('newToken',error.response.data.error.data.token)
+          reject(error)
+        })
+      })
+
+    },
+
+    // http://10.7.200.176/apiweb/api/change-address
+
     registerSendEmail({ state, commit, dispatch }, data) {
       // console.log('Pro')
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
@@ -401,11 +428,6 @@ const store = {
                   reject(error)
           })
         },
-    // http://10.7.200.176/apiweb/api/shipping-master
-    
-
-   
-
     newToken({ state, commit, dispatch }, data) {
       let Profile = JSON.parse(Vue.localStorage.get('user_profile'))
       Profile.access_token = data
