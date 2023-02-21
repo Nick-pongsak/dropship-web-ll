@@ -935,6 +935,44 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog
+      v-model="dialog_success2"
+      persistent
+      max-width="350"
+      id="dialogCinfrim"
+    >
+      <v-card style="border-radius:14px">
+        <v-card-title style="background-color:#ECF1FF;" class="text-h5 ">
+          <div style="width: 100%;">
+            <!-- <div style="width: 80%;">บันทึกการเปลี่ยนแปลง</div> -->
+            <!-- <div style="justify-content: flex-end;display: flex;width: 20%"><span @click="close_success" style="cursor: pointer;" class="mdi mdi-close mdi-18px"></span></div> -->
+            <div style="text-align: center;margin-bottom:20px">
+              <img
+                class="img"
+                src="@/assets/images/success.png"
+                style="height:120px"
+              />
+            </div>
+            <div
+              style="font-family: 'Bai Jamjuree';text-align: center;font-size:16px" 
+            >
+              บันทึกสำเร็จ
+            </div>
+          </div>
+        </v-card-title>
+        <div style="padding:15px 0px;text-align:center">
+          <v-btn
+            rounded
+            @click="close_success"
+            class="ok"
+            :style="{ 'margin-left': '20px' }"
+            >ตกลง</v-btn
+          >
+          <!-- @click="close_success" -->
+        </div>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -955,6 +993,7 @@ export default {
     return {
       shipping_select:'',
       DialogShipping:false,
+      dialog_success2:false,
       shipping_number:'',
       confirmResend:false,
       confirmChangeAddress :false,
@@ -1115,7 +1154,8 @@ export default {
             this.$store
               .dispatch('changeAddress', this.data.purchase_id)
               .then(res => {
-                  console.log(res)
+                  // console.log(res)
+                  this.dialog_success2 = true
                   this.data.change_address = 1
                   this.confirmChangeAddress = false
                 })
@@ -1173,6 +1213,9 @@ export default {
     },
     close_s(){
        this.$emit('close_s', {})
+    },
+    close_success(){
+      this.dialog_success2  = false
     },
 
     maps(po , param , head){ 
